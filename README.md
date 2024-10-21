@@ -24,5 +24,7 @@ We will need to use `npm install` and `npm start`
 Ari Rojas 
 Colin Kearns 
 
+
+Soni: Contributed to Greyscale designs
 ## Acknowledgments
 
