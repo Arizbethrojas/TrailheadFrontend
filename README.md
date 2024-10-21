@@ -10,6 +10,10 @@ NB: we had to remove the camal casing due to the warning: "name can no longer co
 
 React.js for user interface, React Router for page navigation, and either Axios or Fetch API for calling the backend APIs is we use any. 
 
+## Designs
+
+Home Page:
+
 ## Setup
 
 run: 
