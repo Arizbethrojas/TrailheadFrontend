@@ -21,7 +21,7 @@ We will need to use `npm install` and `npm start`
 
 ## Authors
 
-Ari Rojas (Coding done and committed using Ari's laptop - we thought it would be easier that way)!
+Ari Rojas (Coding done and committed using Ari's laptop - we thought it would be easier that way)!!
 Colin Kearns 
 
 ## Acknowledgments
