@@ -45,6 +45,7 @@ We will need to use `npm install` and `npm start`
 Ari Rojas 
 Colin Kearns 
 Sammy Rago
+Dara Casey
 
 
 Soni: Contributed to Greyscale designs
