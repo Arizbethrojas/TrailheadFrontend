@@ -1,0 +1,45 @@
+/* src/screens/GlobalStyles.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #FDFAEF; /* Light background color */
+  }
+  
+  .trips-container {
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #616242; /* Darker background for header */
+    color: white;
+    padding: 10px;
+  }
+  
+  .icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .bell {
+    margin-right: 20px;
+  }
+  
+  .profile-pic {
+    border-radius: 50%;
+    width: 40px; /* Size of the profile picture */
+    height: 40px;
+  }
+  
+  .past-trips, .all-doc-trips {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  
+  h2 {
+    margin-top: 40px;
+  }
