@@ -1,0 +1,97 @@
+/* Author: Sammy Rago 
+Purpose: styling for AddTrip.js page 
+Date: 10/27 */
+
+.app-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    background: #FDFAF0;
+
+}
+.add-trip-container{
+    width: 90%;
+    height: 650px;
+    background: #D7DEDD;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.add-trip-title{
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #34464C;
+    font-size: 32px;
+}
+
+.form-group{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label{
+    color: #34464C;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.form-input{
+    /* width: 100%; */
+    /* padding: 10px; */
+    border-radius: 14px;
+    height: 12px;
+    background: #FDFAF0;
+    border: none;
+    padding: 10px;
+}
+
+#title{
+    width: 97%;
+}
+
+#date-group, #leader-group, #capacity-group, #subclub-group{
+/* .form-question{ */
+    display: flex;
+    justify-content: space-between;
+    width: 45%;
+    flex-direction: column;
+}
+
+.shared-line{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+}
+
+#date, #leader, #capacity, #subclub{
+    width: 100%;
+}
+
+#description{
+    width: 97%;
+    height: 250px;
+}
+
+.submit-button{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 24px;
+    background: #EFD287;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.submit-button:hover{
+    background: #d6c67d;
+}
