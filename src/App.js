@@ -5,6 +5,7 @@ import Archive from './screens/Archive'; // Import Archive screen
 import Chat from './screens/Chat'; // Import Chat screen
 import Profile from './screens/Profile'; // Import Profile screen
 import Trips from './screens/Trips'; // Import Trips screen
+import SignUpIndividual from './screens/SignUp'; // Import Sign Up screen
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 // App Component
@@ -28,6 +29,9 @@ export default function App() {
           <li>
             <Link to="/chat">Chat</Link> {/* Chat link */}
           </li>
+          <li>
+            <Link to="/sign-up">Sign Up</Link> {/* Sign Up link */}
+          </li>
         </ul>
       </nav>
       <Routes>
@@ -36,6 +40,7 @@ export default function App() {
         <Route path="/add-trip" element={<AddTrip />} /> {/* Add route for Add Trip */}
         <Route path="/profile" element={<Profile />} /> {/* Profile route */}
         <Route path="/chat" element={<Chat />} /> {/* Chat route */}
+        <Route path="/sign-up" element={<SignUpIndividual />} /> {/* Sign Up route */}     
       </Routes>
     </Router>
   );
