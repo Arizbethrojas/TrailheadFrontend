@@ -46,8 +46,7 @@ Ari Rojas
 Colin Kearns 
 Sammy Rago
 Dara Casey
+Muthoni Mbesa
 
-
-Soni: Contributed to Greyscale designs
 ## Acknowledgments
 
