@@ -11,7 +11,7 @@ export const getTrips = async () => {
 
 export const createTrip = async (newTrip) => {
     try {
-        const response = await axios.post('trips/', newTrip);
+        const response = await axios.post('http://127.0.0.1:8000/api/trips/', newTrip);
         console.log('Your trip is created:', response.data);
         return response.data;
     } catch (err) {
@@ -22,7 +22,7 @@ export const createTrip = async (newTrip) => {
 
 export const updateTrip = async (tripId, updatedTrip) => {
     try {
-        const response = await axios.put(`trips/${tripId}/`, updatedTrip);
+        const response = await axios.put(`http://127.0.0.1:8000/api/trips/${tripId}/`, updatedTrip);
         console.log('Your trip is updated:', response.data);
         return response.data;
     } catch (err) {
@@ -33,7 +33,7 @@ export const updateTrip = async (tripId, updatedTrip) => {
 
 export const deleteTrip = async (tripId) => {
     try {
-        await axios.delete(`trips/${tripId}/`);
+        await axios.delete(`http://127.0.0.1:8000/api/trips/${tripId}/`);
         console.log('you deleted your trip deleted');
     } catch (err) {
         console.error('Error deleting trip:', err.message);

@@ -20,7 +20,7 @@ const TripExplore = () => {
     }, []);
 
     const handleAddTrip = async () => {
-        const newTrip = { title: 'Gile Hike', tripLeader: 'Ari', date: '2024-10-31', attendees: '5' };
+        const newTrip = { trip_name: 'Gile Hike', trip_date: '2024-10-31', trip_description: 'Peak foliage', trip_leader: 'Ari', trip_capacity: '5', subclub: 1 };
         try {
             const createdTrip = await createTrip(newTrip);
             setTrips([...trips, createdTrip]);

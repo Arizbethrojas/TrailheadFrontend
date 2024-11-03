@@ -34,8 +34,10 @@ Profile:
 ## Setup
 installations: 
 `npm install axios`
+`npm install react-router-dom`
 run: 
 `npx create-react-app trailheadfrontend`
+
 
 ## Deployment
 
