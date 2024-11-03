@@ -7,6 +7,18 @@ import Profile from './screens/Profile'; // Import Profile screen
 import Trips from './screens/Trips'; // Import Trips screen
 import SignUpIndividual from './screens/SignUp'; // Import Sign Up screen
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import TripExplore from './components/getTrips';
+import sendTripData from './components/SendTrips';
+
+function App() {
+  return (
+    <div className="App">
+      <TripExplore />
+      < sendTripData />
+      <h1>Hello World from the Frontend!</h1>
+    </div>
+  );
+}
 
 // App Component
 export default function App() {

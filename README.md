@@ -32,13 +32,20 @@ Profile:
 <img width="1058" alt="Screenshot 2024-10-20 at 8 43 16 PM" src="https://github.com/user-attachments/assets/7ac32827-c579-4479-bc86-4b5be137fe76">
 
 ## Setup
-
+installations: 
+`npm install axios`
 run: 
-`npx create-react-app TrailheadFrontend`
+`npx create-react-app trailheadfrontend`
 
 ## Deployment
 
 We will need to use `npm install` and `npm start`
+
+## Django API 
+
+We choose to centralize our API calls in one file — apiServices — which contains the functions createTrip, getTrips, updateTrip and deleteTrip. We will modify these functions as need be later in our development. 
+
+This organizational decsion allows our team to import only neccesary functions from apiServices to other files. 
 
 ## Authors
 
