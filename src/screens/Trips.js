@@ -2,13 +2,15 @@
 import React from 'react';
 import '../styles/globalStyles.css'; // Import global styles
 import TripCard from '../components/TripCard'; // Import the TripCard component
+import TripExplore from '../components/getTrips';
 
-const tripsData = [
-  { title: "Trip 1", date: "10/16" },
-  { title: "Trip 2", date: "10/16" },
-  { title: "Trip 3", date: "10/16" },
-  { title: "Trip 4", date: "10/16" },
-];
+// const tripsData = [
+//   { title: "Trip 1", date: "10/16" },
+//   { title: "Trip 2", date: "10/16" },
+//   { title: "Trip 3", date: "10/16" },
+//   { title: "Trip 4", date: "10/16" },
+// ];
+
 
 const Trips = () => {
   return (
@@ -21,7 +23,8 @@ const Trips = () => {
         </div>
       </div>
       
-      <div className="past-trips">
+      <TripExplore/>
+      {/* <div className="past-trips">
         {tripsData.map((trip, index) => (
           <TripCard key={index} title={trip.title} date={trip.date} />
         ))}
@@ -29,9 +32,9 @@ const Trips = () => {
       <div className="all-doc-trips">
         {tripsData.map((trip, index) => (
           <TripCard key={index} title={trip.title} date={trip.date} />
-        ))}
+        ))} */}
         {/* Add more trip cards as needed */}
-      </div>
+      {/* </div> */}
     </div>
   );
 };

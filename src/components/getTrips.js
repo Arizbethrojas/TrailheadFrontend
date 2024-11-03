@@ -9,6 +9,7 @@ const TripExplore = () => {
         const loadTrips = async () => {
             try {
                 const data = await getTrips();
+                console.log("data", data);
                 setTrips(data);
             } catch (err) {
                 setError(err.message);
@@ -34,7 +35,7 @@ const TripExplore = () => {
             {error && <p>Error: {error}</p>}
             <ul>
                 {Array.isArray(trips) && trips.map(trip => (
-                    <li key={trip.id}>{trip.title} - {trip.tripLeader} on {trip.date}</li>
+                    <li key={trip.id}>{trip.trip_name} - {trip.trip_leader} on {trip.trip_date}</li>
                 ))}
             </ul>
             <button onClick={handleAddTrip}>Add New Trip</button>

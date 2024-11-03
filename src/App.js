@@ -6,7 +6,7 @@ import Chat from './screens/Chat'; // Import Chat screen
 import Profile from './screens/Profile'; // Import Profile screen
 import Trips from './screens/Trips'; // Import Trips screen
 import SignUpIndividual from './screens/SignUp'; // Import Sign Up screen
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import TripExplore from './components/getTrips';
 import sendTripData from './components/SendTrips';
 
@@ -47,7 +47,7 @@ export default function App() {
         </ul>
       </nav>
       <Routes>
-        <Route path="/trips" element={<Trips />} />
+        <Route path="/" element={<Navigate to="/trips" replace />} />      <Route path="/trips" element={<Trips />} />
         <Route path="/archive" element={<Archive />} />
         <Route path="/add-trip" element={<AddTrip />} /> {/* Add route for Add Trip */}
         <Route path="/profile" element={<Profile />} /> {/* Profile route */}
