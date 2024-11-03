@@ -28,7 +28,7 @@ const AddTrip = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await axios.post('http://127.0.0.1:800/trips/create/', formData);
+      const response = await axios.post('http://127.0.0.1:800/api/trips/', formData);
       console.log(response.data);
       navigate('/trips');
     } catch (error){
