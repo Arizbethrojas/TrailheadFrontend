@@ -8,7 +8,8 @@ import Trips from './screens/Trips';
 import SignUpIndividual from './screens/SignUp'; 
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import TripExplore from './components/getTrips'; 
-import sendTripData from './components/SendTrips'; 
+import sendTripData from './components/SendTrips';
+import TripList from './screens/TripList';
 
 const App = () => {
   const [title, setTitle] = useState('Testing Notification');
@@ -36,7 +37,6 @@ const App = () => {
       });
       
       notification.onclick = () => {
-        // Define what happens when the notification is clicked
         console.log('Notification clicked');
         window.open('https://example.com'); // Replace with your URL
       };
@@ -48,7 +48,7 @@ const App = () => {
   // Request notification permission when the app initializes
   useEffect(() => {
     requestNotificationPermission();
-  }, []); // Empty dependency array ensures this runs once when the component mounts
+  }, []); 
 
   const handleNotification = () => {
     showNotification(title, body, icon);
@@ -76,11 +76,14 @@ const App = () => {
           <li>
             <Link to="/sign-up">Sign Up</Link> 
           </li>
+          <li>
+            <Link to="/explore-trips">Explore Trips</Link> {/* New link for TripList */}
+          </li>
         </ul>
       </nav>
 
-       {/* Test notification button, unhighlight to view an example of notifcations working */}
-       {/* <button onClick={handleNotification}>Test Notification</button>  */}
+      {/* Test notification button */}
+      {/* <button onClick={handleNotification}>Test Notification</button> */}
 
       <Routes>
         <Route path="/" element={<Navigate to="/trips" replace />} />
@@ -89,7 +92,8 @@ const App = () => {
         <Route path="/add-trip" element={<AddTrip />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/sign-up" element={<SignUpIndividual />} />     
+        <Route path="/sign-up" element={<SignUpIndividual />} />
+        <Route path="/explore-trips" element={<TripList />} /> {/* Route for TripList */}
       </Routes>
     </Router>
   );
