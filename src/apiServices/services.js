@@ -1,7 +1,7 @@
 import axios from 'axios';
 export const getTrips = async () => {
     try {
-        const response = await axios.get('http://127.0.0.1:8000/api/trips');
+        const response = await axios.get('http://127.0.0.1:8000/api/trips/');
         return response.data;
     } catch (err) {
         console.error('Error getting trips:', err.message);
