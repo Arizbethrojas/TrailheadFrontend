@@ -3,7 +3,7 @@
 // Date: 10/27
 
 // src/screens/AddTrip.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/globalStyles.css'; // Import global styles
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
@@ -19,7 +19,36 @@ const AddTrip = () => {
     subclub: '',
   });
 
+  const [subclubs, setSubclubs] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchSubclubs = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/subclubs/');
+        setSubclubs(response.data);
+      } catch (error){
+        console.error('Error fetching subclubs:', error);
+      }
+    };
+    fetchSubclubs();
+  }, []);
+
+  //function to get CSRF token so i can make POST requests
+  const getCookie = (name) =>{
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== ''){
+      const cookies = document.cookie.split(';');
+      for(let i = 0; i < cookies.length; i++){
+        const cookie = cookies[i].trim();
+        if(cookie.substring(0, name.length = 1) === (name + '=')){
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue
+  }
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value });
@@ -27,14 +56,22 @@ const AddTrip = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = getCookie('csrftoken'); //obtain csrf token
     try{
-      const response = await axios.post('http://127.0.0.1:800/api/trips/', formData);
+      const response = await axios.post('http://127.0.0.1:8000/api/trips/', formData, {
+      headers: {
+        'X-CSRFToken': token,
+        'Content-Type': 'application/json',
+      },
+    });
       console.log(response.data);
       navigate('/trips');
     } catch (error){
-      console.error('There was an error creating the trip', error);
+      console.error('There was an error creating the trip', error.response ? error.response.data : error.message);
+
     }
   };
+
   return (
     <div className="app-container">
       <div className="add-trip-container">
@@ -59,10 +96,17 @@ const AddTrip = () => {
               <label className='form-label'>Capacity</label>
               <input type="number" className="form-input" id="capacity" name="trip_capacity" value={formData.trip_capacity} onChange={handleChange} required />
             </div>
-            <div className="form-question" id="subclub-group">
+            {/* <div className="form-question" id="subclub-group">
               <label className='form-label'>Subclub</label>
               <input type="text" className="form-input" id="subclub" name="subclub" value={formData.subclub} onChange={handleChange} required />
-            </div>
+            </div> */}
+            <label htmlFor="subclub">Subclub:</label>
+            <select name="subclub" value={formData.subclub} onChange={handleChange} required>
+              <option value="">Select a Subclub</option>
+              {subclubs.map(subclub => (
+                <option key={subclub.id} value={subclub.id}>{subclub.subclub_name}</option>
+              ))}
+            </select>
           </div>
           <div className="form-question">
             <label className='form-label'>Description</label>
