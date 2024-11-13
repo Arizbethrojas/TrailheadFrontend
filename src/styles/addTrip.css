@@ -2,11 +2,14 @@
 Purpose: styling for AddTrip.js page 
 Date: 10/27 */
 
-.app-container{
+/* .app-container{
     display: flex;
+    position: absolute;
     justify-content: center;
     align-items: center;
-    height: 80%;
+    width: 90%;
+    left: 90px;
+    top: 0;
     background: #FDFAF0;
 
 }
@@ -23,6 +26,9 @@ Date: 10/27 */
 }
 
 .add-trip-title{
+    position: absolute;
+    top: 20px;
+    left: 50px;
     margin-top: 0;
     margin-bottom: 10px;
     color: #34464C;
@@ -42,8 +48,6 @@ Date: 10/27 */
 }
 
 .form-input{
-    /* width: 100%; */
-    /* padding: 10px; */
     border-radius: 14px;
     height: 12px;
     background: #FDFAF0;
@@ -56,7 +60,6 @@ Date: 10/27 */
 }
 
 #date-group, #leader-group, #capacity-group, #subclub-group{
-/* .form-question{ */
     display: flex;
     justify-content: space-between;
     width: 45%;
@@ -94,4 +97,131 @@ Date: 10/27 */
 
 .submit-button:hover{
     background: #d6c67d;
+} */
+
+/* Layout for the entire application */
+.app-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    /* align-items: center;
+    height: 100vh; */
+    width: 90%; 
+    background-color: #FDFAF0; /* Light background color */
+    padding: 20px;
+    left: 80px;
+    padding-top: 40px;
+}
+
+/* Container specifically for adding a trip */
+.add-trip-container {
+    background-color: #D7DEDD; /* Container background color */
+    border-radius: 14px; /* Rounded corners */
+    padding: 20px; /* Padding inside the container */
+    /* width: 90%; 
+    max-width: 600px; Max width for larger screens */
+    height: 80vh;
+    padding-right: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+.add-trip-title{
+    position: absolute;
+    top: -15px;
+    left: 30px;
+    margin-top: 0;
+    /* margin-bottom: 10px; */
+    color: #34464C;
+    font-size: 32px;
+}
+
+/* Form styling */
+.trip-form {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+}
+
+/* Style for each form question */
+.form-question {
+    margin-bottom: 15px; /* Spacing between questions */
+}
+
+/* Label styling for form fields */
+.form-label {
+    font-size: 18px; /* Medium font size for labels */
+    color: #34464C; /* Dark text color */
+    margin-bottom: 5px; /* Space below the labels */
+}
+
+/* Input fields styling */
+.form-input {
+    width: 100%; /* Full width of the container */
+    padding: 10px; /* Padding inside inputs */
+    border-radius: 8px; /* Slightly rounded corners */
+    border: 1px solid #ccc; /* Light border */
+    background-color: #FFFFFF; /* White background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: border 0.3s; /* Transition for the border effect */
+    height: 40px;
+}
+
+/* Focus effect for inputs */
+.form-input:focus {
+    border-color: #70B3C3; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Styling for shared lines (multiple fields in one line) */
+.shared-line {
+    display: flex;
+    justify-content: space-evenly; /* Space between items */
+    gap: 10px; /* Space between input fields */
+}
+
+#leader, #date, #bring, #provided{
+    width: 550px;
+}
+
+#type, #capacity, #subclub, #level{
+    width: 270px;
+}
+#type, #subclub, #level{
+    height: 60px;
+}
+
+/* #capacity{
+    height: 40px;
+} */
+
+/* Submit button styling */
+.submit-button {
+    background-color: #EFD287; /* Button background color */
+    color: white; /* Button text color */
+    font-size: 18px; /* Font size for button text */
+    font-weight: bold; /* Bold text */
+    padding: 10px; /* Padding inside the button */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    /* transition: background 0.3s; Smooth background change on hover */
+    margin-top: 20px; /* Space above the button */
+    max-width: 200px; /* Max width for button */
+    align-self: center; /* Center the button */
+}
+
+/* Button hover effect */
+.submit-button:hover {
+    background-color: #d6c67d; /* Darken background on hover */
+}
+
+/* Responsive textarea styling */
+textarea.form-input {
+    height: 80px; /* Fixed height for textareas */
+}
+
+/* Ensure consistency for different input types */
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    height: 40px; /* Consistent height for input fields */
 }
