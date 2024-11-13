@@ -139,17 +139,25 @@ return (
     <h2 className='add-trip-title'>Plan a Trip</h2>
     <div className="add-trip-container">
       <form onSubmit={handleSubmit} className="trip-form">
-        {/* LINE 1: TITLE */}
-        <div className="form-question">
-          <label className='form-label'>Title</label>
-          <input type="text" className="form-input" id="title" name="trip_name" value={formData.trip_name} onChange={handleChange} required />
-        </div>
-        {/* LINE 2: LEADERS AND DATE */}
-        <div className="shared-line" id="line2">
+        {/* LINE 1: TITLE AND LEADERS*/}
+        <div className="shared-line" id="line1">
+          {/* TITLE */}
+          <div className="form-question">
+            <label className='form-label'>Title</label>
+            <input type="text" className="form-input" id="title" name="trip_name" value={formData.trip_name} onChange={handleChange} required />
+          </div>
           {/* LEADERS */}
           <div className="form-question">
             <label className='form-label'>Leaders</label>
             <input type="text" className="form-input" id="leader" name="trip_leader" value={formData.trip_leader} onChange={handleChange} required />
+          </div>
+        </div>
+        {/* LINE 2: LOCATION AND DATE */}
+        <div className="shared-line" id="line2">
+          {/* LEADERS */}
+          <div className="form-question">
+            <label className='form-label'>Location</label>
+            <input type="text" className="form-input" id="location" name="trip_location" value={formData.trip_location} onChange={handleChange} required />
           </div>
           {/* DATE */}
           <div className="form-question">

@@ -177,8 +177,7 @@ Date: 10/27 */
     justify-content: space-evenly; /* Space between items */
     gap: 10px; /* Space between input fields */
 }
-
-#leader, #date, #bring, #provided{
+#leader, #date, #bring, #provided, #title, #location{
     width: 550px;
 }
 
