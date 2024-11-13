@@ -20,6 +20,19 @@ const AddTrip = () => {
   });
 
   const [subclubs, setSubclubs] = useState([]);
+
+  const tripTypeOptions = [
+    {value:'', label:'Select Trip Type'},
+    {value:'day_trip', label:'Day Trip'},
+    {value:'overnight_trip', label:'Overnight'},
+  ];
+
+  const tripLevelOptions = [
+    {value:'', label:'Select Trip Level'},
+    {value:'beginner', label:'Beginner'},
+    {value:'intermediate', label:'Intermediate'},
+    {value:'advanced', label:'Advanced'},
+  ]
   const navigate = useNavigate();
 
   useEffect(() => {
