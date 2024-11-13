@@ -2,13 +2,17 @@
 import React, { useState } from 'react';
 import '../styles/globalStyles.css'; // Import global styles
 import TripCard from '../components/TripCard'; // Import the TripCard component
-import TripExplore from '../components/getTrips';
+import TripExplore from '../components/getTrips'; // this is never used, causing a warning
 import TripModal from '../screens/TripModal'; // Import TripModal component
-
+import Filter from '../components/filter'; // filter component used in trips and archive 
 const Trips = () => {
   // State to manage selected trip and modal visibility
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  // States for the filter
+  const [filterBySubclub, setFilterBySubclub] = useState('');
+  const [filterBySignUp, setFilterBySignUp] = useState(false);
 
   // Handler to open modal and set selected trip
   const handleTripClick = (trip) => {
@@ -24,6 +28,13 @@ const Trips = () => {
     { id: 4, title: "Trip 4", date: "10/16", leader: "Leader 4", description: "Description for Trip 4" },
   ];
 
+  // Apply filters to the tripsData
+  const filteredTrips = tripsData.filter((trip) => {
+    const subclubMatch = filterBySubclub ? trip.subclub === filterBySubclub : true;
+    const signUpMatch = filterBySignUp ? trip.signedUp === true : true;
+    return subclubMatch && signUpMatch;
+  });
+
   return (
     <div className="trips-container">
       <div className="header">
@@ -33,6 +44,13 @@ const Trips = () => {
           <img src="path-to-your-profile-image" alt="Profile" className="profile-pic" />
         </div>
       </div>
+
+      <Filter
+        filterBySubclub={filterBySubclub}
+        setFilterBySubclub={setFilterBySubclub}
+        filterBySignUp={filterBySignUp}
+        setFilterBySignUp={setFilterBySignUp}
+      />
       
       {/* Display trips with a "View Details" button for each */}
       <div className="all-doc-trips">

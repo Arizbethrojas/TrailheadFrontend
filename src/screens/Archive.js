@@ -1,7 +1,9 @@
+// Archive.js
 import React, { useState, useEffect } from 'react';
 import '../styles/globalStyles.css';
 import TripCard from '../components/TripCard';
 import TripModal from '../screens/TripModal';
+import Filter from '../components/filter'; 
 
 const Archive = () => {
   const [selectedTrip, setSelectedTrip] = useState(null);
@@ -28,14 +30,6 @@ const Archive = () => {
     setShowModal(true);
   };
 
-  const handleFilterChange = (event) => {
-    setFilterBySubclub(event.target.value);
-  };
-
-  const toggleSignUpFilter = () => {
-    setFilterBySignUp(!filterBySignUp);
-  };
-
   const filteredTrips = tripsData.filter((trip) => {
     const subclubMatch = filterBySubclub ? trip.subclub === filterBySubclub : true;
     const signUpMatch = filterBySignUp ? trip.signedUp === true : true;
@@ -48,24 +42,13 @@ const Archive = () => {
         <h1>Archive of Trips</h1>
       </div>
 
-      {/* Filters Container */}
-      <div className="filters-container">
-        <div className="filters">
-          <label>
-            Outdoor subclub:
-            <select value={filterBySubclub} onChange={handleFilterChange}>
-              <option value="">All</option>
-              <option value="Hiking">Hiking</option>
-              <option value="Biking">Biking</option>
-              <option value="Climbing">Climbing</option>
-            </select>
-          </label>
-          <label>
-            <input type="checkbox" checked={filterBySignUp} onChange={toggleSignUpFilter} />
-            My trips
-          </label>
-        </div>
-      </div>
+      {/* Include the Filter component */}
+      <Filter 
+        filterBySubclub={filterBySubclub}
+        setFilterBySubclub={setFilterBySubclub}
+        filterBySignUp={filterBySignUp}
+        setFilterBySignUp={setFilterBySignUp}
+      />
 
       <div className="archive-trips">
         {filteredTrips.map((trip) => (

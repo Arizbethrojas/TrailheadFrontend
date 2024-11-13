@@ -7,6 +7,7 @@ body {
   }
   
   .trips-container {
+    position: absolute;
     padding: 20px;
   }
   
@@ -59,5 +60,6 @@ body {
   
   
   .archive-trips {
+    position: absolute;
     flex-wrap: wrap;
   }
