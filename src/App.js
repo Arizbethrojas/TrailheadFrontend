@@ -84,8 +84,8 @@ const App = () => {
             </li>
             <li><Link to="/add-trip">Add Trip</Link></li>
             <li><Link to="/chat">Chat</Link></li>
-            <li><Link to="/sign-up">Sign Up</Link></li>
-            <li><Link to="/explore-trips">Explore Trips</Link></li>
+            {/* <li><Link to="/sign-up">Sign Up</Link></li> */}
+            {/* <li><Link to="/explore-trips">Explore Trips</Link></li> */}
           </ul>
         </nav>
       {/* <nav>
