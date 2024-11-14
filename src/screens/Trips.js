@@ -1,19 +1,24 @@
-// src/screens/Trips.js
 import React, { useState } from 'react';
-import '../styles/globalStyles.css'; // Import global styles
-import TripCard from '../components/TripCard'; // Import the TripCard component
+import '../styles/globalStyles.css';
+import TripCard from '../components/TripCard';
 import TripExplore from '../components/getTrips';
-import TripModal from '../screens/TripModal'; // Import TripModal component
+import TripPage from './TripPage';
 
 const Trips = () => {
-  // State to manage selected trip and modal visibility
+  // State to manage selected trip and view state
   const [selectedTrip, setSelectedTrip] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showTripDetails, setShowTripDetails] = useState(false);
 
-  // Handler to open modal and set selected trip
+  // Handler to show trip details and set selected trip
   const handleTripClick = (trip) => {
     setSelectedTrip(trip);
-    setShowModal(true);
+    setShowTripDetails(true);
+  };
+
+  // Handler to go back to trips list
+  const handleBack = () => {
+    setShowTripDetails(false);
+    setSelectedTrip(null);
   };
 
   // Assuming TripExplore passes a list of trips as props or fetches them
@@ -24,17 +29,21 @@ const Trips = () => {
     { id: 4, title: "Trip 4", date: "10/16", leader: "Leader 4", description: "Description for Trip 4" },
   ];
 
+  // Return TripPage if showing details, otherwise show trips list
+  if (showTripDetails && selectedTrip) {
+    return <TripPage trip={selectedTrip} onBack={handleBack} />;
+  }
+
   return (
     <div className="trips-container">
       <div className="header">
         <h1>Dartmouth Outing Club Trips</h1>
         <div className="icons">
-          <span className="bell">🔔</span> {/* Notification icon */}
+          <span className="bell">🔔</span>
           <img src="path-to-your-profile-image" alt="Profile" className="profile-pic" />
         </div>
       </div>
-      
-      {/* Display trips with a "View Details" button for each */}
+
       <div className="all-doc-trips">
         {tripsData.map((trip) => (
           <div key={trip.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
@@ -48,13 +57,6 @@ const Trips = () => {
           </div>
         ))}
       </div>
-
-      {/* Modal for viewing trip details */}
-      <TripModal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        trip={selectedTrip}
-      />
     </div>
   );
 };
