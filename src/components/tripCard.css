@@ -1,6 +1,6 @@
 /* src/components/TripCard.css */
 .trip-card {
-    background-color: #616242; /* Card background color */
+    background-color: #BDAA8D; /* Card background color */
     border-radius: 10px;
     width: 300px; /* Set a width for the trip card */
     height: 200px; /* Set a height for the trip card */
@@ -24,7 +24,7 @@
 
 .trip-date {
     margin-top: auto; /* Push the date to the bottom */
-    background-color: #e0d0a1; /* Circle for date */
+    background-color: #A6957C; /* Circle for date */
     border-radius: 50%;
     padding: 5px 10px;
     align-self: flex-end; /* Align to the right */
