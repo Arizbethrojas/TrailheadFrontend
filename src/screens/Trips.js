@@ -1,6 +1,7 @@
 // src/screens/Trips.js
 import React, { useState, useEffect } from 'react';
 import '../styles/globalStyles.css'; // Import global styles
+import '../styles/trips.css';
 import TripCard from '../components/TripCard'; // Import the TripCard component
 import TripExplore from '../components/getTrips';
 import TripModal from '../screens/TripModal'; // Import TripModal component
@@ -53,6 +54,10 @@ const Trips = () => {
     console.log('trip.level', trip.trip_level, 'filterbylevel', filterByLevel);
     return subclubMatch && levelMatch;
   });
+
+  const reverse = filteredTrips.reverse();
+  
+  const new_trips = reverse.slice(0,5);
   
   return (
     <div className="trips-container">
@@ -66,18 +71,22 @@ const Trips = () => {
         filterByLevel={filterByLevel}
         setFilterByLevel={setFilterByLevel}
       />
+
       
       {/* Display trips with a "View Details" button for each */}
-      <div className="all-doc-trips">
-        {filteredTrips.map((trip) => (
-          <div key={trip.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+      {/* new trips */}
+      <div className="new-trips">
+        {new_trips.map((trip) => (
+          <div key={trip.id} onClick={() => handleTripClick(trip)}>
             <TripCard title={trip.trip_name} date={trip.trip_date} subclub={trip.subclub} level={trip.trip_level}/>
-            <button
-              onClick={() => handleTripClick(trip)}
-              style={{ marginLeft: '10px' }}
-            >
-              View Details
-            </button>
+          </div>
+        ))}
+      </div>
+      {/* all trips */}
+      <div className="all-doc-trips">
+        {reverse.map((trip) => (
+          <div key={trip.id} onClick={() => handleTripClick(trip)}>
+            <TripCard title={trip.trip_name} date={trip.trip_date} subclub={trip.subclub} level={trip.trip_level}/>
           </div>
         ))}
       </div>
