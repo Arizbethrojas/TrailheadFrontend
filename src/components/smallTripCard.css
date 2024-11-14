@@ -1,28 +1,27 @@
-/* src/components/TripCard.css */
-.trip-card {
+.small-trip-card {
     background-color: #BDAA8D; /* Card background color */
     border-radius: 10px;
-    width: 300px; /* Set a width for the trip card */
-    height: 200px; /* Set a height for the trip card */
+    width: 150px; /* Set a width for the trip card */
+    height: 100px; /* Set a height for the trip card */
     margin: 10px;
     display: flex;
     flex-direction: column;
     padding: 10px;
 }
 
-.trip-image {
+.small-trip-image {
     background-color: white; /* Placeholder for trip image */
     height: 70%; /* Adjust height for the image box */
     border-radius: 8px; /* Rounding corners */
     flex-grow: 1; /* Allow the image box to grow */
 }
 
-.trip-title {
+.small-trip-title {
     font-weight: bold;
-    margin-top: 10px; /* Space between title and image */
+    margin-top: 5px; /* Space between title and image */
 }
 
-.trip-date {
+.small-trip-date {
     margin-top: auto; /* Push the date to the bottom */
     background-color: #A6957C; /* Circle for date */
     border-radius: 50%;
