@@ -8,10 +8,12 @@ import TripExplore from '../components/getTrips';
 import TripModal from '../screens/TripModal'; // Import TripModal component
 import axios from 'axios';
 import Filter from '../components/filter'; // filter component used in trips and archive 
+import TripPage from './TripPage';
 
 const Trips = () => {
   // State to manage selected trip and modal visibility
   const [selectedTrip, setSelectedTrip] = useState(null);
+  const [showTripDetails, setShowTripDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [tripsData, setTripsData] = useState([]);
 
@@ -21,7 +23,13 @@ const Trips = () => {
   // Handler to open modal and set selected trip
   const handleTripClick = (trip) => {
     setSelectedTrip(trip);
-    setShowModal(true);
+    // setShowModal(true);
+    setShowTripDetails(true);
+  };
+
+  const handleBack = () => {
+    setShowTripDetails(false);
+    setSelectedTrip(null);
   };
 
   // Assuming TripExplore passes a list of trips as props or fetches them
@@ -51,14 +59,19 @@ const Trips = () => {
   const filteredTrips = tripsData.filter((trip) => {
     const subclubMatch = filterBySubclub ? String(trip.subclub) === filterBySubclub : true;
     const levelMatch = filterByLevel ? trip.trip_level === filterByLevel : true;
-    console.log(trip.subclub)
-    console.log('trip.level', trip.trip_level, 'filterbylevel', filterByLevel);
+    // console.log(trip.subclub)
+    // console.log('trip.level', trip.trip_level, 'filterbylevel', filterByLevel);
     return subclubMatch && levelMatch;
   });
 
   const reverse = filteredTrips.reverse();
   
   const new_trips = reverse.slice(0,5);
+
+  // Return TripPage if showing details, otherwise show trips list
+  if (showTripDetails && selectedTrip) {
+    return <TripPage trip={selectedTrip} onBack={handleBack} />;
+  }
   
   return (
     <div className="trips-container">
@@ -95,11 +108,11 @@ const Trips = () => {
       </div>
 
       {/* Modal for viewing trip details */}
-      <TripModal
+      {/* <TripModal
         show={showModal}
         onHide={() => setShowModal(false)}
         trip={selectedTrip}
-      />
+      /> */}
     </div>
   );
 };
