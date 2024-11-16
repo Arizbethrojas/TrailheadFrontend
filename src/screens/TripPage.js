@@ -1,7 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../styles/TripPage.css';
+import axios from 'axios';
 
-const TripPage = ({ trip, onBack }) => {
+const TripPage = ({ trip, onBack, studentID=2 }) => {
+    const getCookie = (name) =>{
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== ''){
+          const cookies = document.cookie.split(';');
+          for(let i = 0; i < cookies.length; i++){
+            const cookie = cookies[i].trim();
+            if(cookie.substring(0, name.length + 1) === (name + '=')){
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue
+      }
+
+    const [error, setError] = useState(null)
+    const handleSignUp = async () => {
+        const token = getCookie('csrftoken'); //obtain csrf token
+        console.log('signup TripPage')
+        try{
+          const response = await axios.post('http://127.0.0.1:8000/api/register_trip/', {
+            student_id: studentID,
+            trip_id: trip.id,
+          },
+          {headers: {
+            'X-CSRFToken': token,
+            'Content-Type': 'application/json',
+          },}
+        );
+    
+          if (response.status === 201){
+            alert(response.data.message);
+            onBack();
+          }
+        } catch (err){
+          setError(err.response ? err.response.data.error: 'Error signing up')
+        }
+      };
+
   return (
     <div className="min-h-screen">
       {/* Banner Image */}
@@ -70,7 +110,7 @@ const TripPage = ({ trip, onBack }) => {
 
         {/* Sign Up Button */}
         <div className="signup-button-container">
-          <button className="signup-button">
+          <button className="signup-button" onClick={handleSignUp}>
             Sign Up!
           </button>
         </div>

@@ -1,10 +1,29 @@
 // src/components/TripModal.js
-import React from 'react';
+import React, {useState} from 'react';
 import '../styles/tripModal.css';
+import axios from 'axios';
 
 
-const TripModal = ({ show, onHide, trip }) => {
+const TripModal = ({ show, onHide, trip, studentID=2 }) => {
+  const [error, setError] = useState(null)
   if (!show || !trip) return null;
+
+  const handleSignUp = async () => {
+    console.log('signup')
+    try{
+      const response = await axios.post('http://127.0.0.1:8000/api/register_trip/', {
+        student_id: studentID,
+        trip_id: trip.id,
+      });
+
+      if (response.status === 201){
+        alert(response.data.message);
+        onHide();
+      }
+    } catch (err){
+      setError(err.response ? err.response.data.error: 'Error signing up')
+    }
+  };
 
   return (
     <div className={`modal-overlay ${show ? 'show' : ''}`} onClick={onHide}>
@@ -36,7 +55,7 @@ const TripModal = ({ show, onHide, trip }) => {
             </ul>
           </div>
         </div>
-        <button className="sign-up-btn">Sign Up!</button>
+        <button className="sign-up-btn" onClick={handleSignUp}>Sign Up!</button>
       </div>
     </div>
   );
