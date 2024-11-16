@@ -18,13 +18,15 @@
 
 .small-trip-title {
     font-weight: bold;
-    margin-top: 5px; /* Space between title and image */
+    color: white;
+    /* margin-top: 5px; Space between title and image */
 }
 
 .small-trip-date {
-    margin-top: auto; /* Push the date to the bottom */
+    /* margin-top: auto; Push the date to the bottom */
     background-color: #A6957C; /* Circle for date */
     border-radius: 50%;
     padding: 5px 10px;
     align-self: flex-end; /* Align to the right */
+    color: white;
 }

@@ -59,20 +59,17 @@ const Trips = () => {
   const reverse = filteredTrips.reverse();
   
   const new_trips = reverse.slice(0,5);
+
+  const formatDate = (wrong_date) => {
+    const [year, month, day] = wrong_date.split('-');
+    return  `${month}/${day}/${year.slice(-2)}`;
+  };
   
   return (
     <div className="trips-container">
       <div className="header">
         <h1>Explore Trips</h1>
       </div>
-
-      <Filter
-        filterBySubclub={filterBySubclub}
-        setFilterBySubclub={setFilterBySubclub}
-        filterByLevel={filterByLevel}
-        setFilterByLevel={setFilterByLevel}
-      />
-
       
       {/* Display trips with a "View Details" button for each */}
       {/* new trips */}
@@ -80,16 +77,22 @@ const Trips = () => {
       <div className="new-trips">
         {new_trips.map((trip) => (
           <div key={trip.id} onClick={() => handleTripClick(trip)}>
-            <TripCard title={trip.trip_name} date={trip.trip_date} subclub={trip.subclub} level={trip.trip_level}/>
+            <TripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level}/>
           </div>
         ))}
       </div>
+      <Filter
+        filterBySubclub={filterBySubclub}
+        setFilterBySubclub={setFilterBySubclub}
+        filterByLevel={filterByLevel}
+        setFilterByLevel={setFilterByLevel}
+      />
       {/* all trips */}
       <h2>All Trips</h2>
       <div className="all-doc-trips">
         {reverse.map((trip) => (
           <div key={trip.id} onClick={() => handleTripClick(trip)}>
-            <SmallTripCard title={trip.trip_name} date={trip.trip_date} subclub={trip.subclub} level={trip.trip_level}/>
+            <SmallTripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level}/>
           </div>
         ))}
       </div>
