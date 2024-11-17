@@ -9,7 +9,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import '../styles/addTrip.css';
 
-const AddTrip = () => {
+const AddTrip = ({onTripCreated}) => {
   const [formData, setFormData] = useState({
     trip_name: '',
     trip_date: '',
@@ -78,6 +78,7 @@ const AddTrip = () => {
       },
     });
       console.log(response.data);
+      onTripCreated(response.data);
       navigate('/trips');
     } catch (error){
       console.error('There was an error creating the trip', error.response ? error.response.data : error.message);

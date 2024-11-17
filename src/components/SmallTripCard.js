@@ -9,8 +9,8 @@ const SmallTripCard = ({ title, date, subclub, level }) => {
       <div className="small-trip-image"></div> {/* Placeholder for trip image */}
       <div className="small-trip-title">{title}</div>
       <div className="small-trip-date">{date}</div>
-      <div className="small-subclub">{subclub}</div>
-      <div className="small-trip-level">{level}</div>
+      {/* <div className="small-subclub">{subclub}</div>
+      <div className="small-trip-level">{level}</div> */}
     </div>
   );
 };
