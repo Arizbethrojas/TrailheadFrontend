@@ -15,6 +15,7 @@ const Profile = () => {
     phone: "781-870-0169",
     age: 19,
     allergies: "tree-nuts, gluten",
+    favorite_subclubs: "VHOC",
     upcomingTrips: [
       { id: 1, title: "Title 1", date: "10/16" },
       { id: 2, title: "Title 2", date: "10/22" },
@@ -103,6 +104,7 @@ const Profile = () => {
         <div className="profile-info">
           <img src="path-to-your-profile-image" alt="Profile" className="profile-pic" />
           <h1>{userData.username}</h1>
+          <p>Favorite Subclubs: {userData.favorite_subclubs}</p>
           <p>Email: {userData.email}</p>
           <p>Phone number: {userData.phone}</p>
           <p>Age: {userData.age}</p>

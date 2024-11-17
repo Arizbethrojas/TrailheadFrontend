@@ -51,7 +51,17 @@ const App = () => {
     requestNotificationPermission();
   }, []); 
 
-  const handleNotification = () => {
+  const handleFavSubclub = (trip) =>{
+    console.log('subclub: ', typeof(trip.subclub));
+    if(trip.subclub === 1 || trip.subclub === 'VHOC'){
+      console.log('notification');
+      const notificationTitle= `A new VHOC trip was posted!`;
+      const notificationBody=  `${trip.trip_name}`
+      handleNotification(notificationTitle, notificationBody, null);
+    }
+  };
+
+  const handleNotification = (title, body, icon) => {
     showNotification(title, body, icon);
   };
 
@@ -84,8 +94,8 @@ const App = () => {
             </li>
             <li><Link to="/add-trip">Add Trip</Link></li>
             <li><Link to="/chat">Chat</Link></li>
-            <li><Link to="/sign-up">Sign Up</Link></li>
-            <li><Link to="/explore-trips">Explore Trips</Link></li>
+            {/* <li><Link to="/sign-up">Sign Up</Link></li> */}
+            {/* <li><Link to="/explore-trips">Explore Trips</Link></li> */}
           </ul>
         </nav>
       {/* <nav>
@@ -121,7 +131,7 @@ const App = () => {
             <Route path="/" element={<Navigate to="/trips" replace />} />
             <Route path="/trips" element={<Trips />} />
             <Route path="/archive" element={<Archive />} />
-            <Route path="/add-trip" element={<AddTrip />} />
+            <Route path="/add-trip" element={<AddTrip onTripCreated={handleFavSubclub}/>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/sign-up" element={<SignUpIndividual />} />
