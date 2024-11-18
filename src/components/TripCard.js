@@ -37,7 +37,6 @@ const TripCard = ({ title, date, subclub, width = 300, height = 200, showImage =
       <div className="trip-title">{title}</div>
       <div className="trip-info">
         <span className="trip-date">{date}</span> {/* Date will be inline */}
-        <span className="subclub">{subclub}</span> {/* Subclub displayed inline */}
       </div>
     </div>
   );

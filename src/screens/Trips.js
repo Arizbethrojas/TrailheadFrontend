@@ -8,10 +8,12 @@ import TripExplore from '../components/getTrips';
 import TripModal from '../screens/TripModal'; // Import TripModal component
 import axios from 'axios';
 import Filter from '../components/filter'; // filter component used in trips and archive 
+import TripPage from './TripPage';
 
 const Trips = () => {
   // State to manage selected trip and modal visibility
   const [selectedTrip, setSelectedTrip] = useState(null);
+  const [showTripDetails, setShowTripDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [tripsData, setTripsData] = useState([]);
 
@@ -21,7 +23,13 @@ const Trips = () => {
   // Handler to open modal and set selected trip
   const handleTripClick = (trip) => {
     setSelectedTrip(trip);
-    setShowModal(true);
+    // setShowModal(true);
+    setShowTripDetails(true);
+  };
+
+  const handleBack = () => {
+    setShowTripDetails(false);
+    setSelectedTrip(null);
   };
 
   // Assuming TripExplore passes a list of trips as props or fetches them
@@ -51,8 +59,8 @@ const Trips = () => {
   const filteredTrips = tripsData.filter((trip) => {
     const subclubMatch = filterBySubclub ? String(trip.subclub) === filterBySubclub : true;
     const levelMatch = filterByLevel ? trip.trip_level === filterByLevel : true;
-    console.log(trip.subclub)
-    console.log('trip.level', trip.trip_level, 'filterbylevel', filterByLevel);
+    // console.log(trip.subclub)
+    // console.log('trip.level', trip.trip_level, 'filterbylevel', filterByLevel);
     return subclubMatch && levelMatch;
   });
 
@@ -60,19 +68,22 @@ const Trips = () => {
   
   const new_trips = reverse.slice(0,5);
   
+  const formatDate = (wrong_date) => {
+    const [year, month, day] = wrong_date.split('-');
+    return  `${month}/${day}/${year.slice(-2)}`;
+  };
+
+  // Return TripPage if showing details, otherwise show trips list
+  if (showTripDetails && selectedTrip) {
+    return <TripPage trip={selectedTrip} onBack={handleBack} />;
+  }
+  
+  
   return (
     <div className="trips-container">
       <div className="header">
         <h1>Explore Trips</h1>
       </div>
-
-      <Filter
-        filterBySubclub={filterBySubclub}
-        setFilterBySubclub={setFilterBySubclub}
-        filterByLevel={filterByLevel}
-        setFilterByLevel={setFilterByLevel}
-      />
-
       
       {/* Display trips with a "View Details" button for each */}
       {/* new trips */}
@@ -80,26 +91,32 @@ const Trips = () => {
       <div className="new-trips">
         {new_trips.map((trip) => (
           <div key={trip.id} onClick={() => handleTripClick(trip)}>
-            <TripCard title={trip.trip_name} date={trip.trip_date} subclub={trip.subclub} level={trip.trip_level}/>
+            <TripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level}/>
           </div>
         ))}
       </div>
+      <Filter
+        filterBySubclub={filterBySubclub}
+        setFilterBySubclub={setFilterBySubclub}
+        filterByLevel={filterByLevel}
+        setFilterByLevel={setFilterByLevel}
+      />
       {/* all trips */}
       <h2>All Trips</h2>
       <div className="all-doc-trips">
         {reverse.map((trip) => (
           <div key={trip.id} onClick={() => handleTripClick(trip)}>
-            <SmallTripCard title={trip.trip_name} date={trip.trip_date} subclub={trip.subclub} level={trip.trip_level}/>
+            <SmallTripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level}/>
           </div>
         ))}
       </div>
 
       {/* Modal for viewing trip details */}
-      <TripModal
+      {/* <TripModal
         show={showModal}
         onHide={() => setShowModal(false)}
         trip={selectedTrip}
-      />
+      /> */}
     </div>
   );
 };
