@@ -31,6 +31,8 @@
 .app-container{
   display: flex;
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 /* nav bar styling */
@@ -106,6 +108,4 @@
     transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
-  }
-}
+    transf
