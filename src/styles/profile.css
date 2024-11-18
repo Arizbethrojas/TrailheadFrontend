@@ -1,99 +1,158 @@
-/* src/styles/profile.css */
+/* Global Styles */
+
+body, html {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  height: 100%; /* Ensure body takes full height */
+  overflow: auto; /* Allow scrolling if necessary */
+}
 
 .profile-container {
-    display: flex;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-    border-radius: 8px;
-    height: 100vh; /* Full height of the viewport */
-  }
-  
-  .left-section {
-    flex: 2; /* Allocate more space to the left section */
-    margin-right: 20px; /* Space between the sections */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .right-section {
-    flex: 1; /* Allocate less space to the right section */
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch; /* Enable full height stretching */
-  }
-  
-  .profile-info {
-    text-align: left;
-    background-color: #f2d58f; /* Light background for user info */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adding shadow */
-    flex: 1; /* Allow it to grow to fill the height */
-    width: 100%; /* Ensures it takes the full width */
-    margin: 0; /* Remove any default margins to fill space */
-  }
-  
-  .trips-section {
-    margin-bottom: 20px; /* Space below trips section */
-  }
-  
-/* src/styles/profile.css */
+  display: flex;                /* Set up flexbox layout */
+  justify-content: flex-end;    /* Align children to the right */
+  width: 100%;                  /* Full width of the screen */
+  height: 100vh;                /* Full height of the viewport */
+  margin: 0;                    /* Ensure no margin interferes */
+  padding: 0;                   /* Ensure no padding interferes */
+}
+
+/* Profile Container Styles */
+.profile-container {
+  display: flex;                /* Set up flexbox layout */
+  justify-content: flex-end;    /* Align children to the right */
+  width: 100%;                  /* Full width of the screen */
+  height: 100vh;                /* Full height of the viewport */
+}
+
+.left-section {
+  margin-top: 50px;            /* Space from the top */
+  flex: 2;                     /* Left section takes more space (2/3) */
+  display: flex;               /* Flexbox for inner layout */
+  flex-direction: column;      /* Stack elements vertically */
+  padding: 20px;               /* Optional padding */
+  padding-right: 20%;
+  padding-left: 0;
+  align-self: flex-start;
+}
+
+.right-section {
+  position: fixed; 
+  right: 0;
+  background-color: #CBD2B6;   /* Background color */
+  padding: 20px;               /* Padding around content */
+  box-sizing: border-box;      /* Include padding in width calculation */
+  height: 100vh;               /* Ensure it takes full height */
+  overflow-y: auto;            /* Scroll if content overflows */
+  width: 30%;
+}
+
+/* Header Styles */
+h2 {
+  margin: 0; /* Remove top margin */
+  padding: 10px 0; /* Optional padding */
+  color: #444;
+}
+
+/* Profile Info Styles */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center; /* Aligns name and profile image */
+  margin-bottom: 20px;
+}
+
+.profile-pic {
+  width: 50px; /* Adjust size as needed */
+  height: auto;
+  border-radius: 50%; /* Circular profile pic */
+  margin-left: 10px; /* Space between name and image */
+}
+
+/* Subclub Icons */
+.subclub-icons {
+  margin-bottom: 20px;
+}
+
+.subclub-icon {
+  width: 24px; /* Size for subclub icons */
+  height: 24px;
+  margin-right: 10px; /* Space between icons */
+}
+
+/* Achievements Styles */
+.achievements-box, .details-box {
+  border: 1px solid #B7BEA3; /* Box border */
+  padding: 10px; /* Inside padding */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow */
+  margin-bottom: 20px; /* Space between boxes */
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four columns */
+  gap: 10px; /* Space between items */
+  width: 100%; /* Full width */
+}
+
+.achievement-icon {
+  width: 60px; /* Set width for icons */
+  height: auto; /* Maintain aspect ratio */
+  margin: auto; /* Center icons */
+}
+
+/* Right Arrow Button */
+.view-more-button {
+    background: none;
+    border: none;
+    color: #000; /* Aesthetic color */
+    cursor: pointer;
+    font-size: 16px; /* Size for arrow */
+    align-self: right;
+}
+
+/* Trip Drafts and Upcoming Trips */
+.trip-drafts-grid {
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  gap: 15px; /* Item spacing */
+}
+
 .upcoming-trips {
-    display: flex;
-    justify-content: space-between; /* Adjusts spacing between trip cards */
-    margin-bottom: 20px; /* Space between upcoming trips and achievements */
+  display: flex; /* Flex container */
+  gap: 0; /* Space between trip cards */
+}
+
+.trip-card {
+  color: white;
+  border-radius: 8px;
+  padding: 10px;
+  width: calc(50% - 10px); /* Adjust width */
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.trip-card:hover {
+  transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+  .right-section {
+    display: none; /* Hide the right section on smaller screens */
   }
-  
-  .trip-card {
-    background-color: #4a6e53; /* Dark green background for trip cards */
-    color: white;
-    border-radius: 8px;
-    padding: 10px;
-    width: 40%; /* Adjust width to bring cards closer */
-    text-align: center;
-    transition: transform 0.2s; /* Lift effect on hover */
-  }
-  
-  .trip-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .achievements-drafts-container {
-    display: flex;
-    gap: 20px; /* Space between the sections */
-    background-color: #f2f2f2; /* Background for both sections */
-    padding: 10px;
-    border-radius: 8px; /* Rounded corners */
-    border: 1px solid #ccc; /* Border around the entire container */
-    margin-top: 20px; /* Space from the trips section */
-  }
-  
-  .achievements-section, .trip-drafts-section {
-    flex: 1; /* Equal space for both sections */
-    background-color: #ffffff; /* Background for each section */
-    border-radius: 8px;
-    padding: 10px;
-  }
-  
-  .achievements-list, .trip-drafts-list {
-    list-style-type: none; /* Remove default list styling */
-    padding: 0; /* Remove padding */
-  }
-  
-  .achievement-item, .trip-draft-item {
-    display: flex; /* Use flex to align icon and text */
-    align-items: center; /* Center the icon vertically */
-    margin-bottom: 10px; /* Space between items */
-  }
-  
-  .achievement-icon, .draft-icon {
-    width: 24px; /* Adjust icon size */
-    height: 24px; /* Adjust icon size */
-    margin-right: 10px; /* Space between icon and text */
-  }
-  
-  h2 {
-    margin-bottom: 10px;
-    color: #444;
-  }
+}
+
+.toggle-button {
+  padding: 10px;
+  margin-bottom: 20px; /* Space below the button */
+  cursor: pointer;
+  background-color: #61dafb; /* Color as per theme */
+  border: none;
+  border-radius: 5px; /* Round edges */
+  color: white;
+}
