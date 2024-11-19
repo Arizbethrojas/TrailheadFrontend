@@ -128,19 +128,6 @@ h2 {
   gap: 0; /* Space between trip cards */
 }
 
-.trip-card {
-  color: white;
-  border-radius: 8px;
-  padding: 10px;
-  width: calc(50% - 10px); /* Adjust width */
-  text-align: center;
-  transition: transform 0.2s;
-}
-
-.trip-card:hover {
-  transform: translateY(-5px);
-}
-
 @media (max-width: 768px) {
   .right-section {
     display: none; /* Hide the right section on smaller screens */

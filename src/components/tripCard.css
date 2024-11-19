@@ -1,13 +1,22 @@
 .trip-card {
     background-color: #BDAA8D; /* Card background color */
-    border-radius: 10px;
+    border-radius: 8px;
     margin: 10px;
     display: flex;
+    padding: 10px;
     flex-direction: column;
+    width: calc(50% - 10px); /* Adjust width */
     padding: 10px;
     height: 400px; /* Set a fixed height for testing */
     position: relative; /* Set relative positioning for absolute positioning inside */
+    text-align: center;
+    transition: transform 0.2s;
+    color: white;
 }
+  
+  .trip-card:hover {
+    transform: translateY(-5px);
+  }
 
 .trip-image {
     background-color: transparent; /* Remove the white background color */
