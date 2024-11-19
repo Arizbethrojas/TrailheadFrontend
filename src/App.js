@@ -89,11 +89,15 @@ const App = () => {
                 <img src="/Profile.png" alt="Profile" className="icon" />
               </Link>
             </li>
-            <li>
+            {/* <li>
               <img src="/Notification.png" alt="Notifications" className="icon" />
+            </li> */}
+            <li>
+              <Link to="/add-trip">
+                <img src="/Add.png" alt="Add" className="icon" />
+              </Link>
             </li>
-            <li><Link to="/add-trip">Add Trip</Link></li>
-            <li><Link to="/chat">Chat</Link></li>
+            {/* <li><Link to="/chat">Chat</Link></li> */}
             {/* <li><Link to="/sign-up">Sign Up</Link></li> */}
             {/* <li><Link to="/explore-trips">Explore Trips</Link></li> */}
           </ul>
@@ -133,7 +137,7 @@ const App = () => {
             <Route path="/archive" element={<Archive />} />
             <Route path="/add-trip" element={<AddTrip onTripCreated={handleFavSubclub}/>} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/chat" element={<Chat />} />
+            {/* <Route path="/chat" element={<Chat />} /> */}
             <Route path="/sign-up" element={<SignUpIndividual />} />
             <Route path="/explore-trips" element={<TripList />} /> {/* Route for TripList */}
           </Routes>

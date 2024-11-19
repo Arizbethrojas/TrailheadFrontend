@@ -114,7 +114,7 @@ const Trips = () => {
       <div className="all-doc-trips">
         {reverse.map((trip) => (
           <div key={trip.id} onClick={() => handleTripClick(trip)}>
-            <SmallTripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level}/>
+            <TripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level} width={'150px'} height={'100px'} showImage={false}/>
           </div>
         ))}
       </div>

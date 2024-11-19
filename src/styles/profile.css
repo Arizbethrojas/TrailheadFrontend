@@ -29,7 +29,9 @@ body, html {
   padding: 20px;               /* Optional padding */
   padding-right: 20%;
   padding-left: 0;
+  margin-left: 160px;
   align-self: flex-start;
+  width: 55vw;
 }
 .right-section {
   position: fixed;
@@ -108,8 +110,15 @@ h2 {
   gap: 15px; /* Item spacing */
 }
 .upcoming-trips {
-  display: flex; /* Flex container */
-  gap: 0; /* Space between trip cards */
+  /* display: flex; Flex container */
+  /* gap: 0; Space between trip cards */
+  display: flex;
+  overflow-x: auto;
+  color: #333;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  scrollbar-width: none;
+  /* display: flex; */
 }
 @media (max-width: 768px) {
   .right-section {
