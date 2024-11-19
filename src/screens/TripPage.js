@@ -42,6 +42,36 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
         }
       };
 
+      const formatDate = (wrong_date) => {
+        const [year, month, day] = wrong_date.split('-');
+        return  `${month}/${day}/${year.slice(-2)}`;
+      };
+
+      // const mapSubclub = (subclub_id) => {
+        
+      // }
+      const subclubs = [
+        {id:'1', 'subclub_name':'VHOC'},
+        {id:'2', 'subclub_name':'Winter Sports'},
+        {id:'3', 'subclub_name':'Flora & Fauna'},
+        {id:'4', 'subclub_name':'Cabin & Trail'},
+        {id:'5', 'subclub_name':'Mountaineering'},
+        {id:'6', 'subclub_name':'Nordic Skiing'},
+        {id:'7', 'subclub_name':'Climbing Team'},
+        {id:'8', 'subclub_name':'Ledyard'},
+        {id:'9', 'subclub_name':'POCO'},
+      ]
+
+      const getSubclubNameById = (id) => {
+        // Find the subclub with the matching id
+        console.log('id', id)
+        // console.log(subclubs[String(id)])
+        const found = subclubs.find(subclub => String(subclub.id) === String(id));
+        
+        // Return the subclub name or a default message if not found
+        return found ? found.subclub_name : 'Subclub not found';
+      };
+
   return (
     <div className="min-h-screen">
       {/* Banner Image */}
@@ -67,7 +97,7 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
         <div className="tags-container">
           <span className="tag">{trip.trip_type}</span>
           <span className="tag">{trip.trip_level}</span>
-          <span className="tag">{trip.subclub}</span>
+          <span className="tag">{getSubclubNameById(trip.subclub)}</span>
         </div>
 
         {/* Two Column Layout */}
@@ -84,6 +114,10 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
           <div className="details">
             <h2>Details</h2>
             <div className="space-y-4">
+            <div className="details-item">
+                <h3>Date:</h3>
+                <p>{formatDate(trip.trip_date)}</p>
+              </div>
               <div className="details-item">
                 <h3>Leader(s):</h3>
                 <p>{trip.trip_leader}</p>

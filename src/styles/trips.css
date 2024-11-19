@@ -8,27 +8,34 @@
 }
 
 .trips-container {
+    width: calc(100vw - 200px);
+    box-sizing: border-box;
+    /* margin: 0 auto; */
+    margin-left: 160px;
     padding: 20px;
-    /* width: 100%; */
-    margin-left: 700px;
-    /* overflow-x: auto; */
-    /* overflow-y: hidden; */
-    /* white-space: nowrap; */
+    background-color: #FCF8F6;
 }
 
 .new-trips {
-    display: flex;
+    /* display: flex;
     padding: 10px;
     overflow-x: auto;
     white-space: nowrap;
     width: 75%;
+    scrollbar-width: none; */
+    display: flex;
+    /* flex-wrap: wrap; */
+    overflow-x: auto;
+    color: #333;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
     scrollbar-width: none;
 }
 
-.new-trips div {
+/* .new-trips div {
     flex: 0 0 auto;
     margin-right: 15px;
-}
+} */
 
 .all-doc-trips {
     display: flex;

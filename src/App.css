@@ -38,7 +38,7 @@
 /* nav bar styling */
 .sidebar{
   width: 160px;
-  background-color: rgba(252, 248, 246, 1);
+  background-color: #FCF8F6;
   height: 100vh;
   padding: 20px;
   padding-right: 0px;
@@ -76,7 +76,7 @@
 .icon{
   width: 40px;
   height: 40px;
-  background-color: #D7DEDD;
+  background-color: rgba(183, 190, 163, 0.84);
   padding: 8px;
   border-radius: 100%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);

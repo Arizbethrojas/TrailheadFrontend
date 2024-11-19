@@ -91,6 +91,13 @@ const Trips = () => {
       <div className="header">
         <h1>Explore Trips</h1>
       </div>
+
+      <Filter
+        filterBySubclub={filterBySubclub}
+        setFilterBySubclub={setFilterBySubclub}
+        filterByLevel={filterByLevel}
+        setFilterByLevel={setFilterByLevel}
+      />
       
       {/* Display trips with a "View Details" button for each */}
       {/* new trips */}
@@ -102,12 +109,6 @@ const Trips = () => {
           </div>
         ))}
       </div>
-      <Filter
-        filterBySubclub={filterBySubclub}
-        setFilterBySubclub={setFilterBySubclub}
-        filterByLevel={filterByLevel}
-        setFilterByLevel={setFilterByLevel}
-      />
       {/* all trips */}
       <h2>All Trips</h2>
       <div className="all-doc-trips">

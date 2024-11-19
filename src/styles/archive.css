@@ -9,7 +9,7 @@
   }
   
   .page-title {
-    font-size: 24px;
+    /* font-size: 24px; */
     color: #333;
     margin-bottom: 20px;
   }
@@ -62,7 +62,7 @@
   
   /* Trip sections */
   .section-title {
-    font-size: 18px;
+    /* font-size: 18px; */
     color: #333;
     margin: 30px 0 20px;
   }
