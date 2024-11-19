@@ -79,7 +79,7 @@ const Archive = () => {
     const subclubMatch = filterBySubclub ? String(trip.subclub) === filterBySubclub : true;
     const levelMatch = filterByLevel ? trip.trip_level === filterByLevel : true;
     const dateMatch = trip.trip_date <= formattedToday;
-    return subclubMatch && dateMatch;
+    return subclubMatch && dateMatch && levelMatch;
   }).reverse();
 
 
