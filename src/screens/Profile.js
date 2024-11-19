@@ -1,13 +1,16 @@
-// src/screens/Profile.js
 import React, { useState } from 'react';
 import '../styles/profile.css'; // Import your CSS file
 
 import TripCard from '../components/TripCard'; // Import the TripCard component
 import TripModal from '../screens/TripModal'; // Import TripModal for trip details
+import fnfImage from '../styles/images/fnf.jpg';
+import dmcIcon from '../styles/images/dmcicon.png';
+import mteverestAcheivement from '../styles/images/acheivementicons/mteverest.png';
 
 const Profile = () => {
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showRightSection, setShowRightSection] = useState(true); // State to control right section visibility
 
   const userData = {
     username: "Caroline Casey",
@@ -17,106 +20,93 @@ const Profile = () => {
     allergies: "tree-nuts, gluten",
     favorite_subclubs: "VHOC",
     upcomingTrips: [
-      { id: 1, title: "Title 1", date: "10/16" },
-      { id: 2, title: "Title 2", date: "10/22" },
+      { id: 1, title: "Title 1", date: "10/16", subclub: "Mountaineering" },
+      { id: 2, title: "Title 2", date: "10/22", subclub: "Ledyard" },
     ],
-    achievements: [
-      {
-        text: "Accumulate a hiking distance that equals Mount Everest",
-        icon: "path/to/your/achievement-icon1.png" // Replace with actual path
-      },
-      {
-        text: "Reached 100 miles in hiking",
-        icon: "path/to/your/achievement-icon2.png" // Replace with actual path
-      },
-      {
-        text: "Participated in 5 outdoor education workshops",
-        icon: "path/to/your/achievement-icon3.png" // Replace with actual path
-      },
-    ],
+    achievements: Array(12).fill({ icon: mteverestAcheivement }), // Example for 12 achievements
     tripDrafts: [
-      {
-        text: "Climbing @ Rumney",
-        icon: "path/to/your/draft-icon1.png", // Replace with actual path
-        details: "Details about climbing @ Rumney"
-      },
-      {
-        text: "Kayak on the Connecticut",
-        icon: "path/to/your/draft-icon2.png", // Replace with actual path
-        details: "Details about kayak on the Connecticut"
-      },
-      {
-        text: "White water teaching session",
-        icon: "path/to/your/draft-icon3.png", // Replace with actual path
-        details: "Details about white water teaching session"
-      },
+      { id: 1, title: "Climbing @ Rumney", date: "11/05", subclub: "Climbing Team" },
+      { id: 2, title: "Kayak on the Connecticut", date: "11/13", subclub: "Cabin & Trail" },
+      { id: 3, title: "White Water Teaching Session", date: "12/01", subclub: "Winter Sports" },
+      { id: 4, title: "Trip Draft 4", date: "12/10", subclub: "Flora & Fauna" },
+      { id: 5, title: "Trip Draft 5", date: "01/15", subclub: "Nordic Skiing" },
+      { id: 6, title: "Trip Draft 6", date: "01/20", subclub: "Mountaineering" },
     ],
   };
 
-  // Function to handle modal open and set selected trip
   const handleTripClick = (trip) => {
     setSelectedTrip(trip);
     setShowModal(true);
+  };
+
+  const toggleRightSection = () => {
+    setShowRightSection(prev => !prev); // Toggle visibility
   };
 
   return (
     <div className="profile-container">
       <div className="left-section">
         <div className="trips-section">
-          <h2>Upcoming Trips:</h2>
+          <h2>Upcoming Trips</h2>
           <div className="upcoming-trips">
             {userData.upcomingTrips.map(trip => (
               <div key={trip.id} onClick={() => handleTripClick(trip)}>
-                <TripCard title={trip.title} date={trip.date}/>
+                <TripCard title={trip.title} date={trip.date} subclub={trip.subclub} />
               </div>
             ))}
           </div>
         </div>
 
-        <div className="achievements-drafts-container">
-          <div className="achievements-section">
-            <h2>Achievements:</h2>
-            <ul className="achievements-list">
-              {userData.achievements.map((achievement, index) => (
-                <li key={index} className="achievement-item">
-                  <img src={achievement.icon} alt="Achievement Icon" className="achievement-icon" />
-                  {achievement.text}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="trip-drafts-section">
-            <h2>Trip Drafts:</h2>
-            <ul className="trip-drafts-list">
-              {userData.tripDrafts.map((draft, index) => (
-                <li key={index} className="trip-draft-item" onClick={() => handleTripClick(draft)}>
-                  <img src={draft.icon} alt="Draft Icon" className="draft-icon" />
-                  {draft.text}
-                </li>
-              ))}
-            </ul>
+        <div className="trip-drafts-section">
+          <h2>Trip Drafts:</h2>
+          <div className="trip-drafts-grid">
+            {userData.tripDrafts.map((draft) => (
+              <div key={draft.id} onClick={() => handleTripClick(draft)}> 
+                <TripCard title={draft.title} date={draft.date} subclub={draft.subclub} width={300 / 1.5} height={200 / 1.5} showImage={false} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="right-section">
-        <div className="profile-info">
-          <img src="path-to-your-profile-image" alt="Profile" className="profile-pic" />
-          <h1>{userData.username}</h1>
+      {showRightSection && (
+        <div className="right-section">
+          <div className="profile-info">
+            <div className="profile-header">
+              <h1>{userData.username}</h1>
           <p>Favorite Subclubs: {userData.favorite_subclubs}</p>
-          <p>Email: {userData.email}</p>
-          <p>Phone number: {userData.phone}</p>
-          <p>Age: {userData.age}</p>
-          <p>Allergies: {userData.allergies}</p>
+              <img src={fnfImage} alt="Profile" className="profile-pic" />
+            </div>
+            <div className="subclub-icons">
+              <img src={dmcIcon} alt="Subclub Icon 1" className="subclub-icon" />
+              <img src={dmcIcon} alt="Subclub Icon 2" className="subclub-icon" />
+            </div>
+            <h2>Achievements</h2>
+            <div className="achievements-box">
+              <div className="achievements-grid">
+                {userData.achievements.map((achievement, index) => (
+                  <img key={index} src={achievement.icon} alt="Achievement Icon" className="achievement-icon" />
+                ))}
+              </div>
+              <button className="view-more-button">
+                <span>➜</span>
+              </button>
+            </div>
+            <h2>Details</h2>
+            <div className="details-box">
+              <p>Email: {userData.email}</p>
+              <p>Phone number: {userData.phone}</p>
+              <p>Age: {userData.age}</p>
+              <p>Allergies: {userData.allergies}</p>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Modal for viewing trip details */}
       <TripModal
         show={showModal}
         onHide={() => setShowModal(false)}
-        trip={selectedTrip} // Pass selected trip details
+        trip={selectedTrip}
       />
     </div>
   );
