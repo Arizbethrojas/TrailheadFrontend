@@ -20,7 +20,7 @@ const Profile = () => {
     allergies: "tree-nuts, gluten",
     favorite_subclubs: "VHOC",
     upcomingTrips: [
-      { id: 1, title: "Title 1", date: "10/16", subclub: "Mountaineering" },
+      { id: 1, title: "Title 1", date: "10/16", subclub: "Winter Sports" },
       { id: 2, title: "Title 2", date: "10/22", subclub: "Ledyard" },
     ],
     achievements: Array(12).fill({ icon: mteverestAcheivement }), // Example for 12 achievements
@@ -74,7 +74,6 @@ const Profile = () => {
           <div className="profile-info">
             <div className="profile-header">
               <h1>{userData.username}</h1>
-          <p>Favorite Subclubs: {userData.favorite_subclubs}</p>
               <img src={fnfImage} alt="Profile" className="profile-pic" />
             </div>
             <div className="subclub-icons">
