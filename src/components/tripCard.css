@@ -7,6 +7,9 @@
     flex-direction: column;
     width: calc(50% - 10px); /* Adjust width */
     padding: 10px;
+/*     width: 365px;
+    height: 285px; 
+    position: relative;  */
     height: 400px; /* Set a fixed height for testing */
     position: relative; /* Set relative positioning for absolute positioning inside */
     text-align: center;

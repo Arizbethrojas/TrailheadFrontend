@@ -104,10 +104,8 @@ Date: 10/27 */
     display: flex;
     justify-content: center;
     position: absolute;
-    /* align-items: center;
-    height: 100vh; */
     width: 90%; 
-    background-color: #FDFAF0; /* Light background color */
+    background-color: #FDFAF0; 
     padding: 20px;
     left: 80px;
     padding-top: 40px;
@@ -115,21 +113,26 @@ Date: 10/27 */
 
 /* Container specifically for adding a trip */
 .add-trip-container {
-    background-color: #D7DEDD; /* Container background color */
-    border-radius: 14px; /* Rounded corners */
-    padding: 20px; /* Padding inside the container */
-    /* width: 90%; 
-    max-width: 600px; Max width for larger screens */
+    background-color: rgba(183, 190, 163, 1); 
+    border-radius: 14px; 
+    padding: 20px; 
     height: 80vh;
     padding-right: 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
     position: absolute;
-    left: 10px;
+    left: 30px;
+    top: 70px;
+
+    /* width: calc(100vw - 200px);
+    box-sizing: border-box;
+    margin-left: 160px;
+    padding: 20px;
+    background-color: #FCF8F6; */
 }
 
 .add-trip-title{
     position: absolute;
-    top: -15px;
+    top: 15px;
     left: 30px;
     margin-top: 0;
     /* margin-bottom: 10px; */
@@ -197,7 +200,7 @@ Date: 10/27 */
 
 /* Submit button styling */
 .submit-button {
-    background-color: #EFD287; /* Button background color */
+    background-color: rgba(189, 170, 141, 0.837); /* Button background color */
     color: white; /* Button text color */
     font-size: 18px; /* Font size for button text */
     font-weight: bold; /* Bold text */
@@ -213,7 +216,7 @@ Date: 10/27 */
 
 /* Button hover effect */
 .submit-button:hover {
-    background-color: #d6c67d; /* Darken background on hover */
+    background-color: rgba(189, 170, 141, 1); /* Darken background on hover */
 }
 
 /* Responsive textarea styling */

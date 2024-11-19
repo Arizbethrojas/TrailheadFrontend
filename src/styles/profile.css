@@ -6,7 +6,6 @@ body, html {
   height: 100%; /* Ensure body takes full height */
   overflow: auto; /* Allow scrolling if necessary */
 }
-
 .profile-container {
   display: flex;                /* Set up flexbox layout */
   justify-content: flex-end;    /* Align children to the right */
@@ -15,7 +14,6 @@ body, html {
   margin: 0;                    /* Ensure no margin interferes */
   padding: 0;                   /* Ensure no padding interferes */
 }
-
 /* Profile Container Styles */
 .profile-container {
   display: flex;                /* Set up flexbox layout */
@@ -23,7 +21,6 @@ body, html {
   width: 100%;                  /* Full width of the screen */
   height: 100vh;                /* Full height of the viewport */
 }
-
 .left-section {
   margin-top: 50px;            /* Space from the top */
   flex: 2;                     /* Left section takes more space (2/3) */
@@ -34,9 +31,8 @@ body, html {
   padding-left: 0;
   align-self: flex-start;
 }
-
 .right-section {
-  position: fixed; 
+  position: fixed;
   right: 0;
   background-color: #CBD2B6;   /* Background color */
   padding: 20px;               /* Padding around content */
@@ -45,45 +41,38 @@ body, html {
   overflow-y: auto;            /* Scroll if content overflows */
   width: 30%;
 }
-
 /* Header Styles */
 h2 {
   margin: 0; /* Remove top margin */
   padding: 10px 0; /* Optional padding */
   color: #444;
 }
-
 /* Profile Info Styles */
 .profile-info {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-
 .profile-header {
   display: flex;
   align-items: center; /* Aligns name and profile image */
   margin-bottom: 20px;
 }
-
 .profile-pic {
   width: 50px; /* Adjust size as needed */
   height: auto;
   border-radius: 50%; /* Circular profile pic */
   margin-left: 10px; /* Space between name and image */
 }
-
 /* Subclub Icons */
 .subclub-icons {
   margin-bottom: 20px;
 }
-
 .subclub-icon {
   width: 24px; /* Size for subclub icons */
   height: 24px;
   margin-right: 10px; /* Space between icons */
 }
-
 /* Achievements Styles */
 .achievements-box, .details-box {
   border: 1px solid #B7BEA3; /* Box border */
@@ -92,20 +81,17 @@ h2 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow */
   margin-bottom: 20px; /* Space between boxes */
 }
-
 .achievements-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* Four columns */
   gap: 10px; /* Space between items */
   width: 100%; /* Full width */
 }
-
 .achievement-icon {
   width: 60px; /* Set width for icons */
   height: auto; /* Maintain aspect ratio */
   margin: auto; /* Center icons */
 }
-
 /* Right Arrow Button */
 .view-more-button {
     background: none;
@@ -115,30 +101,26 @@ h2 {
     font-size: 16px; /* Size for arrow */
     align-self: right;
 }
-
 /* Trip Drafts and Upcoming Trips */
 .trip-drafts-grid {
-  display: grid; 
+  display: grid;
   grid-template-columns: repeat(3, 1fr); /* Three columns */
   gap: 15px; /* Item spacing */
 }
-
 .upcoming-trips {
   display: flex; /* Flex container */
   gap: 0; /* Space between trip cards */
 }
-
 @media (max-width: 768px) {
   .right-section {
     display: none; /* Hide the right section on smaller screens */
   }
 }
-
 .toggle-button {
   padding: 10px;
   margin-bottom: 20px; /* Space below the button */
   cursor: pointer;
-  background-color: #61dafb; /* Color as per theme */
+  background-color: #61DAFB; /* Color as per theme */
   border: none;
   border-radius: 5px; /* Round edges */
   color: white;

@@ -1,0 +1,28 @@
+.filters-container {
+    margin-bottom: 20px; 
+}
+
+/* For the filters container */
+.filters {
+    display: flex;
+    gap: 20px; 
+}
+
+/* no labels rn */
+.filters label {
+    display: flex;
+    flex-direction: column; /* Stack label on top of each select */
+}
+
+.filters select {
+    padding: 8px; /* Add some padding for aesthetics */
+    border-radius: 8px; /* Rounded corners */
+    outline: none; /* No outline on focus */
+    background-color: rgba(183, 190, 163, 1);
+    color: white;
+}
+
+/* Optional: Change color on hover */
+.filters select:hover {
+    background-color: rgba(183, 190, 163, 0.84); /* Change border color on hover */
+}
