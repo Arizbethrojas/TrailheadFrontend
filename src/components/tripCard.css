@@ -42,7 +42,7 @@
 
 .trip-title {
     font-weight: bold;
-    font-size: 18px; /* Set the title size */
+    font-size : 18px !important; /* Set the title size */
     display: flex; /* Flex for title and date */
     align-items: center; /* Center items vertically */
 }

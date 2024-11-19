@@ -56,12 +56,12 @@ const Profile = () => {
     // ],
     achievements: Array(12).fill({ icon: mteverestAcheivement }), // Example for 12 achievements
     tripDrafts: [
-      { id: 1, title: "Climbing @ Rumney", date: "2024-20-11", subclub: "Climbing Team" },
-      { id: 2, title: "Kayak on the Connecticut", date: "2024-20-11", subclub: "Cabin & Trail" },
-      { id: 3, title: "White Water Teaching Session", date: "2024-20-11", subclub: "Winter Sports" },
-      { id: 4, title: "Trip Draft 4", date: "2024-20-11", subclub: "Flora & Fauna" },
-      { id: 5, title: "Trip Draft 5", date: "2024-20-11", subclub: "Nordic Skiing" },
-      { id: 6, title: "Trip Draft 6", date: "2024-20-11", subclub: "Mountaineering" },
+      { id: 1, title: "Climbing @ Rumney", date: "11/20/24", subclub: "Climbing Team" },
+      { id: 2, title: "Kayak on the Connecticut", date: "11/30/24", subclub: "Cabin & Trail" },
+      { id: 3, title: "White Water Teaching Session", date: "12/8/24", subclub: "Winter Sports" },
+      { id: 4, title: "Trip Draft 4", date: "12/6/24", subclub: "Flora & Fauna" },
+      { id: 5, title: "Trip Draft 5", date: "11/23/24", subclub: "Nordic Skiing" },
+      { id: 6, title: "Trip Draft 6", date: "11/26/24", subclub: "Mountaineering" },
     ],
   };
 
