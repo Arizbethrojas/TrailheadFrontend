@@ -20,6 +20,7 @@ const Trips = () => {
   const [filterBySubclub, setFilterBySubclub] = useState('');
   const [filterByLevel, setFilterByLevel] = useState('');
 
+
   // Handler to open modal and set selected trip
   const handleTripClick = (trip) => {
     setSelectedTrip(trip);
@@ -54,14 +55,21 @@ const Trips = () => {
     fetchTrips();
   }, []);
 
+  //only display trips that haven't happened yet
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const formattedToday = today.toISOString().split('T')[0]; //YYYY-MM-DD format
 
   // Apply filters to the tripsData
   const filteredTrips = tripsData.filter((trip) => {
     const subclubMatch = filterBySubclub ? String(trip.subclub) === filterBySubclub : true;
     const levelMatch = filterByLevel ? trip.trip_level === filterByLevel : true;
+    console.log('today', formattedToday);
+    console.log('date', trip.trip_date);
+    const dateMatch = trip.trip_date >= formattedToday;
     // console.log(trip.subclub)
     // console.log('trip.level', trip.trip_level, 'filterbylevel', filterByLevel);
-    return subclubMatch && levelMatch;
+    return subclubMatch && levelMatch && dateMatch;
   });
 
   const reverse = filteredTrips.reverse();
