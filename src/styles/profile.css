@@ -45,7 +45,8 @@
     margin-bottom: 20px; /* Space between upcoming trips and achievements */
   }
   
-  .trip-card {
+  /* I changed this from trip-card to profile-trip-card bc it was interfering with styling on other pages -sammy */
+  .profile-trip-card {
     background-color: #4a6e53; /* Dark green background for trip cards */
     color: white;
     border-radius: 8px;
@@ -55,7 +56,7 @@
     transition: transform 0.2s; /* Lift effect on hover */
   }
   
-  .trip-card:hover {
+  .profile-trip-card:hover {
     transform: translateY(-5px);
   }
   

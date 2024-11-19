@@ -24,7 +24,7 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
         console.log('signup TripPage')
         try{
           const response = await axios.post('http://127.0.0.1:8000/api/register_trip/', {
-            student_id: studentID,
+            student_id: studentID, //this is hardcoded to 2, that is the id of the test user
             trip_id: trip.id,
           },
           {headers: {

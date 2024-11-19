@@ -67,7 +67,7 @@ const Profile = () => {
           <div className="upcoming-trips">
             {userData.upcomingTrips.map(trip => (
               <div key={trip.id} onClick={() => handleTripClick(trip)}>
-                <TripCard title={trip.title} date={trip.date} />
+                <TripCard title={trip.title} date={trip.date}/>
               </div>
             ))}
           </div>

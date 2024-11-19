@@ -86,7 +86,6 @@ const Trips = () => {
     return <TripPage trip={selectedTrip} onBack={handleBack} />;
   }
   
-  
   return (
     <div className="trips-container">
       <div className="header">
