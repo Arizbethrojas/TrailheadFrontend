@@ -1,21 +1,17 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
 import AddTrip from './screens/AddTrip';
+import Login from './screens/Login'; // Import Login component
 import Archive from './screens/Archive';
-import Chat from './screens/Chat';
 import Profile from './screens/Profile';
 import Trips from './screens/Trips';
 import SignUpIndividual from './screens/SignUp'; 
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
-import TripExplore from './components/getTrips'; 
-import sendTripData from './components/SendTrips';
 import TripList from './screens/TripList';
 import './App.css';
 
 const App = () => {
-  const [title, setTitle] = useState('Testing Notification');
-  const [body, setBody] = useState('This is a test notification to verify that it works!');
-  const [icon, setIcon] = useState('/icon.png');
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Manage authentication state
 
   const requestNotificationPermission = async () => {
     try {
@@ -46,100 +42,75 @@ const App = () => {
     }
   };
 
-  // Request notification permission when the app initializes
+  const handleFavSubclub = (trip) => {
+    console.log('subclub: ', typeof(trip.subclub));
+    if (trip.subclub === 1 || trip.subclub === 'VHOC') {
+      console.log('notification');
+      const notificationTitle = `A new VHOC trip was posted!`;
+      const notificationBody = `${trip.trip_name}`;
+      showNotification(notificationTitle, notificationBody, null);
+    }
+  };
+
   useEffect(() => {
     requestNotificationPermission();
   }, []); 
 
-  const handleFavSubclub = (trip) =>{
-    console.log('subclub: ', typeof(trip.subclub));
-    if(trip.subclub === 1 || trip.subclub === 'VHOC'){
-      console.log('notification');
-      const notificationTitle= `A new VHOC trip was posted!`;
-      const notificationBody=  `${trip.trip_name}`
-      handleNotification(notificationTitle, notificationBody, null);
-    }
+  const handleLogin = () => {
+    setIsAuthenticated(true); // Set authentication state to true
   };
 
-  const handleNotification = (title, body, icon) => {
-    showNotification(title, body, icon);
+  const handleLogout = () => {
+    setIsAuthenticated(false); // Set authentication state to false
   };
 
   return (
     <Router>
-      <div className = "app-container">
-        <nav className="sidebar">
-          <img src="/Logo.png" alt="Logo" className="logo" />
-          <img src="/Dashed1.png" alt="" className="dashed-line" id="dashed1"/>
-          <img src="/Dashed.png" alt="" className="dashed-line" id="dashed2"/>
-
-          <ul>
-            <li>
-              <Link to="/trips">
-                <img src="/Map.png" alt="Explore" className="icon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/archive">
-                <img src="/Archive.png" alt="Archive" className="icon" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/profile">
-                <img src="/Profile.png" alt="Profile" className="icon" />
-              </Link>
-            </li>
-            {/* <li>
-              <img src="/Notification.png" alt="Notifications" className="icon" />
-            </li> */}
-            <li>
-              <Link to="/add-trip">
-                <img src="/Add.png" alt="Add" className="icon" />
-              </Link>
-            </li>
-            {/* <li><Link to="/chat">Chat</Link></li> */}
-            {/* <li><Link to="/sign-up">Sign Up</Link></li> */}
-            {/* <li><Link to="/explore-trips">Explore Trips</Link></li> */}
-          </ul>
-        </nav>
-      {/* <nav>
-        <ul>
-          <li>
-            <Link to="/trips">Trips</Link>
-          </li>
-          <li>
-            <Link to="/archive">Archive</Link>
-          </li>
-          <li>
-            <Link to="/add-trip">Add Trip</Link> 
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link> 
-          </li>
-          <li>
-            <Link to="/chat">Chat</Link> 
-          </li>
-          <li>
-            <Link to="/sign-up">Sign Up</Link> 
-          </li>
-          <li>
-            <Link to="/explore-trips">Explore Trips</Link> 
-          </li>
-        </ul>
-      </nav> */}
-
-      {/* Test notification button */}
-      {/* <button onClick={handleNotification}>Test Notification</button> */}
+      <div className="app-container">
+        {/* Render the navigation bar only if the user is authenticated */}
+        {isAuthenticated && (
+          <nav className="sidebar">
+            <img src="/Logo.png" alt="Logo" className="logo" />
+            <img src="/Dashed1.png" alt="" className="dashed-line" id="dashed1" />
+            <img src="/Dashed.png" alt="" className="dashed-line" id="dashed2" />
+            <ul>
+              <li>
+                <Link to="/trips">
+                  <img src="/Map.png" alt="Explore" className="icon" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/archive">
+                  <img src="/Archive.png" alt="Archive" className="icon" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/profile">
+                  <img src="/Profile.png" alt="Profile" className="icon" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/add-trip">
+                  <img src="/Add.png" alt="Add" className="icon" />
+                </Link>
+              </li>
+              <li>
+                <button onClick={handleLogout}>Logout</button>
+              </li>
+            </ul>
+          </nav>
+        )}
+        
         <div className="content">
           <Routes>
-            <Route path="/" element={<Navigate to="/trips" replace />} />
-            <Route path="/trips" element={<Trips />} />
-            <Route path="/archive" element={<Archive />} />
-            <Route path="/add-trip" element={<AddTrip onTripCreated={handleFavSubclub}/>} />
-            <Route path="/profile" element={<Profile />} />
-            {/* <Route path="/chat" element={<Chat />} /> */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/trips" element={isAuthenticated ? <Trips /> : <Navigate to="/login" />} />
+            <Route path="/archive" element={isAuthenticated ? <Archive /> : <Navigate to="/login" />} />
+            <Route path="/add-trip" element={isAuthenticated ? <AddTrip onTripCreated={handleFavSubclub}/> : <Navigate to="/login" />} />
+            <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual />} />
-            <Route path="/explore-trips" element={<TripList />} /> {/* Route for TripList */}
+            <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
           </Routes>
         </div>
       </div>
