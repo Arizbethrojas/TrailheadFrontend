@@ -7,7 +7,7 @@ import axios from 'axios'
 import Filter from '../components/filter'; 
 import TripPage from './TripPage';
 
-const Archive = () => {
+const Archive = ({authToken}) => {
   // trip click
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showTripDetails, setShowTripDetails] = useState(false);
@@ -24,7 +24,11 @@ const Archive = () => {
   //fetch all trips
   const fetchTrips = async() => {
     try{
-      const response = await axios.get('http://127.0.0.1:8000/api/trips/');
+      const response = await axios.get('http://127.0.0.1:8000/api/trips/', {
+        headers:{
+          Authorization: `Bearer ${authToken}`,
+        }
+      });
       console.log('response: ', response.data);
       setTripsData(response.data);
     }catch (error){
@@ -33,8 +37,11 @@ const Archive = () => {
   };
 
   useEffect(() => {
-    fetchTrips();
-  }, []);
+      if (authToken){
+        fetchTrips();
+      }
+  
+    }, [authToken]);
 
   //fetch users trips
   const fetchMyTrips = async() => {

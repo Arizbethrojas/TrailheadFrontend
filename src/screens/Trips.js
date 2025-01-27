@@ -10,7 +10,7 @@ import axios from 'axios';
 import Filter from '../components/filter'; // filter component used in trips and archive 
 import TripPage from './TripPage';
 
-const Trips = () => {
+const Trips = ({authToken}) => {
   // State to manage selected trip and modal visibility
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showTripDetails, setShowTripDetails] = useState(false);
@@ -43,7 +43,11 @@ const Trips = () => {
 
   const fetchTrips = async() => {
     try{
-      const response = await axios.get('http://127.0.0.1:8000/api/trips/');
+      const response = await axios.get('http://127.0.0.1:8000/api/trips/', {
+        headers:{
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
       console.log('response: ', response.data);
       setTripsData(response.data);
     }catch (error){
@@ -52,8 +56,11 @@ const Trips = () => {
   };
 
   useEffect(() => {
-    fetchTrips();
-  }, []);
+    if (authToken){
+      fetchTrips();
+    }
+
+  }, [authToken]);
 
   //only display trips that haven't happened yet
   const today = new Date();
