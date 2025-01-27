@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../styles/TripPage.css';
 import axios from 'axios';
 
@@ -12,6 +12,10 @@ import clubskiImage from '../styles/images/skier.webp';
 import fnfImage from '../styles/images/fnf.jpg';
 
 const TripPage = ({ trip, onBack, studentID=2 }) => {
+  // const [waitlist, setWaitlist] = useState([]);
+  // const [modalOpen, setModalOpen] = useState(false);
+  // const [error, setError] = useState(null)
+
   const getCookie = (name) =>{
       let cookieValue = null;
       if (document.cookie && document.cookie !== ''){
@@ -26,6 +30,23 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
       }
       return cookieValue
     }
+
+    //fetch waitlist when the modal opens
+    // const fetchWaitlist = async () => {
+    //   const token = getCookie('cstftoken');
+    //   try{
+    //     // check that this is actually supposed to be
+    //     const response = await axios.get('http://127.0.0.1:8000/api/waitlist/${trip.id}/',{ 
+    //       headers:{
+    //         'X-CSRFToken': token,
+    //         'Content-Type': 'application/json',
+    //       },
+    //     });
+    //     setWaitlist(response.data);
+    //   } catch (err){
+    //     setError('Error fetching waitlist');
+    //   }
+    // };
 
     //handle images
     const subclubImages = {
@@ -43,7 +64,6 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
 
     const imageSrc = subclubImages[trip.subclub] || 'path/to/default_image.jpg';
 
-    const [error, setError] = useState(null)
     const handleSignUp = async () => {
         const token = getCookie('csrftoken'); //obtain csrf token
         console.log('signup TripPage')
