@@ -83,7 +83,7 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
             onBack();
           }
         } catch (err){
-          setError(err.response ? err.response.data.error: 'Error signing up')
+          //setError(err.response ? err.response.data.error: 'Error signing up')
         }
       };
 

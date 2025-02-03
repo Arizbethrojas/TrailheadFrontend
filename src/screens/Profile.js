@@ -1,60 +1,26 @@
-import React, { useState, useEffect  } from 'react';
-import '../styles/profile.css'; // Import your CSS file
-
-import TripCard from '../components/TripCard'; // Import the TripCard component
-import TripModal from '../screens/TripModal'; // Import TripModal for trip details
+import React, { useState, useEffect } from 'react';
+import '../styles/profile.css';
+import TripCard from '../components/TripCard';
+import TripModal from '../screens/TripModal';
 import fnfImage from '../styles/images/fnf.jpg';
 import dmcIcon from '../styles/images/dmcicon.png';
 import mteverestAcheivement from '../styles/images/acheivementicons/mteverest.png';
-import axios from 'axios'
+import axios from 'axios';
 import TripPage from './TripPage';
 
-const Profile = () => {
+const Profile = ({ authToken }) => {  // Add authToken as a prop here
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showTripDetails, setShowTripDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showRightSection, setShowRightSection] = useState(true); // State to control right section visibility
-
-  // getting trips
+  const [showRightSection, setShowRightSection] = useState(true);
   const [myTrips, setMyTrips] = useState([]);
-
-  //fetch users trips
-  const fetchMyTrips = async() => {
-    try{
-      const response = await axios.get('http://127.0.0.1:8000/api/trip-registrations/student/2/');
-      setMyTrips(response.data);
-      console.log('mine', response.data);
-    }catch (error){
-      console.error('Error fetching my archived trips:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchMyTrips();
-  }, []);
-
-  //only display trips that have not already happened
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const formattedToday = today.toISOString().split('T')[0]; //YYYY-MM-DD format
-
-  const filteredTrips = myTrips.filter((trip) => {
-    const dateMatch = trip.trip_date >= formattedToday;
-    return dateMatch;
-  }).reverse();
-
-  const userData = {
-    username: "Caroline Casey",
-    email: "caroline@gmail.com",
-    phone: "781-870-0169",
-    age: 19,
-    allergies: "tree-nuts, gluten",
-    favorite_subclubs: "VHOC",
-    // upcomingTrips: [
-    //   { id: 1, title: "Title 1", date: "2024-20-11", subclub: "Winter Sports" },
-    //   { id: 2, title: "Title 2", date: "2024-20-11", subclub: "Ledyard" },
-    // ],
-    achievements: Array(12).fill({ icon: mteverestAcheivement }), // Example for 12 achievements
+  const [userData, setUserData] = useState({
+    student_name: "",
+    class_year: "",
+    pronouns: "",
+    allergies: "",
+    is_trip_leader: false,
+    achievements: Array(12).fill({ icon: mteverestAcheivement }),
     tripDrafts: [
       { id: 1, title: "Climbing @ Rumney", date: "11/20/24", subclub: "Climbing Team" },
       { id: 2, title: "Kayak on the Connecticut", date: "11/30/24", subclub: "Cabin & Trail" },
@@ -62,15 +28,74 @@ const Profile = () => {
       { id: 4, title: "Trip Draft 4", date: "12/6/24", subclub: "Flora & Fauna" },
       { id: 5, title: "Trip Draft 5", date: "11/23/24", subclub: "Nordic Skiing" },
       { id: 6, title: "Trip Draft 6", date: "11/26/24", subclub: "Mountaineering" },
-    ],
-  };
+    ]
+  });
+
+
+  const fetchStudentProfile = async () => {
+    if (!authToken) {
+        console.log("No auth token available");
+        return;
+    }
+    
+    try {
+        console.log("Making profile request with token:", authToken);
+        const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        console.log("Profile response:", response.data);
+        
+        setUserData(prevData => ({
+            ...prevData,
+            ...response.data
+        }));
+        
+        if (response.data.id) {
+            console.log("Fetching trips for student ID:", response.data.id);
+            const tripsResponse = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${response.data.id}/`, {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log("Trips response:", tripsResponse.data);
+            setMyTrips(tripsResponse.data);
+        }
+    } catch (error) {
+        console.log("Error details:", {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status
+        });
+        console.error('Error fetching profile data:', error);
+    }
+};
+
+  const laProfile = ({ authToken }) => {
+    console.log("Auth Token:", authToken);}  // Add this line
+
+  useEffect(() => {
+    fetchStudentProfile();
+  }, []); // Remove authToken from dependency array
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const formattedToday = today.toISOString().split('T')[0];
+
+  const filteredTrips = myTrips.filter((trip) => {
+    const dateMatch = trip.trip_date >= formattedToday;
+    return dateMatch;
+  }).reverse();
 
   const formatDate = (wrong_date) => {
     const [year, month, day] = wrong_date.split('-');
-    return  `${month}/${day}/${year.slice(-2)}`;
+    return `${month}/${day}/${year.slice(-2)}`;
   };
 
-  //clicking a trip
   const handleTripClick = (trip) => {
     setSelectedTrip(trip);
     setShowTripDetails(true);
@@ -82,8 +107,10 @@ const Profile = () => {
     setSelectedTrip(null);
   };
 
+  
+
   const toggleRightSection = () => {
-    setShowRightSection(prev => !prev); // Toggle visibility
+    setShowRightSection(prev => !prev);
   };
 
   if (showTripDetails && selectedTrip) {
@@ -98,7 +125,6 @@ const Profile = () => {
           <div className="upcoming-trips">
             {filteredTrips.map(trip => (
               <div key={trip.id} onClick={() => handleTripClick(trip)}>
-              {/* <div key={trip.id}> */}
                 <TripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} />
               </div>
             ))}
@@ -109,7 +135,6 @@ const Profile = () => {
           <h2>Trip Drafts:</h2>
           <div className="trip-drafts-grid">
             {userData.tripDrafts.map((draft) => (
-              // <div key={draft.id} onClick={() => handleTripClick(draft)}> 
               <div key={draft.id}> 
                 <TripCard title={draft.title} date={draft.date} subclub={draft.subclub} width={300 / 1.5} height={200 / 1.5} showImage={false} />
               </div>
@@ -122,7 +147,7 @@ const Profile = () => {
         <div className="right-section">
           <div className="profile-info">
             <div className="profile-header">
-              <h1>{userData.username}</h1>
+              <h1>{userData.student_name}</h1>
               <img src={fnfImage} alt="Profile" className="profile-pic" />
             </div>
             <div className="subclub-icons">
@@ -136,16 +161,13 @@ const Profile = () => {
                   <img key={index} src={achievement.icon} alt="Achievement Icon" className="achievement-icon" />
                 ))}
               </div>
-              {/* <button className="view-more-button">
-                <span>➜</span>
-              </button> */}
             </div>
             <h2>Details</h2>
             <div className="details-box">
-              <p>Email: {userData.email}</p>
-              <p>Phone number: {userData.phone}</p>
-              <p>Age: {userData.age}</p>
+              <p>Class Year: {userData.class_year}</p>
+              <p>Pronouns: {userData.pronouns}</p>
               <p>Allergies: {userData.allergies}</p>
+              {userData.is_trip_leader && <p>Trip Leader Status: Active</p>}
             </div>
           </div>
         </div>
