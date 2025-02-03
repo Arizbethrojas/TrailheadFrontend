@@ -9,10 +9,47 @@ import SignUpIndividual from './screens/SignUp';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import TripList from './screens/TripList';
 import './App.css';
+import axios from 'axios';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
+  const [userData, setUserData] = useState({is_trip_leader: false});
+
+  const fetchStudentProfile = async () => {
+    if (!authToken) {
+        console.log("No auth token available");
+        return;
+    }
+
+    try {
+      console.log("Making profile request with token:", authToken);
+      const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
+          headers: {
+              'Authorization': `Bearer ${authToken}`,
+              'Content-Type': 'application/json'
+          }
+      });
+      
+      console.log("Profile response:", response.data);
+      setUserData(prevData => ({
+        ...prevData,
+        ...response.data
+    }));
+  } catch (error) {
+    console.log("Error details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+    });
+    console.error('Error fetching profile data:', error);
+  }
+  };
+
+
+  useEffect(() => {
+      fetchStudentProfile();
+    }, []); // Remove authToken from dependency array
 
   const requestNotificationPermission = async () => {
     try {
@@ -62,6 +99,7 @@ const App = () => {
     setAuthToken(token);
     setIsAuthenticated(true);
   };
+
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
@@ -118,7 +156,7 @@ const App = () => {
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} /> : <Navigate to="/login" />} />
             <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} /> : <Navigate to="/login" />} />
-            <Route path="/add-trip" element={isAuthenticated ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/login" />} />
+            <Route path="/add-trip" element={isAuthenticated && !userData.is_trip_leader ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/profile" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual />} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
@@ -128,5 +166,6 @@ const App = () => {
     </Router>
   );
 };
+
 
 export default App;

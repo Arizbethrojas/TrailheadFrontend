@@ -24,6 +24,7 @@ const AddTrip = ({onTripCreated, authToken}) => {
     trip_provided: ''
   });
 
+
   const [subclubs, setSubclubs] = useState([]);
 
   const tripTypeOptions = [
