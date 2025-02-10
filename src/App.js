@@ -110,7 +110,7 @@ const App = () => {
             <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken}/> : <Navigate to="/login" />} />
             <Route path="/add-trip" element={isAuthenticated ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken}/> : <Navigate to="/login" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
-            <Route path="/sign-up" element={<SignUpIndividual />} />
+            <Route path="/sign-up" element={<SignUpIndividual onSignUp={handleLogin} setAuthToken={setAuthToken}/>} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
           </Routes>
         </div>
