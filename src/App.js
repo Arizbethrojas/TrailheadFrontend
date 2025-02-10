@@ -14,7 +14,12 @@ import axios from 'axios';
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
-  const [userData, setUserData] = useState({is_trip_leader: false});
+  const [userData, setUserData] = useState({
+    is_trip_leader: false,
+    id: -1,
+
+  });
+  console.log('cookies: ', document.cookie);
 
   const fetchStudentProfile = async () => {
     if (!authToken) {
@@ -36,6 +41,7 @@ const App = () => {
         ...prevData,
         ...response.data
     }));
+    console.log('userData', userData);
   } catch (error) {
     console.log("Error details:", {
         message: error.message,
@@ -154,12 +160,12 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} /> : <Navigate to="/login" />} />
+            <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} user_id={userData.id}/> : <Navigate to="/login" />} />
             <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} /> : <Navigate to="/login" />} />
-            <Route path="/add-trip" element={isAuthenticated && !userData.is_trip_leader ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/profile" />} />
+            <Route path="/add-trip" element={isAuthenticated && userData.is_trip_leader ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/profile" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual />} />
-            <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
+            {/* <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} /> */}
           </Routes>
         </div>
       </div>

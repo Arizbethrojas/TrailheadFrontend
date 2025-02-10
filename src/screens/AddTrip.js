@@ -82,6 +82,7 @@ const AddTrip = ({onTripCreated, authToken}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = getCookie('csrftoken'); //obtain csrf token
+    console.log('token: ', token);
     try{
       const response = await axios.post('http://127.0.0.1:8000/api/trips/', formData, {
       headers: {

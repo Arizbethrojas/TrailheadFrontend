@@ -10,7 +10,7 @@ import axios from 'axios';
 import Filter from '../components/filter'; // filter component used in trips and archive 
 import TripPage from './TripPage';
 
-const Trips = ({authToken}) => {
+const Trips = ({authToken, user_id}) => {
   // State to manage selected trip and modal visibility
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showTripDetails, setShowTripDetails] = useState(false);
@@ -32,14 +32,6 @@ const Trips = ({authToken}) => {
     setShowTripDetails(false);
     setSelectedTrip(null);
   };
-
-  // Assuming TripExplore passes a list of trips as props or fetches them
-  // const tripsData = [
-  //   { id: 1, title: "Trip 1", date: "10/16", leader: "Leader 1", description: "Description for Trip 1" },
-  //   { id: 2, title: "Trip 2", date: "10/16", leader: "Leader 2", description: "Description for Trip 2" },
-  //   { id: 3, title: "Trip 3", date: "10/16", leader: "Leader 3", description: "Description for Trip 3" },
-  //   { id: 4, title: "Trip 4", date: "10/16", leader: "Leader 4", description: "Description for Trip 4" },
-  // ];
 
   const fetchTrips = async() => {
     try{
@@ -90,7 +82,7 @@ const Trips = ({authToken}) => {
 
   // Return TripPage if showing details, otherwise show trips list
   if (showTripDetails && selectedTrip) {
-    return <TripPage trip={selectedTrip} onBack={handleBack} />;
+    return <TripPage trip={selectedTrip} onBack={handleBack} studentID={user_id} authToken={authToken}/>;
   }
   
   return (
