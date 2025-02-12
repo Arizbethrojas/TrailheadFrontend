@@ -5,6 +5,7 @@ import Login from './screens/Login'; // Import Login component
 import Archive from './screens/Archive';
 import Profile from './screens/Profile';
 import Trips from './screens/Trips';
+import Chat from './screens/Chat';
 import SignUpIndividual from './screens/SignUp'; 
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import TripList from './screens/TripList';
@@ -96,6 +97,11 @@ const App = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/chat">
+                  <img src="/Add.png" alt="Chat" className="icon" />
+                </Link>
+              </li>
+              <li>
                 <button onClick={handleLogout}>Logout</button>
               </li>
             </ul>
@@ -112,6 +118,7 @@ const App = () => {
             <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual />} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
+            <Route path="/chat" element={isAuthenticated ? <Chat authToken={authToken}/> : <Navigate to="/login" />} />
           </Routes>
         </div>
       </div>
