@@ -1,7 +1,7 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
 import AddTrip from './screens/AddTrip';
-import Login from './screens/Login'; // Import Login component
+import Login from './screens/Login';
 import Archive from './screens/Archive';
 import Profile from './screens/Profile';
 import Trips from './screens/Trips';
@@ -11,7 +11,8 @@ import TripList from './screens/TripList';
 import './App.css';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Manage authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
 
   const requestNotificationPermission = async () => {
     try {
@@ -35,7 +36,7 @@ const App = () => {
       
       notification.onclick = () => {
         console.log('Notification clicked');
-        window.open('https://example.com'); // Replace with your URL
+        window.open('https://example.com');
       };
     } else {
       console.log('Notification permission not granted. Cannot show notification.');
@@ -56,18 +57,28 @@ const App = () => {
     requestNotificationPermission();
   }, []); 
 
-  const handleLogin = () => {
-    setIsAuthenticated(true); // Set authentication state to true
+  const handleLogin = (token) => {
+    localStorage.setItem('authToken', token);
+    setAuthToken(token);
+    setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
-    setIsAuthenticated(false); // Set authentication state to false
+    localStorage.removeItem('authToken');
+    setAuthToken(null);
+    setIsAuthenticated(false);
   };
+
+  // Check authentication status on app load
+  useEffect(() => {
+    if (authToken) {
+      setIsAuthenticated(true);
+    }
+  }, [authToken]);
 
   return (
     <Router>
       <div className="app-container">
-        {/* Render the navigation bar only if the user is authenticated */}
         {isAuthenticated && (
           <nav className="sidebar">
             <img src="/Logo.png" alt="Logo" className="logo" />
@@ -105,10 +116,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/trips" element={isAuthenticated ? <Trips /> : <Navigate to="/login" />} />
-            <Route path="/archive" element={isAuthenticated ? <Archive /> : <Navigate to="/login" />} />
-            <Route path="/add-trip" element={isAuthenticated ? <AddTrip onTripCreated={handleFavSubclub}/> : <Navigate to="/login" />} />
-            <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
+            <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} /> : <Navigate to="/login" />} />
+            <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} /> : <Navigate to="/login" />} />
+            <Route path="/add-trip" element={isAuthenticated ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/login" />} />
+            <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual />} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
           </Routes>

@@ -9,7 +9,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import '../styles/addTrip.css';
 
-const AddTrip = ({onTripCreated}) => {
+const AddTrip = ({onTripCreated, authToken}) => {
   const [formData, setFormData] = useState({
     trip_name: '',
     trip_date: '',
@@ -17,6 +17,11 @@ const AddTrip = ({onTripCreated}) => {
     trip_leader: '',
     trip_capacity: 0,
     subclub: '',
+    trip_type: '',
+    trip_level: '',
+    trip_location: '',
+    trip_bring: '',
+    trip_provided: ''
   });
 
   const [subclubs, setSubclubs] = useState([]);
@@ -38,14 +43,20 @@ const AddTrip = ({onTripCreated}) => {
   useEffect(() => {
     const fetchSubclubs = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/subclubs/');
+        const response = await axios.get('http://127.0.0.1:8000/api/subclubs/', {
+          headers: {
+            Authorization: `Bearer ${authToken}`, // Set the authorization token
+          },
+        });
         setSubclubs(response.data);
       } catch (error){
         console.error('Error fetching subclubs:', error);
       }
     };
-    fetchSubclubs();
-  }, []);
+    if (authToken){
+      fetchSubclubs();
+    }
+  }, [authToken]);
 
   //function to get CSRF token so i can make POST requests
   const getCookie = (name) =>{
@@ -75,6 +86,7 @@ const AddTrip = ({onTripCreated}) => {
       headers: {
         'X-CSRFToken': token,
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`,
       },
     });
       console.log(response.data);
