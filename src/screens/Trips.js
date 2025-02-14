@@ -71,8 +71,8 @@ const Trips = ({authToken}) => {
   const filteredTrips = tripsData.filter((trip) => {
     const subclubMatch = filterBySubclub ? String(trip.subclub) === filterBySubclub : true;
     const levelMatch = filterByLevel ? trip.trip_level === filterByLevel : true;
-    console.log('today', formattedToday);
-    console.log('date', trip.trip_date);
+    // console.log('today', formattedToday);
+    // console.log('date', trip.trip_date);
     const dateMatch = trip.trip_date >= formattedToday;
     // console.log(trip.subclub)
     // console.log('trip.level', trip.trip_level, 'filterbylevel', filterByLevel);

@@ -43,12 +43,46 @@ const Archive = ({authToken}) => {
   
     }, [authToken]);
 
+  //fetch user profile to fetch trips
+  const fetchStudentProfile = async () => {
+    if (!authToken) {
+      console.log("No auth token available");
+      return;
+    }
+
+    try {
+      console.log("Making profile request with token:", authToken);
+      const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.data.id){
+        console.log('data: ', response.data.id);
+        return response.data.id;
+      }
+    }catch{
+      console.log("could not fetch user data");
+    }
+
+  }
+
   //fetch users trips
   const fetchMyTrips = async() => {
     try{
-      const response = await axios.get('http://127.0.0.1:8000/api/trip-registrations/student/2/');
+      const userID = await fetchStudentProfile();
+      if (userID){
+        console.log('this one id: ', userID);
+        const response = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${userID}/`, {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
       setMyTrips(response.data);
       console.log('mine', response.data);
+      }
     }catch (error){
       console.error('Error fetching my archived trips:', error);
     }
@@ -81,14 +115,13 @@ const Archive = ({authToken}) => {
   const formattedToday = today.toISOString().split('T')[0]; //YYYY-MM-DD format
 
   const filteredTrips = tripsData.filter((trip) => {
-    console.log('trip.subclub', trip.subclub)
-    console.log('filterBySubclub', filterBySubclub)
+    // console.log('trip.subclub', trip.subclub)
+    // console.log('filterBySubclub', filterBySubclub)
     const subclubMatch = filterBySubclub ? String(trip.subclub) === filterBySubclub : true;
     const levelMatch = filterByLevel ? trip.trip_level === filterByLevel : true;
     const dateMatch = trip.trip_date <= formattedToday;
     return subclubMatch && dateMatch && levelMatch;
   }).reverse();
-
 
 
   const myFilteredTrips = myTrips.filter((trip) => {

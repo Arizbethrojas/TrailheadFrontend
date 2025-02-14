@@ -174,7 +174,7 @@ const Profile = ({ authToken }) => {
   
       if (response.data.id) {
         console.log("Fetching trips for student ID:", response.data.id);
-        const tripsResponse = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${response.data.id}/`, {
+        const tripsResponse = await axios.get('http://127.0.0.1:8000/api/trip-registrations/student/3/', {
           headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
