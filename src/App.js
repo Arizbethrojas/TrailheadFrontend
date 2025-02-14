@@ -9,10 +9,38 @@ import SignUpIndividual from './screens/SignUp';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import TripList from './screens/TripList';
 import './App.css';
+import axios from 'axios';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
+  const [userID, setUserID] = useState(null);
+
+  //store the current userID to be used by other screens
+  const fetchStudentProfile = async () => {
+    if (!authToken) {
+      console.log("No auth token available");
+      return;
+    }
+
+    try {
+      console.log("Making profile request with token:", authToken);
+      const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.data.id){
+        console.log('data: ', response.data.id);
+        setUserID(response.data.id);
+        return response.data.id;
+      }
+    }catch{
+      console.log("could not fetch user data");
+    }
+
+  }
 
   const requestNotificationPermission = async () => {
     try {
@@ -57,6 +85,7 @@ const App = () => {
     requestNotificationPermission();
   }, []); 
 
+
   const handleLogin = (token) => {
     localStorage.setItem('authToken', token);
     setAuthToken(token);
@@ -73,6 +102,7 @@ const App = () => {
   useEffect(() => {
     if (authToken) {
       setIsAuthenticated(true);
+      fetchStudentProfile();
     }
   }, [authToken]);
 
@@ -117,7 +147,7 @@ const App = () => {
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} /> : <Navigate to="/login" />} />
-            <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} /> : <Navigate to="/login" />} />
+            <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
             <Route path="/add-trip" element={isAuthenticated ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/login" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual />} />

@@ -7,7 +7,7 @@ import axios from 'axios'
 import Filter from '../components/filter'; 
 import TripPage from './TripPage';
 
-const Archive = ({authToken}) => {
+const Archive = ({authToken, userID}) => {
   // trip click
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showTripDetails, setShowTripDetails] = useState(false);
@@ -43,35 +43,10 @@ const Archive = ({authToken}) => {
   
     }, [authToken]);
 
-  //fetch user profile to fetch trips
-  const fetchStudentProfile = async () => {
-    if (!authToken) {
-      console.log("No auth token available");
-      return;
-    }
-
-    try {
-      console.log("Making profile request with token:", authToken);
-      const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
-        headers: {
-          'Authorization': `Bearer ${authToken}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      if (response.data.id){
-        console.log('data: ', response.data.id);
-        return response.data.id;
-      }
-    }catch{
-      console.log("could not fetch user data");
-    }
-
-  }
 
   //fetch users trips
   const fetchMyTrips = async() => {
     try{
-      const userID = await fetchStudentProfile();
       if (userID){
         console.log('this one id: ', userID);
         const response = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${userID}/`, {
