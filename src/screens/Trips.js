@@ -17,6 +17,7 @@ const Trips = ({authToken, userID}) => {
   const [showModal, setShowModal] = useState(false);
   const [tripsData, setTripsData] = useState([]);
   const [waitlist, setWaitlist] = useState([]);
+  const [trippees, setTrippees] = useState([]);
 
   const [filterBySubclub, setFilterBySubclub] = useState('');
   const [filterByLevel, setFilterByLevel] = useState('');
@@ -24,6 +25,7 @@ const Trips = ({authToken, userID}) => {
   // Handler to open modal and set selected trip
   const handleTripClick = (trip) => {
     fetchWaitlist(trip.id);
+    fetchTrippees(trip.id);
     setSelectedTrip(trip);
     // setShowModal(true);
     setShowTripDetails(true);
@@ -33,14 +35,6 @@ const Trips = ({authToken, userID}) => {
     setShowTripDetails(false);
     setSelectedTrip(null);
   };
-
-  // Assuming TripExplore passes a list of trips as props or fetches them
-  // const tripsData = [
-  //   { id: 1, title: "Trip 1", date: "10/16", leader: "Leader 1", description: "Description for Trip 1" },
-  //   { id: 2, title: "Trip 2", date: "10/16", leader: "Leader 2", description: "Description for Trip 2" },
-  //   { id: 3, title: "Trip 3", date: "10/16", leader: "Leader 3", description: "Description for Trip 3" },
-  //   { id: 4, title: "Trip 4", date: "10/16", leader: "Leader 4", description: "Description for Trip 4" },
-  // ];
 
   //fetch waitlist when a trip is clicked
   const fetchWaitlist = async (tripID) => {
@@ -61,11 +55,22 @@ const Trips = ({authToken, userID}) => {
   };
 
   //fetch trippees when a trip is called
-  // const fetchTrippees = async (tripID) => {
-  //   try{
-  //     const response = await axios.get
-  //   }
-  // }
+  const fetchTrippees = async (tripID) => {
+    try{
+      const response = await axios.get(`http://127.0.0.1:8000/api/registrations/${tripID}/`,{ 
+        headers:{
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      setTrippees(response.data);
+      console.log('trippees data: ', response.data);
+      console.log('trippees: ', trippees);
+      return response.data;
+    } catch (err){
+      console.log('Error fetching trippees');
+    }
+  };
 
   const fetchTrips = async() => {
     try{
@@ -116,7 +121,7 @@ const Trips = ({authToken, userID}) => {
 
   // Return TripPage if showing details, otherwise show trips list
   if (showTripDetails && selectedTrip) {
-    return <TripPage trip={selectedTrip} onBack={handleBack} userID={userID} authToken={authToken} waitlist={waitlist} trippees={null}/>;
+    return <TripPage trip={selectedTrip} onBack={handleBack} userID={userID} authToken={authToken} waitlist={waitlist} trippees={trippees}/>;
   }
   
   return (

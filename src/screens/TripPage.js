@@ -63,11 +63,30 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees}) => {
       }
     };
 
-    const handleSignUp = async () => {
+    // remove a student from the waitlist
+    const handleRemove = async (student_id) => {
+      const response = await axios.delete('http://127.0.0.1:8000/api/waitlist/remove/', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`,
+        },
+        data: {
+          student_id: student_id, 
+          trip_id: trip.id,
+        }
+      }
+      );
+      alert(response.data.message);
+      onBack();
+
+    }
+
+    const handleSignUp = async (student_id) => {
         console.log('signup TripPage')
         try{
+          console.log('trip: ', trip.id, 'student', student_id)
           const response = await axios.post('http://127.0.0.1:8000/api/register_trip/', {
-            student_id: userID, 
+            student_id: student_id, 
             trip_id: trip.id,
           },
           {headers: {
@@ -75,11 +94,9 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees}) => {
             'Content-Type': 'application/json',
           },}
         );
-    
-          if (response.status === 201){
-            alert(response.data.message);
-            onBack();
-          }
+        if (response.status===201){
+          handleRemove(student_id);
+        }
         } catch (err){
           console.log(err.response ? err.response.data.error: 'Error signing up')
         }
@@ -207,11 +224,12 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees}) => {
                   //key is registration id but displays name
                   <li key={person.id}>
                     {person.student_name}
-                    {/* <button onClick={() => handleSignUp(person.student_id)}>Approve</button> */}
+                    <button onClick={() => handleSignUp(person.waitlist_student)}>Approve</button>
+                    <button onClick={() => handleRemove(person.waitlist_student)}>Deny</button>
                   </li>
                 ))}
               </ul>
-              {/* <h2>Trippees</h2>
+              <h2>Trippees</h2>
               <ul>
                 {trippees.map((person) => (
                   //key is registration id but displays name
@@ -219,7 +237,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees}) => {
                     {person.student_name}
                   </li>
                   ))}
-              </ul> */}
+              </ul>
               <button onClick={() => setModalOpen(false)}>Close</button>
               </div>
           </div>
