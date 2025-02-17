@@ -148,7 +148,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} /> : <Navigate to="/login" />} />
+            <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
             <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
             <Route path="/add-trip" element={isAuthenticated && isTripLeader ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/trips" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
