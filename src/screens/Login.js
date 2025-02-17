@@ -12,30 +12,28 @@ const Login = ({ onLogin, setAuthToken }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submitting Form:', { username, password }); // Debugging line
+    console.log('Submitting Form:', { username, password });
 
     if (isLogin) {
-      try{
+      try {
         const response = await axios.post('http://127.0.0.1:8000/api/token/', {
           username,
           password,
         });
-        const {access, refresh} = response.data;
-        setAuthToken(access);
+        const { access, refresh } = response.data;
         console.log('login successful');
-        onLogin();
+        onLogin(access); // Pass the access token to App.js handleLogin
         navigate('/trips');
-      } catch(err) {
-        console.error('Invalid username or password'); // Debugging line
+      } catch (err) {
+        console.error('Invalid username or password');
         setError('Invalid username or password');
       }
     } else {
       // Placeholder for sign-up logic
       console.log('Sign Up:', { username, password });
-      // Simulate a successful sign-up traversal
       navigate('/trips');
     }
-  };
+};
 
   return (
     <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
