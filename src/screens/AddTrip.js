@@ -59,20 +59,20 @@ const AddTrip = ({onTripCreated, authToken}) => {
   }, [authToken]);
 
   //function to get CSRF token so i can make POST requests
-  const getCookie = (name) =>{
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== ''){
-      const cookies = document.cookie.split(';');
-      for(let i = 0; i < cookies.length; i++){
-        const cookie = cookies[i].trim();
-        if(cookie.substring(0, name.length = 1) === (name + '=')){
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue
-  }
+  // const getCookie = (name) =>{
+  //   let cookieValue = null;
+  //   if (document.cookie && document.cookie !== ''){
+  //     const cookies = document.cookie.split(';');
+  //     for(let i = 0; i < cookies.length; i++){
+  //       const cookie = cookies[i].trim();
+  //       if(cookie.substring(0, name.length = 1) === (name + '=')){
+  //         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+  //         break;
+  //       }
+  //     }
+  //   }
+  //   return cookieValue
+  // }
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value });
@@ -80,11 +80,12 @@ const AddTrip = ({onTripCreated, authToken}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = getCookie('csrftoken'); //obtain csrf token
+    // const token = getCookie('csrftoken'); //obtain csrf token
+    // console.log('token in addtrip: ', token);
     try{
       const response = await axios.post('http://127.0.0.1:8000/api/trips/', formData, {
       headers: {
-        'X-CSRFToken': token,
+        // 'X-CSRFToken': token,
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`,
       },

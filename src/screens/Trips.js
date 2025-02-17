@@ -10,19 +10,22 @@ import axios from 'axios';
 import Filter from '../components/filter'; // filter component used in trips and archive 
 import TripPage from './TripPage';
 
-const Trips = ({authToken}) => {
+const Trips = ({authToken, userID}) => {
   // State to manage selected trip and modal visibility
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showTripDetails, setShowTripDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [tripsData, setTripsData] = useState([]);
+  const [waitlist, setWaitlist] = useState([]);
+  const [trippees, setTrippees] = useState([]);
 
   const [filterBySubclub, setFilterBySubclub] = useState('');
   const [filterByLevel, setFilterByLevel] = useState('');
 
-
   // Handler to open modal and set selected trip
   const handleTripClick = (trip) => {
+    fetchWaitlist(trip.id);
+    fetchTrippees(trip.id);
     setSelectedTrip(trip);
     // setShowModal(true);
     setShowTripDetails(true);
@@ -33,13 +36,41 @@ const Trips = ({authToken}) => {
     setSelectedTrip(null);
   };
 
-  // Assuming TripExplore passes a list of trips as props or fetches them
-  // const tripsData = [
-  //   { id: 1, title: "Trip 1", date: "10/16", leader: "Leader 1", description: "Description for Trip 1" },
-  //   { id: 2, title: "Trip 2", date: "10/16", leader: "Leader 2", description: "Description for Trip 2" },
-  //   { id: 3, title: "Trip 3", date: "10/16", leader: "Leader 3", description: "Description for Trip 3" },
-  //   { id: 4, title: "Trip 4", date: "10/16", leader: "Leader 4", description: "Description for Trip 4" },
-  // ];
+  //fetch waitlist when a trip is clicked
+  const fetchWaitlist = async (tripID) => {
+    try{
+      const response = await axios.get(`http://127.0.0.1:8000/api/waitlist/${tripID}/`,{ 
+        headers:{
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      setWaitlist(response.data);
+      console.log('data: ', response.data);
+      console.log('waitlist: ', waitlist);
+      return response.data;
+    } catch (err){
+      console.log('Error fetching waitlist');
+    }
+  };
+
+  //fetch trippees when a trip is called
+  const fetchTrippees = async (tripID) => {
+    try{
+      const response = await axios.get(`http://127.0.0.1:8000/api/registrations/${tripID}/`,{ 
+        headers:{
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      setTrippees(response.data);
+      console.log('trippees data: ', response.data);
+      console.log('trippees: ', trippees);
+      return response.data;
+    } catch (err){
+      console.log('Error fetching trippees');
+    }
+  };
 
   const fetchTrips = async() => {
     try{
@@ -71,8 +102,8 @@ const Trips = ({authToken}) => {
   const filteredTrips = tripsData.filter((trip) => {
     const subclubMatch = filterBySubclub ? String(trip.subclub) === filterBySubclub : true;
     const levelMatch = filterByLevel ? trip.trip_level === filterByLevel : true;
-    console.log('today', formattedToday);
-    console.log('date', trip.trip_date);
+    // console.log('today', formattedToday);
+    // console.log('date', trip.trip_date);
     const dateMatch = trip.trip_date >= formattedToday;
     // console.log(trip.subclub)
     // console.log('trip.level', trip.trip_level, 'filterbylevel', filterByLevel);
@@ -90,7 +121,7 @@ const Trips = ({authToken}) => {
 
   // Return TripPage if showing details, otherwise show trips list
   if (showTripDetails && selectedTrip) {
-    return <TripPage trip={selectedTrip} onBack={handleBack} />;
+    return <TripPage trip={selectedTrip} onBack={handleBack} userID={userID} authToken={authToken} waitlist={waitlist} trippees={trippees}/>;
   }
   
   return (
