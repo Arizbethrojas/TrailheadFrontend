@@ -11,7 +11,7 @@ import wscImage from '../styles/images/wsc.jpg';
 import clubskiImage from '../styles/images/skier.webp';
 import fnfImage from '../styles/images/fnf.jpg';
 
-const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees}) => {
+const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive=false}) => {
   const [modalOpen, setModalOpen] = useState(false);
 
     const handleOpenModal = () => {
@@ -36,11 +36,14 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees}) => {
 
     const handleWaitlist = async () => {
       //don't add them if they're already on the waitlist
-      const onWaitlist = waitlist.some(person => person.waitlist_student===userID);
+      if (waitlist){
+        const onWaitlist = waitlist.some(person => person.waitlist_student===userID);
 
-      if (onWaitlist){
-        alert('You are already on the waitlist');
-        return;
+        if (onWaitlist){
+          alert('You are already on the waitlist');
+          return;
+        }
+
       }
       console.log('signup TripPage')
       try{
@@ -207,12 +210,16 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees}) => {
 
         {/* Sign Up Button */}
         <div className="signup-button-container">
-          <button className="signup-button" onClick={handleWaitlist}>
-            Sign Up!
-          </button>
-          <button className="trippees-button" onClick={handleOpenModal}>
-            Trippees
-          </button>
+          {!archive && (
+            <>
+              <button className="signup-button" onClick={handleWaitlist}>
+                Sign Up!
+              </button>
+              <button className="trippees-button" onClick={handleOpenModal}>
+                Trippees
+              </button>
+            </>
+          )}
         </div>
         {/* Waitlist/trippees Modal */}
         {modalOpen && (
