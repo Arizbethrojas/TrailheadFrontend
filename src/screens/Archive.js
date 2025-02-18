@@ -7,7 +7,7 @@ import axios from 'axios'
 import Filter from '../components/filter'; 
 import TripPage from './TripPage';
 
-const Archive = ({authToken}) => {
+const Archive = ({authToken, userID}) => {
   // trip click
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showTripDetails, setShowTripDetails] = useState(false);
@@ -43,12 +43,21 @@ const Archive = ({authToken}) => {
   
     }, [authToken]);
 
+
   //fetch users trips
   const fetchMyTrips = async() => {
     try{
-      const response = await axios.get('http://127.0.0.1:8000/api/trip-registrations/student/2/');
+      if (userID){
+        console.log('this one id: ', userID);
+        const response = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${userID}/`, {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
       setMyTrips(response.data);
       console.log('mine', response.data);
+      }
     }catch (error){
       console.error('Error fetching my archived trips:', error);
     }
@@ -81,14 +90,13 @@ const Archive = ({authToken}) => {
   const formattedToday = today.toISOString().split('T')[0]; //YYYY-MM-DD format
 
   const filteredTrips = tripsData.filter((trip) => {
-    console.log('trip.subclub', trip.subclub)
-    console.log('filterBySubclub', filterBySubclub)
+    // console.log('trip.subclub', trip.subclub)
+    // console.log('filterBySubclub', filterBySubclub)
     const subclubMatch = filterBySubclub ? String(trip.subclub) === filterBySubclub : true;
     const levelMatch = filterByLevel ? trip.trip_level === filterByLevel : true;
     const dateMatch = trip.trip_date <= formattedToday;
     return subclubMatch && dateMatch && levelMatch;
   }).reverse();
-
 
 
   const myFilteredTrips = myTrips.filter((trip) => {
@@ -104,7 +112,7 @@ const Archive = ({authToken}) => {
   };
 
   if (showTripDetails && selectedTrip) {
-    return <TripPage trip={selectedTrip} onBack={handleBack} />;
+    return <TripPage trip={selectedTrip} onBack={handleBack} archive={true}/>;
   }
 
   return (

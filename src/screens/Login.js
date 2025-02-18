@@ -33,7 +33,7 @@ const Login = ({ onLogin, setAuthToken }) => {
         setError('Invalid username or password');
       }
     }
-  };
+};
 
   return (
     <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
