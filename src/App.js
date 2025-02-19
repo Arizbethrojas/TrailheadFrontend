@@ -10,10 +10,40 @@ import SignUpIndividual from './screens/SignUp';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import TripList from './screens/TripList';
 import './App.css';
+import axios from 'axios';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
+  const [userID, setUserID] = useState(null);
+  const [isTripLeader, setTripLeader] = useState(null);
+
+  //store the current userID to be used by other screens
+  const fetchStudentProfile = async () => {
+    if (!authToken) {
+      console.log("No auth token available");
+      return;
+    }
+
+    try {
+      console.log("Making profile request with token:", authToken);
+      const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.data.id){
+        console.log('app.js user data: ', response.data);
+        setUserID(response.data.id);
+        setTripLeader(response.data.is_trip_leader);
+        return response.data.id;
+      }
+    }catch{
+      console.log("could not fetch user data");
+    }
+
+  }
 
   const requestNotificationPermission = async () => {
     try {
@@ -58,6 +88,7 @@ const App = () => {
     requestNotificationPermission();
   }, []); 
 
+
   const handleLogin = (token) => {
     localStorage.setItem('authToken', token);
     setAuthToken(token);
@@ -74,6 +105,7 @@ const App = () => {
   useEffect(() => {
     if (authToken) {
       setIsAuthenticated(true);
+      fetchStudentProfile();
     }
   }, [authToken]);
 

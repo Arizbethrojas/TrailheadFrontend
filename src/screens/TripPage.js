@@ -11,42 +11,12 @@ import wscImage from '../styles/images/wsc.jpg';
 import clubskiImage from '../styles/images/skier.webp';
 import fnfImage from '../styles/images/fnf.jpg';
 
-const TripPage = ({ trip, onBack, studentID=2 }) => {
-  // const [waitlist, setWaitlist] = useState([]);
-  // const [modalOpen, setModalOpen] = useState(false);
-  // const [error, setError] = useState(null)
+const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive=false}) => {
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const getCookie = (name) =>{
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== ''){
-        const cookies = document.cookie.split(';');
-        for(let i = 0; i < cookies.length; i++){
-          const cookie = cookies[i].trim();
-          if(cookie.substring(0, name.length + 1) === (name + '=')){
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue
+    const handleOpenModal = () => {
+      setModalOpen(true);
     }
-
-    //fetch waitlist when the modal opens
-    // const fetchWaitlist = async () => {
-    //   const token = getCookie('cstftoken');
-    //   try{
-    //     // check that this is actually supposed to be
-    //     const response = await axios.get('http://127.0.0.1:8000/api/waitlist/${trip.id}/',{ 
-    //       headers:{
-    //         'X-CSRFToken': token,
-    //         'Content-Type': 'application/json',
-    //       },
-    //     });
-    //     setWaitlist(response.data);
-    //   } catch (err){
-    //     setError('Error fetching waitlist');
-    //   }
-    // };
 
     //handle images
     const subclubImages = {
@@ -64,28 +34,77 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
 
     const imageSrc = subclubImages[trip.subclub] || 'path/to/default_image.jpg';
 
-    const handleSignUp = async () => {
-        const token = getCookie('csrftoken'); //obtain csrf token
+    const handleWaitlist = async () => {
+      //don't add them if they're already on the waitlist
+      if (waitlist){
+        const onWaitlist = waitlist.some(person => person.waitlist_student===userID);
+
+        if (onWaitlist){
+          alert('You are already on the waitlist');
+          return;
+        }
+
+      }
+      console.log('signup TripPage')
+      try{
+        const response = await axios.post('http://127.0.0.1:8000/api/register_waitlist/', {
+          student_id: userID, 
+          trip_id: trip.id,
+        },
+        {headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },}
+      );
+  
+        if (response.status === 201){
+          alert(response.data.message);
+          onBack();
+        }
+      } catch (err){
+        console.log(err.response ? err.response.data.error: 'Error signing up')
+      }
+    };
+
+    // remove a student from the waitlist
+    const handleRemove = async (student_id) => {
+      const response = await axios.delete('http://127.0.0.1:8000/api/waitlist/remove/', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`,
+        },
+        data: {
+          student_id: student_id, 
+          trip_id: trip.id,
+        }
+      }
+      );
+      alert(response.data.message);
+      onBack();
+
+    }
+
+    const handleSignUp = async (student_id) => {
         console.log('signup TripPage')
         try{
+          console.log('trip: ', trip.id, 'student', student_id)
           const response = await axios.post('http://127.0.0.1:8000/api/register_trip/', {
-            student_id: studentID, //this is hardcoded to 2, that is the id of the test user
+            student_id: student_id, 
             trip_id: trip.id,
           },
           {headers: {
-            'X-CSRFToken': token,
+            'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json',
           },}
         );
-    
-          if (response.status === 201){
-            alert(response.data.message);
-            onBack();
-          }
+        if (response.status===201){
+          handleRemove(student_id);
+        }
         } catch (err){
-          //setError(err.response ? err.response.data.error: 'Error signing up')
+          console.log(err.response ? err.response.data.error: 'Error signing up')
         }
       };
+
 
       const formatDate = (wrong_date) => {
         const [year, month, day] = wrong_date.split('-');
@@ -112,7 +131,6 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
       const getSubclubNameById = (id) => {
         // Find the subclub with the matching id
         console.log('id', id)
-        // console.log(subclubs[String(id)])
         const found = subclubs.find(subclub => String(subclub.id) === String(id));
         
         // Return the subclub name or a default message if not found
@@ -192,10 +210,45 @@ const TripPage = ({ trip, onBack, studentID=2 }) => {
 
         {/* Sign Up Button */}
         <div className="signup-button-container">
-          <button className="signup-button" onClick={handleSignUp}>
-            Sign Up!
-          </button>
+          {!archive && (
+            <>
+              <button className="signup-button" onClick={handleWaitlist}>
+                Sign Up!
+              </button>
+              <button className="trippees-button" onClick={handleOpenModal}>
+                Trippees
+              </button>
+            </>
+          )}
         </div>
+        {/* Waitlist/trippees Modal */}
+        {modalOpen && (
+          <div className="modal">
+            <div className="modal-content">
+              <h2>Waitlist</h2>
+              <ul>
+                {waitlist.map((person) => (
+                  //key is registration id but displays name
+                  <li key={person.id}>
+                    {person.student_name}
+                    <button onClick={() => handleSignUp(person.waitlist_student)}>Approve</button>
+                    <button onClick={() => handleRemove(person.waitlist_student)}>Deny</button>
+                  </li>
+                ))}
+              </ul>
+              <h2>Trippees</h2>
+              <ul>
+                {trippees.map((person) => (
+                  //key is registration id but displays name
+                  <li key={person.id}>
+                    {person.student_name}
+                  </li>
+                  ))}
+              </ul>
+              <button onClick={() => setModalOpen(false)}>Close</button>
+              </div>
+          </div>
+        )}
       </div>
     </div>
   );
