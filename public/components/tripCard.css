@@ -1,0 +1,68 @@
+.trip-card {
+    background-color: #BDAA8D; /* Card background color */
+    border-radius: 8px;
+    margin: 10px;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    width: calc(50% - 10px); /* Adjust width */
+    padding: 10px;
+/*     width: 365px;
+    height: 285px; 
+    position: relative;  */
+    height: 400px; /* Set a fixed height for testing */
+    position: relative; /* Set relative positioning for absolute positioning inside */
+    text-align: center;
+    transition: transform 0.2s;
+    color: white;
+}
+  
+  .trip-card:hover {
+    transform: translateY(-5px);
+  }
+
+.trip-image {
+    background-color: transparent; /* Remove the white background color */
+    height: 70%; /* Adjust height for the image box */
+    border-radius: 8px; /* Rounding corners */
+    background-size: cover; /* Ensure the image covers the element */
+    background-position: center; /* Center the image */
+    min-height: 150px; /* Ensure a minimum height */
+}
+
+.trip-info {
+    display: flex; /* Use flexbox to align items */
+    flex-direction: column; /* Stack title and subclub vertically */
+    align-items: flex-end; /* Align items to the right */
+    position: absolute; /* Positioning for static cards */
+    bottom: 10px; /* Space from the bottom */
+    right: 10px; /* Space from the right side */
+    color: #fff; /* White text color for contrast */
+}
+
+.trip-title {
+    font-weight: bold;
+    font-size : 18px !important; /* Set the title size */
+    display: flex; /* Flex for title and date */
+    align-items: center; /* Center items vertically */
+}
+
+.trip-date {
+    background-color: #A6957C; /* Circle background */
+    border-radius: 50%; /* Make it circular */
+    padding: 5px 10px; /* Padding for date */
+    margin-left: 10px; /* Space between title and date */
+    font-size: 14px; /* Font size for the date */
+    color: white; /* Text color */
+    display: inline-flex; /* Make it flex to center content */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+}
+
+.subclub {
+    /* Optional additional styling for the subclub if needed */
+}
+
+.trip-level {
+    /* Optional styling for the trip level */
+}
