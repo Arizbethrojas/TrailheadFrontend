@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-ro
 import TripList from './screens/TripList';
 import './App.css';
 import axios from 'axios';
+import Map from './components/map'; 
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -154,11 +155,14 @@ const App = () => {
             <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual onSignUp={handleLogin} setAuthToken={setAuthToken}/>} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
+            <Route path="/map" element={<Map/>} />
           </Routes>
         </div>
       </div>
     </Router>
   );
 };
+
+
 
 export default App;
