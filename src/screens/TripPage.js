@@ -47,6 +47,8 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
       }
       console.log('signup TripPage')
       try{
+        console.log('userID', userID);
+        console.log('tripID', trip.id);
         const response = await axios.post('http://127.0.0.1:8000/api/register_waitlist/', {
           student_id: userID, 
           trip_id: trip.id,

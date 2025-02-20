@@ -90,6 +90,7 @@ const App = () => {
 
 
   const handleLogin = (token) => {
+    console.log('handling login with toke: ', token);
     localStorage.setItem('authToken', token);
     setAuthToken(token);
     setIsAuthenticated(true);
@@ -153,13 +154,13 @@ const App = () => {
         <div className="content">
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} /> : <Navigate to="/login" />} />
-            <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} /> : <Navigate to="/login" />} />
-            <Route path="/add-trip" element={isAuthenticated ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/login" />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} setAuthToken={setAuthToken}/>} />
+            <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
+            <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
+            <Route path="/add-trip" element={isAuthenticated && isTripLeader? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/trips" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
             <Route path="/chat" element={isAuthenticated ? <Chat authToken={authToken} /> : <Navigate to="/chat" />} />
-            <Route path="/sign-up" element={<SignUpIndividual />} />
+            <Route path="/sign-up" element={<SignUpIndividual onSignUp={handleLogin} setAuthToken={setAuthToken}/>} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
           </Routes>
         </div>

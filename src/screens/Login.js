@@ -23,12 +23,15 @@ const Login = ({ onLogin, setAuthToken }) => {
     if (isLogin) {
       try {
         const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
+        console.log("response: ", response.data);
         const { access } = response.data;
-        setAuthToken(access);
+        console.log('access', access);
+        // setAuthToken(access);
         console.log('Login successful');
-        onLogin();
+        onLogin(access);
         navigate('/trips');
       } catch (err) {
+        console.log(err);
         console.error('Invalid username or password');
         setError('Invalid username or password');
       }
