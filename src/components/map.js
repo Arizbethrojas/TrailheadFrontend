@@ -101,7 +101,7 @@ function Map() {
             position={{ lat: marker.latitude, lng: marker.longitude }}
             icon={{
               url: marker.image, // Display the image as the marker icon
-              scaledSize: new window.google.maps.Size(40, 40), // Adjust the size if needed
+              scaledSize: new window.google.maps.Size(180, 180), // Adjust the size if needed
             }}
           />
         ))}
