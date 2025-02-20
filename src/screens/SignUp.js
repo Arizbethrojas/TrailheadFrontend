@@ -33,6 +33,10 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const signUpData = new FormData();
+    const username = formData.username;
+    console.log('first username', username);
+    const password = formData.password;
+    console.log('first pw', password);
     signUpData.append("username", formData.username);
     signUpData.append("email", formData.email);
     signUpData.append("password", formData.password);
@@ -50,10 +54,16 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
                 "Content-Type": "multipart/form-data",
               }, 
         });
-        const { access, refresh } = response.data;
-        setAuthToken(access);
+        console.log('user: ', username, "pw: ", password);
+        console.log('response.data', response.data.access_token);
+        const token = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
+        console.log('token', token);
+        const { access, refresh } = token.data;
+        console.log('access', access);
+        // setAuthToken(access);
         console.log("Signup successful!");
-        onSignUp();
+        console.log('su access', access)
+        onSignUp(access);
         navigate("/trips");
         } catch (err) {
         console.error("Signup failed:", err.response ? err.response.data : err.message);
