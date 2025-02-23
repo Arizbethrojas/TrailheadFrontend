@@ -7,6 +7,7 @@ import dmcIcon from '../styles/images/dmcicon.png';
 import mteverestAcheivement from '../styles/images/acheivementicons/mteverest.png';
 import axios from 'axios';
 import TripPage from './TripPage';
+import Autocomplete from 'react-autosuggest';
 
 const BADGE_LEVELS = [
   { threshold: 1, name: "Bronze", description: "5 trips" },
@@ -98,7 +99,86 @@ const Profile = ({ authToken }) => {
   const [showRightSection, setShowRightSection] = useState(true);
   const [myTrips, setMyTrips] = useState([]);
   const [subclubs, setSubclubs] = useState([]);
+  const [blockedUsers, setBlockedUsers] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [value, setValue] = useState('');
+  const [showBlockList, setShowBlockList] = useState(false);
 
+  //blocklist stuff
+  useEffect(() => {
+    fetchBlockedUsers();
+  }, []);
+  
+  const fetchBlockedUsers = async () => {
+    //fetch blockedUsers and set it to the variable
+    try{
+      const response = await axios.get('http://127.0.0.1:8000/api/blocked-users/', {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      setBlockedUsers(response.data);
+      console.log('blocked', response.data);
+      console.log('complainer', response.data[0].complainer_id);
+    }
+    catch (error){
+      console.error('Error fetching blocklist', error);
+    }
+  };
+
+  //there is a list of suggestions when you try to block someone
+  const fetchSuggestions = async (value) => {
+    const response = await axios.get(`http://127.0.0.1:8000/api/students/?search=${value}`, {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log('suggestions: ', response.data);
+    setSuggestions(response.data);
+  };
+
+  const onBlockUser = async (userToBlock) => {
+    console.log('userToBlock', userToBlock);
+    console.log('authToken', authToken);
+    const response = await axios.post('http://127.0.0.1:8000/api/blocked-users/', {
+      blocked_student_id: userToBlock
+    }, {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+    });
+    console.log('onBlockUser', response.data)
+    fetchBlockedUsers();
+  }
+
+  const onSuggestionSelected = (event, {suggestion}) => {
+    console.log('suggestion.id', suggestion.id);
+    onBlockUser(suggestion.id);
+  }
+
+  const onSuggestionFetchRequested = ({value}) => {
+    fetchSuggestions(value);
+  };
+
+  const onSuggestionClearRequested = () => {
+    fetchSuggestions([]);
+  };
+
+  const toggleBlockList = () =>{
+    setShowBlockList(prevShow => !prevShow);
+  }
+
+  const inputProps = {
+    placeholder: "Block a user",
+    value,
+    className: "autocomplete-input", //for styling
+    onChange: (event, {newValue}) => setValue(newValue)
+  };
+
+  //subclub stuff
   const fetchSubclubs = async () => {
     if (!authToken) return;
 
@@ -315,6 +395,35 @@ const Profile = ({ authToken }) => {
               <h1>{userData.student_name}</h1>
               <img src={fnfImage} alt="Profile" className="profile-pic" />
             </div>
+            <button className='blocked-button' onClick={toggleBlockList}>
+              {showBlockList ? 'Hide Block List': 'Manage Block List'}
+            </button>
+
+          {/* Blocking stuff */}
+          {showBlockList && (
+            <div>
+            <h2>Blocked Users</h2>
+            <ul className='blocked-users-list'>
+              {blockedUsers.map(user => (
+                <li key={user.id}>{user.blocked_name}</li>
+              ))}
+            </ul>
+
+            <Autocomplete
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={onSuggestionFetchRequested}
+              onSuggestionClearRequested={onSuggestionClearRequested}
+              getSuggestionValue={suggestion => suggestion.student_name}
+              renderSuggestion={suggestion => (
+                <div onClick={() => onBlockUser(suggestion.id)} style={{cursor: 'pointer', padding: '5px'}}>
+                  {suggestion.student_name}
+                </div>
+              )}
+              inputProps={inputProps}
+              onSuggestionSelected={onSuggestionSelected}
+            />
+          </div>
+          )}
             
             <h2>My Badges</h2>
             <div style={{ padding: '20px' }}>
