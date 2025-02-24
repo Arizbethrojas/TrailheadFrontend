@@ -350,11 +350,6 @@ const Profile = ({ authToken }) => {
                 <p>Sign up for trips with different subclubs to earn badges!</p>
               )}
             </div>
-
-            <div className="subclub-icons">
-              <img src={dmcIcon} alt="Subclub Icon 1" className="subclub-icon" />
-              <img src={dmcIcon} alt="Subclub Icon 2" className="subclub-icon" />
-            </div>
             
             <h2>Details</h2>
             <div className="details-box">
