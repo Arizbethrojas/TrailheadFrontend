@@ -36,12 +36,17 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
     const imageSrc = subclubImages[trip.subclub] || 'path/to/default_image.jpg';
 
     const handleWaitlist = async () => {
-      //don't add them if they're already on the waitlist
-      if (waitlist){
+      //don't add them if they're already on the waitlist/on the trip
+      if (waitlist && trippees){
         const onWaitlist = waitlist.some(person => person.waitlist_student===userID);
+        const onTrip = trippees.some(person => person.student===userID);
 
         if (onWaitlist){
           alert('You are already on the waitlist');
+          return;
+        }
+        else if (onTrip){
+          alert('You are already on the trip!');
           return;
         }
 
