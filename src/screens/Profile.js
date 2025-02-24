@@ -103,6 +103,9 @@ const Profile = ({ authToken }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [value, setValue] = useState('');
   const [showBlockList, setShowBlockList] = useState(false);
+  const [leader, setLeader] = useState(false);
+  const [trippees, setTrippees] = useState([]);
+  const [waitlist, setWaitlist] = useState([]);
 
   //blocklist stuff
   useEffect(() => {
@@ -195,6 +198,7 @@ const Profile = ({ authToken }) => {
     }
   };
 
+  //badge stuff
   const calculateBadges = (trips) => {
     const badges = [];
     const tripsByClub = {};
@@ -235,6 +239,7 @@ const Profile = ({ authToken }) => {
     return badges;
 };
 
+//user stuff
   const fetchStudentProfile = async () => {
     if (!authToken) {
       console.log("No auth token available");
@@ -253,8 +258,9 @@ const Profile = ({ authToken }) => {
       console.log("Profile response:", response.data);
   
       if (response.data.id) {
+        //trips registered for
         console.log("Fetching trips for student ID:", response.data.id);
-        const tripsResponse = await axios.get('http://127.0.0.1:8000/api/trip-registrations/student/3/', {
+        const tripsResponse = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${response.data.id}/`, {
           headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
@@ -264,17 +270,20 @@ const Profile = ({ authToken }) => {
         console.log("Trips response:", tripsResponse.data);
   
         // Map trips by trip name
-        const tripsByName = tripsResponse.data.reduce((acc, trip) => {
+        console.log(tripsResponse.data);
+        const reversed = tripsResponse.data.reverse();
+        const tripsByName = reversed.reduce((acc, trip) => {
           acc[trip.trip_name] = trip;
           return acc;
         }, {});
+
   
         // Update state with user data and mapped trips
         setUserData(prevData => ({
           ...prevData,
           ...response.data,
-          // registered_trips: tripsResponse.data,
-          registered_trips: MOCK_REGISTERED_TRIPS,
+          registered_trips: tripsResponse.data,
+          // registered_trips: MOCK_REGISTERED_TRIPS,
           trips_by_name: tripsByName // Add the mapped trips by name
         }));
       }
@@ -310,15 +319,52 @@ const Profile = ({ authToken }) => {
     return `${month}/${day}/${year.slice(-2)}`;
   };
 
-  const handleTripClick = (trip) => {
+  const handleTripClick = (trip, leader=false) => {
     setSelectedTrip(trip);
     setShowTripDetails(true);
     setShowModal(true);
+    setLeader(leader);
+    fetchTrippees(trip.id);
+    fetchWaitlist(trip.id);
   };
 
   const handleBack = () => {
     setShowTripDetails(false);
     setSelectedTrip(null);
+    setLeader(false);
+  };
+
+  //fetch trippees when a trip is clicked
+  const fetchTrippees = async (tripID) => {
+    try{
+      const response = await axios.get(`http://127.0.0.1:8000/api/registrations/${tripID}/`,{ 
+        headers:{
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      setTrippees(response.data);
+      return response.data;
+    } catch (err){
+      console.log('Error fetching trippees');
+    }
+  };
+
+  //fetch waitlist when a trip is clicked
+  const fetchWaitlist = async (tripID) => {
+    console.log('tripID', tripID)
+    try{
+      const response = await axios.get(`http://127.0.0.1:8000/api/waitlist/${tripID}/`,{ 
+        headers:{
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      setWaitlist(response.data);
+      return response.data;
+    } catch (err){
+      console.log('Error fetching waitlist');
+    }
   };
 
   // Group badges by subclub for display
@@ -334,6 +380,9 @@ const Profile = ({ authToken }) => {
   }, {});
 
   if (showTripDetails && selectedTrip) {
+    if(leader){
+      return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken} leader={true} trippees={trippees} waitlist={waitlist}/>;
+    }
     return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken}/>;
   }
 
@@ -363,7 +412,7 @@ const Profile = ({ authToken }) => {
           <h2>Trips I'm Leading</h2>
           <div className="upcoming-trips">
             {userData.led_trips?.map(trip => (
-              <div key={trip.id} onClick={() => handleTripClick(trip)}>
+              <div key={trip.id} onClick={() => handleTripClick(trip, true)}>
                 <TripCard 
                   title={trip.trip_name} 
                   date={formatDate(trip.trip_date)} 

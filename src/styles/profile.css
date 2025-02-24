@@ -44,7 +44,7 @@ body, html {
   box-sizing: border-box;      /* Include padding in width calculation */
   height: 100vh;               /* Ensure it takes full height */
   overflow-y: auto;            /* Scroll if content overflows */
-  /* width: 30%; */
+  max-width: 20%;
 }
 /* Header Styles */
 h2 {

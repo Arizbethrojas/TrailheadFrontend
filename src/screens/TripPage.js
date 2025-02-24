@@ -11,7 +11,7 @@ import wscImage from '../styles/images/wsc.jpg';
 import clubskiImage from '../styles/images/skier.webp';
 import fnfImage from '../styles/images/fnf.jpg';
 
-const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive=false}) => {
+const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive=false, leader=false}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [leaderName, setLeaderName] = useState('');
 
@@ -152,11 +152,15 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
           })
           setLeaderName(response.data.student_name);
         }
+        //if this is happening its probably just an old trip and the leader is not a user id so it can't map it
+        //displaying trip.trip_leader instead
         catch(error){
-          console.error('Error fetching trip leader');
+          console.log('Error fetching trip leader');
+          setLeaderName(trip.trip_leader);
         }
       }
 
+      console.log('leader', leader);
       getTripLeader();
 
   return (
@@ -237,10 +241,12 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
               <button className="signup-button" onClick={handleWaitlist}>
                 Sign Up!
               </button>
-              <button className="trippees-button" onClick={handleOpenModal}>
-                Trippees
-              </button>
             </>
+          )}
+          {leader && (
+            <button className="trippees-button" onClick={handleOpenModal}>
+              Trippees
+            </button>
           )}
         </div>
         {/* Waitlist/trippees Modal */}
