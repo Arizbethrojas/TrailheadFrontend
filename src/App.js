@@ -17,6 +17,7 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
   const [userID, setUserID] = useState(null);
+  const [userName, setUserName] = useState(null);
   const [isTripLeader, setTripLeader] = useState(null);
 
   //store the current userID to be used by other screens
@@ -37,6 +38,7 @@ const App = () => {
       if (response.data.id){
         console.log('app.js user data: ', response.data);
         setUserID(response.data.id);
+        setUserName(response.data.student_name);
         setTripLeader(response.data.is_trip_leader);
         return response.data.id;
       }
@@ -158,7 +160,7 @@ const App = () => {
             <Route path="/login" element={<Login onLogin={handleLogin} setAuthToken={setAuthToken}/>} />
             <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
             <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
-            <Route path="/add-trip" element={isAuthenticated && isTripLeader? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/trips" />} />
+            <Route path="/add-trip" element={isAuthenticated && isTripLeader? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} userID={userID} userName={userName}/> : <Navigate to="/trips" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
             <Route path="/chat" element={isAuthenticated ? <Chat authToken={authToken} /> : <Navigate to="/chat" />} />
             <Route path="/sign-up" element={<SignUpIndividual onSignUp={handleLogin} setAuthToken={setAuthToken}/>} />

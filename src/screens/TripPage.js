@@ -11,8 +11,9 @@ import wscImage from '../styles/images/wsc.jpg';
 import clubskiImage from '../styles/images/skier.webp';
 import fnfImage from '../styles/images/fnf.jpg';
 
-const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive=false}) => {
+const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive=false, leader=false}) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [leaderName, setLeaderName] = useState('');
 
     const handleOpenModal = () => {
       setModalOpen(true);
@@ -35,12 +36,17 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
     const imageSrc = subclubImages[trip.subclub] || 'path/to/default_image.jpg';
 
     const handleWaitlist = async () => {
-      //don't add them if they're already on the waitlist
-      if (waitlist){
+      //don't add them if they're already on the waitlist/on the trip
+      if (waitlist && trippees){
         const onWaitlist = waitlist.some(person => person.waitlist_student===userID);
+        const onTrip = trippees.some(person => person.student===userID);
 
         if (onWaitlist){
           alert('You are already on the waitlist');
+          return;
+        }
+        else if (onTrip){
+          alert('You are already on the trip!');
           return;
         }
 
@@ -139,6 +145,29 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
         return found ? found.subclub_name : 'Subclub not found';
       };
 
+      //stores leader id, want to get leader name
+      const getTripLeader = async () => {
+        try{
+          console.log('tl: ', trip.trip_leader)
+          const response = await axios.get(`http://127.0.0.1:8000/api/student/${trip.trip_leader}/`, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`,
+            },
+          })
+          setLeaderName(response.data.student_name);
+        }
+        //if this is happening its probably just an old trip and the leader is not a user id so it can't map it
+        //displaying trip.trip_leader instead
+        catch(error){
+          console.log('Error fetching trip leader');
+          setLeaderName(trip.trip_leader);
+        }
+      }
+
+      console.log('leader', leader);
+      getTripLeader();
+
   return (
     <div className="min-h-screen">
       {/* Banner Image */}
@@ -187,8 +216,8 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
                 <p>{formatDate(trip.trip_date)}</p>
               </div>
               <div className="details-item">
-                <h3>Leader(s):</h3>
-                <p>{trip.trip_leader}</p>
+                <h3>Leader:</h3>
+                <p>{leaderName}</p>
               </div>
               <div className="details-item">
                 <h3>Location:</h3>
@@ -196,7 +225,12 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
               </div>
               <div className="details-item">
                 <h3>Capacity:</h3>
-                <p>{trip.trip_capacity}</p>
+                {trippees && (
+                  <p>{trippees.length} / {trip.trip_capacity}</p>
+                )}
+                {!trippees && (
+                  <p>{trip.trip_capacity}</p>
+                )}
               </div>
               <div className="details-item">
                 <h3>Bring:</h3>
@@ -217,10 +251,12 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
               <button className="signup-button" onClick={handleWaitlist}>
                 Sign Up!
               </button>
-              <button className="trippees-button" onClick={handleOpenModal}>
-                Trippees
-              </button>
             </>
+          )}
+          {leader && (
+            <button className="trippees-button" onClick={handleOpenModal}>
+              Trippees
+            </button>
           )}
         </div>
         {/* Waitlist/trippees Modal */}
