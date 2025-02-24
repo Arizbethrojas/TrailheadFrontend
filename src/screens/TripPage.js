@@ -225,7 +225,12 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
               </div>
               <div className="details-item">
                 <h3>Capacity:</h3>
-                <p>{trip.trip_capacity}</p>
+                {trippees && (
+                  <p>{trippees.length} / {trip.trip_capacity}</p>
+                )}
+                {!trippees && (
+                  <p>{trip.trip_capacity}</p>
+                )}
               </div>
               <div className="details-item">
                 <h3>Bring:</h3>
