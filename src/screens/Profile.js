@@ -334,7 +334,7 @@ const Profile = ({ authToken }) => {
   }, {});
 
   if (showTripDetails && selectedTrip) {
-    return <TripPage trip={selectedTrip} onBack={handleBack} archive={true}/>;
+    return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken}/>;
   }
 
   const BadgeCircle = ({ achieved, level, count }) => (

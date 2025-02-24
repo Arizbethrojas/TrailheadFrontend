@@ -187,6 +187,12 @@ Date: 10/27 */
     width: 550px;
 }
 
+/* make the auto text centered */
+#leader{
+    display: flex;
+    align-items: center;
+}
+
 #type, #capacity, #subclub, #level{
     width: 270px;
 }

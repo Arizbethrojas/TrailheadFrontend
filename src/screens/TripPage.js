@@ -13,6 +13,7 @@ import fnfImage from '../styles/images/fnf.jpg';
 
 const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive=false}) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [leaderName, setLeaderName] = useState('');
 
     const handleOpenModal = () => {
       setModalOpen(true);
@@ -139,6 +140,25 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
         return found ? found.subclub_name : 'Subclub not found';
       };
 
+      //stores leader id, want to get leader name
+      const getTripLeader = async () => {
+        try{
+          console.log('tl: ', trip.trip_leader)
+          const response = await axios.get(`http://127.0.0.1:8000/api/student/${trip.trip_leader}/`, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`,
+            },
+          })
+          setLeaderName(response.data.student_name);
+        }
+        catch(error){
+          console.error('Error fetching trip leader');
+        }
+      }
+
+      getTripLeader();
+
   return (
     <div className="min-h-screen">
       {/* Banner Image */}
@@ -187,8 +207,8 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
                 <p>{formatDate(trip.trip_date)}</p>
               </div>
               <div className="details-item">
-                <h3>Leader(s):</h3>
-                <p>{trip.trip_leader}</p>
+                <h3>Leader:</h3>
+                <p>{leaderName}</p>
               </div>
               <div className="details-item">
                 <h3>Location:</h3>

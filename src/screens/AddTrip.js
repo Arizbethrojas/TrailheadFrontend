@@ -9,12 +9,14 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import '../styles/addTrip.css';
 
-const AddTrip = ({onTripCreated, authToken}) => {
+const AddTrip = ({onTripCreated, authToken, userID, userName}) => {
+  console.log('userID', userID);
+  console.log('username', userName);
   const [formData, setFormData] = useState({
     trip_name: '',
     trip_date: '',
     trip_description: '',
-    trip_leader: '',
+    trip_leader: String(userID),
     trip_capacity: 0,
     subclub: '',
     trip_type: '',
@@ -80,12 +82,10 @@ const AddTrip = ({onTripCreated, authToken}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const token = getCookie('csrftoken'); //obtain csrf token
-    // console.log('token in addtrip: ', token);
+    const tripDataToSubmit = {...formData, trip_leader: formData.trip_leader};
     try{
-      const response = await axios.post('http://127.0.0.1:8000/api/trips/', formData, {
+      const response = await axios.post('http://127.0.0.1:8000/api/trips/', tripDataToSubmit, {
       headers: {
-        // 'X-CSRFToken': token,
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`,
       },
@@ -113,8 +113,11 @@ return (
           </div>
           {/* LEADERS */}
           <div className="form-question">
-            <label className='form-label'>Leaders</label>
-            <input type="text" className="form-input" id="leader" name="trip_leader" value={formData.trip_leader} onChange={handleChange} required />
+            <label className='form-label'>Leader</label>
+            <div className='form-input' id='leader'>
+              {userName}
+            </div>
+            {/* <input type="text" className="form-input" id="leader" name="trip_leader" value={formData.trip_leader} onChange={handleChange} required /> */}
           </div>
         </div>
         {/* LINE 2: LOCATION AND DATE */}
