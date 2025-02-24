@@ -143,8 +143,14 @@ const Profile = ({ authToken }) => {
   };
 
   const onBlockUser = async (userToBlock) => {
+    const isBlocked = blockedUsers.some(user => user.receiver_id === userToBlock);
+
+    if (isBlocked){
+      alert('This user is already blocked.');
+      return;
+    }
+
     console.log('userToBlock', userToBlock);
-    console.log('authToken', authToken);
     const response = await axios.post('http://127.0.0.1:8000/api/blocked-users/', {
       blocked_student_id: userToBlock
     }, {
@@ -155,11 +161,6 @@ const Profile = ({ authToken }) => {
     });
     console.log('onBlockUser', response.data)
     fetchBlockedUsers();
-  }
-
-  const onSuggestionSelected = (event, {suggestion}) => {
-    console.log('suggestion.id', suggestion.id);
-    onBlockUser(suggestion.id);
   }
 
   const onSuggestionFetchRequested = ({value}) => {
@@ -469,7 +470,6 @@ const Profile = ({ authToken }) => {
                 </div>
               )}
               inputProps={inputProps}
-              onSuggestionSelected={onSuggestionSelected}
             />
           </div>
           )}

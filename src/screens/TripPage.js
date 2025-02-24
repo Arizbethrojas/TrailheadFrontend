@@ -14,6 +14,7 @@ import fnfImage from '../styles/images/fnf.jpg';
 const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive=false, leader=false}) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [leaderName, setLeaderName] = useState('');
+  const [blockedUser, setBlockedUser] = useState(false);
 
     const handleOpenModal = () => {
       setModalOpen(true);
@@ -168,6 +169,32 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
       console.log('leader', leader);
       getTripLeader();
 
+      //check if there is a blocked user on the trip
+    const checkBlocked = async () => {
+      try{
+        const blocked = await axios.get(`http://127.0.0.1:8000/api/blocked-users/`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`,
+          },
+        });
+        console.log('blocked', blocked)
+        console.log('trippees', trippees)
+        const matchedUsers = trippees.filter(trippee => blocked.data.some(block => block.receiver_id === trippee.student));
+        console.log('matched', matchedUsers);
+        if (matchedUsers.length !== 0){
+          setBlockedUser(true);
+        }
+      }
+      catch (error){
+        console.error(error)
+      }
+    }
+
+    useEffect(() => {
+      checkBlocked();
+    }, []);
+
   return (
     <div className="min-h-screen">
       {/* Banner Image */}
@@ -195,6 +222,12 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
           <span className="tag">{trip_type_formatted[trip.trip_type]}</span>
           <span className="tag">{trip.trip_level}</span>
           <span className="tag">{getSubclubNameById(trip.subclub)}</span>
+          {blockedUser && (
+            <span className="tag" id="blocked-user">
+              !
+              <span className='tooltip'> A user you have blocked is on this trip</span>
+            </span>
+          )}
         </div>
 
         {/* Two Column Layout */}
