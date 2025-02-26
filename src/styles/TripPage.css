@@ -1,4 +1,4 @@
-/* Main container */
+/* main container */
 .min-h-screen {
     min-height: 100vh;
     /* background-color: white; */
@@ -65,21 +65,21 @@
     margin-right: 5px;
   }
 
-  #top-line{
+  #top-line {
     display: flex;
     flex-direction: row;
     align-items: center;
   }
 
-  #trippees{
+  #trippees {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow */
   }
 
-  #trippees:hover{
+  #trippees:hover {
     cursor: pointer;
   }
-  #trippees:active{
+  #trippees:active {
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow */
   }
   
@@ -99,12 +99,12 @@
   }
 
   /* Blocked user message */
-  #blocked-user{
+  #blocked-user {
     position: relative;
     cursor: pointer;
   }
 
-  .tooltip{
+  .tooltip {
     display: none;
     position: absolute;
     background-color: rgba(189, 170, 141, 0.1);
@@ -120,90 +120,223 @@
     text-align: center;
   }
   
-  #blocked-user:hover .tooltip{
+  #blocked-user:hover .tooltip {
     display: block;
   }
 
   /* Grid layout */
   .grid-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: 2fr 1fr;
   }
-  
-  @media (min-width: 768px) {
-    .grid-layout {
-      grid-template-columns: 2fr 1fr;
-    }
-  }
-  
-  /* Description section */
-  .description {
-    margin-bottom: 2rem;
-  }
-  
-  .description h2, .details h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
-  
-  .description p {
-    margin-bottom: 1rem;
-    line-height: 1.5;
-  }
-  
-  /* Details section */
-  .details {
-    background-color: rgba(183, 190, 163, 1);
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    height: fit-content;
-  }
-  
-  .details-item {
-    margin-bottom: 1rem;
-  }
-  
-  .details-item h3 {
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-  }
-  
-  /* Sign up button */
-  .signup-button-container {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-  }
-  
-  .signup-button {
-    background-color: rgba(189, 170, 141, 0.829); /* green-500 */
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 9999px;
-    font-size: 1.125rem;
-    font-weight: 600;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .signup-button:hover {
-    background-color: rgba(189, 170, 141, 1); /* green-600 */
-  }
-  
-  /* Spacing utilities */
-  .space-y-4 > * + * {
-    margin-top: 1rem;
-  }
-  
-  /* Text utilities */
-  .text-lg {
-    font-size: 1.125rem;
-  }
-  
+
   .font-semibold {
     font-weight: 600;
   }
+
+/* description section */
+.description {
+  margin-bottom: 2rem;
+}
+
+.description h2, .details h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.description p {
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* details section */
+.details {
+  background-color: rgba(183, 190, 163, 1);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  height: fit-content;
+}
+
+.details-item {
+  margin-bottom: 1rem;
+}
+
+.details-item h3 {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+/* sign up button */
+.signup-button-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.signup-button {
+  background-color: rgba(189, 170, 141, 0.829); /* green-500 */
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.signup-button:hover {
+  background-color: rgba(189, 170, 141, 1); /* green-600 */
+}
+
+/* trippees button */
+.trippees-button {
+  background-color: rgba(183, 190, 163, 0.9);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.trippees-button:hover {
+  background-color: rgba(183, 190, 163, 1);
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(189, 170, 141, 0.3);
+}
+
+/* lists */
+.modal-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.modal-content li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: #f7fafc;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.modal-content li:hover {
+  background-color: #edf2f7;
+}
+
+/* action buttons */
+.modal-content li button {
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* approve button */
+.modal-content li button:first-of-type {
+  background-color: rgba(189, 170, 141, 0.9);
+  color: white;
+}
+
+.modal-content li button:first-of-type:hover {
+  background-color: rgba(189, 170, 141, 1);
+}
+
+/* deny button waitlist */
+.modal-content li button:last-of-type {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.modal-content li button:last-of-type:hover {
+  background-color: #c53030;
+}
+
+/* close button */
+.modal-content > button {
+  display: block;
+  margin: 1rem auto 0;
+  padding: 0.75rem 2rem;
+  background-color: #718096;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-content > button:hover {
+  background-color: #4a5568;
+}
+
+/* scroll */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
