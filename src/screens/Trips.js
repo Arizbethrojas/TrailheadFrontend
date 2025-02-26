@@ -59,7 +59,6 @@ const Trips = ({authToken}) => {
     if (authToken){
       fetchTrips();
     }
-
   }, [authToken]);
 
   //only display trips that haven't happened yet
@@ -68,7 +67,7 @@ const Trips = ({authToken}) => {
   const formattedToday = today.toISOString().split('T')[0]; //YYYY-MM-DD format
 
   // Apply filters to the tripsData
-  const filteredTrips = tripsData.filter((trip) => {
+    const filteredTrips = tripsData.filter((trip) => {
     const subclubMatch = filterBySubclub ? String(trip.subclub) === filterBySubclub : true;
     const levelMatch = filterByLevel ? trip.trip_level === filterByLevel : true;
     console.log('today', formattedToday);

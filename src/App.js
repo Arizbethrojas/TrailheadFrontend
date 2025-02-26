@@ -5,14 +5,32 @@ import Login from './screens/Login'; // Import Login component
 import Archive from './screens/Archive';
 import Profile from './screens/Profile';
 import Trips from './screens/Trips';
+import Notifications from './screens/Notifications';
 import SignUpIndividual from './screens/SignUp'; 
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import TripList from './screens/TripList';
 import './App.css';
 
+const NotificationList = ({ notifications }) => {
+  return (
+    <div>
+      <h3>Your Notifications</h3>
+      <ul className="list-group">
+        {notifications.map((notification) => (
+          <li key={notification.id} className="list-group-item">
+            {notification.message} - {new Date(notification.created_at).toLocaleString()}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Manage authentication state
   const [authToken, setAuthToken] = useState(null);
+ 
+  const [notifications, setNotifications] = useState([]);
 
   const requestNotificationPermission = async () => {
     try {
@@ -36,7 +54,7 @@ const App = () => {
       
       notification.onclick = () => {
         console.log('Notification clicked');
-        window.open('https://example.com'); // Replace with your URL
+        // window.open('https://example.com'); // Replace with your URL
       };
     } else {
       console.log('Notification permission not granted. Cannot show notification.');
@@ -53,9 +71,44 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    requestNotificationPermission();
-  }, []); 
+  const fetchNotifications = async () => {
+    // Assuming you have an authToken for authorization
+    if (!authToken) return; // Only fetch if authenticated
+
+    try {
+        const response = await fetch('/api/notifications/', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setNotifications(data); // Update state with fetched notifications
+        // data.forEach(notification => {
+        //   showNotification(notification.message, notification.created_at, null);
+        //   console.log("Fetched Notifications:", data);
+        // });
+      } else {
+        console.error("Failed to fetch notifications:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+    
+    };
+  
+
+    
+  // useEffect(() => {
+  //   requestNotificationPermission();
+  //   fetchNotifications(); // Fetch notifications when component mounts
+    
+  //   }, [authToken]);
+  // }, []);
 
   const handleLogin = () => {
     setIsAuthenticated(true); // Set authentication state to true
@@ -68,6 +121,8 @@ const App = () => {
   return (
     <Router>
       <div className="app-container">
+        {/* {isAuthenticated && <NotificationList notifications={notifications} />} */}
+        
         {/* Render the navigation bar only if the user is authenticated */}
         {isAuthenticated && (
           <nav className="sidebar">
@@ -95,6 +150,13 @@ const App = () => {
                   <img src="/Add.png" alt="Add" className="icon" />
                 </Link>
               </li>
+             
+             <li>
+                <Link to="/notifications">
+                  <button className="btn btn-info">Notifications</button>
+                </Link>
+              </li>
+              
               <li>
                 <button onClick={handleLogout}>Logout</button>
               </li>
@@ -112,6 +174,7 @@ const App = () => {
             <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual />} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
+            <Route path="/notifications" element={isAuthenticated ? <Notifications authToken={authToken} /> : <Navigate to="/login" />} />         
           </Routes>
         </div>
       </div>
