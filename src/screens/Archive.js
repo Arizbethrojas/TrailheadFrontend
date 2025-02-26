@@ -112,7 +112,7 @@ const Archive = ({authToken, userID}) => {
   };
 
   if (showTripDetails && selectedTrip) {
-    return <TripPage trip={selectedTrip} onBack={handleBack} archive={true}/>;
+    return <TripPage trip={selectedTrip} onBack={handleBack} authToken={authToken} archive={true}/>;
   }
 
   return (

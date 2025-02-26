@@ -7,6 +7,7 @@ import dmcIcon from '../styles/images/dmcicon.png';
 import mteverestAcheivement from '../styles/images/acheivementicons/mteverest.png';
 import axios from 'axios';
 import TripPage from './TripPage';
+import Autocomplete from 'react-autosuggest';
 
 const BADGE_LEVELS = [
   { threshold: 1, name: "Bronze", description: "5 trips" },
@@ -98,7 +99,90 @@ const Profile = ({ authToken }) => {
   const [showRightSection, setShowRightSection] = useState(true);
   const [myTrips, setMyTrips] = useState([]);
   const [subclubs, setSubclubs] = useState([]);
+  const [blockedUsers, setBlockedUsers] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [value, setValue] = useState('');
+  const [showBlockList, setShowBlockList] = useState(false);
+  const [leader, setLeader] = useState(false);
+  const [trippees, setTrippees] = useState([]);
+  const [waitlist, setWaitlist] = useState([]);
 
+  //blocklist stuff
+  useEffect(() => {
+    fetchBlockedUsers();
+  }, []);
+  
+  const fetchBlockedUsers = async () => {
+    //fetch blockedUsers and set it to the variable
+    try{
+      const response = await axios.get('http://127.0.0.1:8000/api/blocked-users/', {
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      setBlockedUsers(response.data);
+      console.log('blocked', response.data);
+      console.log('complainer', response.data[0].complainer_id);
+    }
+    catch (error){
+      console.error('Error fetching blocklist', error);
+    }
+  };
+
+  //there is a list of suggestions when you try to block someone
+  const fetchSuggestions = async (value) => {
+    const response = await axios.get(`http://127.0.0.1:8000/api/students/?search=${value}`, {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log('suggestions: ', response.data);
+    setSuggestions(response.data);
+  };
+
+  const onBlockUser = async (userToBlock) => {
+    const isBlocked = blockedUsers.some(user => user.receiver_id === userToBlock);
+
+    if (isBlocked){
+      alert('This user is already blocked.');
+      return;
+    }
+
+    console.log('userToBlock', userToBlock);
+    const response = await axios.post('http://127.0.0.1:8000/api/blocked-users/', {
+      blocked_student_id: userToBlock
+    }, {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+      },
+    });
+    console.log('onBlockUser', response.data)
+    fetchBlockedUsers();
+  }
+
+  const onSuggestionFetchRequested = ({value}) => {
+    fetchSuggestions(value);
+  };
+
+  const onSuggestionClearRequested = () => {
+    fetchSuggestions([]);
+  };
+
+  const toggleBlockList = () =>{
+    setShowBlockList(prevShow => !prevShow);
+  }
+
+  const inputProps = {
+    placeholder: "Block a user",
+    value,
+    className: "autocomplete-input", //for styling
+    onChange: (event, {newValue}) => setValue(newValue)
+  };
+
+  //subclub stuff
   const fetchSubclubs = async () => {
     if (!authToken) return;
 
@@ -115,6 +199,7 @@ const Profile = ({ authToken }) => {
     }
   };
 
+  //badge stuff
   const calculateBadges = (trips) => {
     const badges = [];
     const tripsByClub = {};
@@ -155,6 +240,7 @@ const Profile = ({ authToken }) => {
     return badges;
 };
 
+//user stuff
   const fetchStudentProfile = async () => {
     if (!authToken) {
       console.log("No auth token available");
@@ -173,8 +259,9 @@ const Profile = ({ authToken }) => {
       console.log("Profile response:", response.data);
   
       if (response.data.id) {
+        //trips registered for
         console.log("Fetching trips for student ID:", response.data.id);
-        const tripsResponse = await axios.get('http://127.0.0.1:8000/api/trip-registrations/student/3/', {
+        const tripsResponse = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${response.data.id}/`, {
           headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
@@ -184,17 +271,20 @@ const Profile = ({ authToken }) => {
         console.log("Trips response:", tripsResponse.data);
   
         // Map trips by trip name
-        const tripsByName = tripsResponse.data.reduce((acc, trip) => {
+        console.log(tripsResponse.data);
+        const reversed = tripsResponse.data.reverse();
+        const tripsByName = reversed.reduce((acc, trip) => {
           acc[trip.trip_name] = trip;
           return acc;
         }, {});
+
   
         // Update state with user data and mapped trips
         setUserData(prevData => ({
           ...prevData,
           ...response.data,
-          // registered_trips: tripsResponse.data,
-          registered_trips: MOCK_REGISTERED_TRIPS,
+          registered_trips: tripsResponse.data,
+          // registered_trips: MOCK_REGISTERED_TRIPS,
           trips_by_name: tripsByName // Add the mapped trips by name
         }));
       }
@@ -230,15 +320,52 @@ const Profile = ({ authToken }) => {
     return `${month}/${day}/${year.slice(-2)}`;
   };
 
-  const handleTripClick = (trip) => {
+  const handleTripClick = (trip, leader=false) => {
     setSelectedTrip(trip);
     setShowTripDetails(true);
     setShowModal(true);
+    setLeader(leader);
+    fetchTrippees(trip.id);
+    fetchWaitlist(trip.id);
   };
 
   const handleBack = () => {
     setShowTripDetails(false);
     setSelectedTrip(null);
+    setLeader(false);
+  };
+
+  //fetch trippees when a trip is clicked
+  const fetchTrippees = async (tripID) => {
+    try{
+      const response = await axios.get(`http://127.0.0.1:8000/api/registrations/${tripID}/`,{ 
+        headers:{
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      setTrippees(response.data);
+      return response.data;
+    } catch (err){
+      console.log('Error fetching trippees');
+    }
+  };
+
+  //fetch waitlist when a trip is clicked
+  const fetchWaitlist = async (tripID) => {
+    console.log('tripID', tripID)
+    try{
+      const response = await axios.get(`http://127.0.0.1:8000/api/waitlist/${tripID}/`,{ 
+        headers:{
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      setWaitlist(response.data);
+      return response.data;
+    } catch (err){
+      console.log('Error fetching waitlist');
+    }
   };
 
   // Group badges by subclub for display
@@ -254,7 +381,10 @@ const Profile = ({ authToken }) => {
   }, {});
 
   if (showTripDetails && selectedTrip) {
-    return <TripPage trip={selectedTrip} onBack={handleBack} />;
+    if(leader){
+      return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken} leader={true} trippees={trippees} waitlist={waitlist}/>;
+    }
+    return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken}/>;
   }
 
   const BadgeCircle = ({ achieved, level, count }) => (
@@ -283,7 +413,7 @@ const Profile = ({ authToken }) => {
           <h2>Trips I'm Leading</h2>
           <div className="upcoming-trips">
             {userData.led_trips?.map(trip => (
-              <div key={trip.id} onClick={() => handleTripClick(trip)}>
+              <div key={trip.id} onClick={() => handleTripClick(trip, true)}>
                 <TripCard 
                   title={trip.trip_name} 
                   date={formatDate(trip.trip_date)} 
@@ -315,6 +445,34 @@ const Profile = ({ authToken }) => {
               <h1>{userData.student_name}</h1>
               <img src={fnfImage} alt="Profile" className="profile-pic" />
             </div>
+            <button className='blocked-button' onClick={toggleBlockList}>
+              {showBlockList ? 'Hide Block List': 'Manage Block List'}
+            </button>
+
+          {/* Blocking stuff */}
+          {showBlockList && (
+            <div>
+            <h2>Blocked Users</h2>
+            <ul className='blocked-users-list'>
+              {blockedUsers.map(user => (
+                <li key={user.id}>{user.blocked_name}</li>
+              ))}
+            </ul>
+
+            <Autocomplete
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={onSuggestionFetchRequested}
+              onSuggestionClearRequested={onSuggestionClearRequested}
+              getSuggestionValue={suggestion => suggestion.student_name}
+              renderSuggestion={suggestion => (
+                <div onClick={() => onBlockUser(suggestion.id)} style={{cursor: 'pointer', padding: '5px'}}>
+                  {suggestion.student_name}
+                </div>
+              )}
+              inputProps={inputProps}
+            />
+          </div>
+          )}
             
             <h2>My Badges</h2>
             <div style={{ padding: '20px' }}>

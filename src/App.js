@@ -5,16 +5,19 @@ import Login from './screens/Login';
 import Archive from './screens/Archive';
 import Profile from './screens/Profile';
 import Trips from './screens/Trips';
+import Chat from './screens/Chat';
 import SignUpIndividual from './screens/SignUp'; 
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import TripList from './screens/TripList';
 import './App.css';
 import axios from 'axios';
+import Map from './components/map'; 
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
   const [userID, setUserID] = useState(null);
+  const [userName, setUserName] = useState(null);
   const [isTripLeader, setTripLeader] = useState(null);
 
   //store the current userID to be used by other screens
@@ -35,6 +38,7 @@ const App = () => {
       if (response.data.id){
         console.log('app.js user data: ', response.data);
         setUserID(response.data.id);
+        setUserName(response.data.student_name);
         setTripLeader(response.data.is_trip_leader);
         return response.data.id;
       }
@@ -89,6 +93,7 @@ const App = () => {
 
 
   const handleLogin = (token) => {
+    console.log('handling login with toke: ', token);
     localStorage.setItem('authToken', token);
     setAuthToken(token);
     setIsAuthenticated(true);
@@ -138,6 +143,11 @@ const App = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/chat">
+                  <img src="/Add.png" alt="Chat" className="icon" />
+                </Link>
+              </li>
+              <li>
                 <button onClick={handleLogout}>Logout</button>
               </li>
             </ul>
@@ -147,18 +157,22 @@ const App = () => {
         <div className="content">
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} setAuthToken={setAuthToken}/>} />
             <Route path="/trips" element={isAuthenticated ? <Trips authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
             <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
-            <Route path="/add-trip" element={isAuthenticated && isTripLeader ? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} /> : <Navigate to="/trips" />} />
+            <Route path="/add-trip" element={isAuthenticated && isTripLeader? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} userID={userID} userName={userName}/> : <Navigate to="/trips" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
-            <Route path="/sign-up" element={<SignUpIndividual />} />
+            <Route path="/chat" element={isAuthenticated ? <Chat authToken={authToken} /> : <Navigate to="/chat" />} />
+            <Route path="/sign-up" element={<SignUpIndividual onSignUp={handleLogin} setAuthToken={setAuthToken}/>} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
+            <Route path="/map" element={<Map/>} />
           </Routes>
         </div>
       </div>
     </Router>
   );
 };
+
+
 
 export default App;
