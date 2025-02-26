@@ -1,0 +1,1142 @@
+/* for trip sign up*/
+
+.button {
+  align-items: center;
+  background-color: #92b6b1;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 72px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 15px;
+  position: relative;
+  width: 156px;
+}
+
+/* 
+filter styling
+*/
+.filter {
+  border-radius: 25px;
+  height: 37px;
+  width: 108px;
+}
+
+.filter .overlap-group {
+  background-color: #ffe5d5;
+  border-radius: 25px;
+  height: 30px;
+  position: relative;
+  width: 104px;
+}
+
+.filter .text-wrapper {
+  color: #000000;
+  font-family: "Roboto-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  height: 23px;
+  left: 18px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 4px;
+  white-space: nowrap;
+}
+
+/* details frame */
+
+.details-frame {
+  background-color: #fcf8f6;
+  padding: 20px;
+}
+
+.details-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.details-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.simple-line {
+  height: 8px;
+  background-color: #aec1c2;
+  border-radius: 4px;
+}
+
+.details-list {
+  margin-top: 20px;
+}
+
+.details-item {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.details-item .details-item-title {
+  font-weight: bold;
+}
+
+.sign-up-individual {
+    background-color: #fcf8f6;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .sign-up-individual .div-2 {
+    background-color: #fcf8f6;
+    height: 1353px;
+    position: relative;
+    width: 1512px;
+  }
+  
+  .sign-up-individual .details-frame {
+    height: 562px;
+    left: 1200px;
+    position: absolute;
+    top: 552px;
+    width: 263px;
+  }
+  
+  .sign-up-individual .details-title {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Itim-Regular", Helvetica;
+    font-size: 32px;
+    font-weight: 400;
+    left: 2px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: -4px;
+    width: 255px;
+  }
+  
+  .sign-up-individual .overlap {
+    height: 511px;
+    left: 0;
+    position: absolute;
+    top: 51px;
+    width: 263px;
+  }
+  
+  .sign-up-individual .details-bar {
+    height: 511px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 263px;
+  }
+  
+  .sign-up-individual .overlap-group-2 {
+    height: 511px;
+    position: relative;
+  }
+  
+  .sign-up-individual .rectangle-3 {
+    background-color: #d9d9d9;
+    border: 3px solid;
+    border-color: #aec1c2;
+    border-radius: 14px;
+    height: 511px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 261px;
+  }
+  
+  .sign-up-individual .linear-indeterminate-progress-indicator {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 83px !important;
+    width: 258px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-instance {
+    top: 1px !important;
+    width: 258px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-progress-indicator-instance {
+    background-color: #aec1c2 !important;
+  }
+  
+  .sign-up-individual .design-component-instance-node {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 170px !important;
+    width: 258px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-2 {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 256px !important;
+    width: 261px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-3 {
+    top: 1px !important;
+    width: 261px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-4 {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 343px !important;
+    width: 260px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-5 {
+    top: 1px !important;
+    width: 260px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-6 {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 429px !important;
+    width: 261px !important;
+  }
+  
+  .sign-up-individual .details-text-tab {
+    height: 423px;
+    left: 25px;
+    position: absolute;
+    top: 6px;
+    width: 231px;
+  }
+  
+  .sign-up-individual .provided-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 347px;
+    width: 218px;
+  }
+  
+  .sign-up-individual .span {
+    font-weight: 700;
+  }
+  
+  .sign-up-individual .text-wrapper-4 {
+    font-family: "Inter-Regular", Helvetica;
+  }
+  
+  .sign-up-individual .bring-item-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 267px;
+    width: 218px;
+  }
+  
+  .sign-up-individual .leader-s-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: -3px;
+    width: 218px;
+  }
+  
+  .sign-up-individual .location-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: -3px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 94px;
+    width: 218px;
+  }
+  
+  .sign-up-individual .capacity-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 181px;
+    width: 218px;
+  }
+  
+  .sign-up-individual .subclub-filter {
+    left: 521px !important;
+    position: absolute !important;
+    top: 490px !important;
+  }
+  
+  .sign-up-individual .dificulty-filter {
+    left: 395px !important;
+    position: absolute !important;
+    top: 490px !important;
+  }
+  
+  .sign-up-individual .trip-type-filter-instance {
+    left: 267px !important;
+    position: absolute !important;
+    top: 490px !important;
+  }
+  
+  .sign-up-individual .image {
+    height: 403px;
+    left: 235px;
+    position: absolute;
+    top: 0;
+    width: 1277px;
+  }
+  
+  .sign-up-individual .header-line {
+    left: 259px !important;
+    position: absolute !important;
+    top: 545px !important;
+    width: 890px !important;
+  }
+  
+  .sign-up-individual .header-line-2 {
+    width: 890px !important;
+  }
+  
+  .sign-up-individual .description-text {
+    border-radius: 25px !important;
+    display: flex !important;
+    height: 176px !important;
+    left: 255px !important;
+    position: absolute !important;
+    top: 564px !important;
+    width: 894px !important;
+  }
+  
+  .sign-up-individual .textarea-field-instance {
+    align-self: unset !important;
+    color: #000000 !important;
+    font-family: "Itim-Regular", Helvetica !important;
+    font-size: 32px !important;
+    font-style: unset !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    line-height: normal !important;
+    width: 240px !important;
+  }
+  
+  .sign-up-individual .description-text-2 {
+    border-radius: 25px !important;
+    margin-bottom: -375.00px !important;
+  }
+  
+  .sign-up-individual .description-text-3 {
+    color: #000000 !important;
+    font-family: "Inter-Regular", Helvetica !important;
+    font-size: 24px !important;
+    font-style: unset !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    line-height: 40px !important;
+  }
+  
+  .sign-up-individual .description-text-4 {
+    left: 882px !important;
+    top: 491px !important;
+  }
+  
+  .sign-up-individual .sign-up-button {
+    background-color: #92b6b1 !important;
+    border-radius: 25px !important;
+    box-shadow: 0px 4px 4px #00000040 !important;
+    display: flex !important;
+    height: 72px !important;
+    left: 1259px !important;
+    padding: 15px !important;
+    position: absolute !important;
+    top: 1208px !important;
+    width: 156px !important;
+  }
+  
+  .sign-up-individual .button-instance {
+    flex: unset !important;
+    flex-grow: unset !important;
+    height: 40px !important;
+    padding: 25px 24px !important;
+  }
+  
+  .sign-up-individual .sign-up-button-2 {
+    font-family: "Roboto-SemiBold", Helvetica !important;
+    font-size: 40px !important;
+    font-style: unset !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.10px !important;
+    line-height: 20px !important;
+    margin-bottom: -14.00px !important;
+    margin-left: -36.50px !important;
+    margin-right: -36.50px !important;
+    margin-top: -16.00px !important;
+  }
+  
+  .sign-up-individual .sidebar {
+    height: 682px;
+    left: 39px;
+    position: absolute;
+    top: 47px;
+    width: 83px;
+  }
+  
+  .sign-up-individual .icons {
+    height: 492px;
+    left: 9px;
+    position: absolute;
+    top: 190px;
+    width: 72px;
+  }
+  
+  .sign-up-individual .user-icon {
+    height: 72px;
+    left: 0;
+    position: absolute;
+    top: 420px;
+    width: 67px;
+  }
+  
+  .sign-up-individual .archive-icon {
+    background-color: #d7dedd;
+    border-radius: 33.24px / 36.05px;
+    height: 72px;
+    left: 6px;
+    position: absolute;
+    top: 139px;
+    width: 66px;
+  }
+  
+  .sign-up-individual .screenshot {
+    height: 67px;
+    left: 13px;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    width: 39px;
+  }
+  
+  .sign-up-individual .notifications-icon {
+    background-color: #d7dedd;
+    border-radius: 33.24px / 36.05px;
+    height: 72px;
+    left: 0;
+    position: absolute;
+    top: 280px;
+    width: 66px;
+  }
+  
+  .sign-up-individual .bell {
+    height: 43px !important;
+    left: 13px !important;
+    position: absolute !important;
+    top: 15px !important;
+    width: 40px !important;
+  }
+  
+  .sign-up-individual .trips-icon {
+    background-color: #d7dedd;
+    border-radius: 33.24px / 36.05px;
+    height: 72px;
+    left: 6px;
+    position: absolute;
+    top: 0;
+    width: 66px;
+  }
+  
+  .sign-up-individual .image-2 {
+    height: 47px;
+    left: 11px;
+    object-fit: cover;
+    position: absolute;
+    top: 12px;
+    width: 44px;
+  }
+  
+  .sign-up-individual .logo-instance {
+    left: 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+  }
+  
+  .sign-up-individual .trip-title {
+    color: #000000;
+    font-family: "Itim-Regular", Helvetica;
+    font-size: 40px;
+    font-weight: 400;
+    left: 255px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 426px;
+    white-space: nowrap;
+    width: 714px;
+  }
+  
+  .sign-up-individual .track-2 {
+    height: 1350px;
+    left: 169px;
+    position: absolute;
+    top: 3px;
+    width: 9px;
+  }
+  
+  .sign-up-individual .track-3 {
+    height: 1353px;
+    left: 181px;
+    position: absolute;
+    top: 0;
+    width: 9px;
+  }
+  
+
+
+
+/* 
+.sign-up-individual {
+    background-color: #fcf8f6;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .sign-up-individual .div {
+    background-color: #fcf8f6;
+    height: 1353px;
+    position: relative;
+    width: 1512px;
+  }
+  
+  .sign-up-individual .trip-title {
+    color: #000000;
+    font-family: "Itim-Regular", Helvetica;
+    font-size: 40px;
+    font-weight: 400;
+    left: 255px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 426px;
+    white-space: nowrap;
+    width: 714px;
+  }
+  
+  .sign-up-individual .filters-frame {
+    height: 48px;
+    left: 255px;
+    position: absolute;
+    top: 491px;
+    width: 366px;
+  }
+  
+  .sign-up-individual .filter-labels {
+    height: 48px;
+  }
+  
+  .sign-up-individual .overlap {
+    height: 48px;
+    position: relative;
+    width: 366px;
+  }
+  
+  .sign-up-individual .trip-type-filter {
+    border-radius: 25px;
+    height: 47px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 154px;
+  }
+  
+  .sign-up-individual .overlap-group {
+    background-color: #ffe5d5;
+    border-radius: 25px;
+    height: 30px;
+    position: relative;
+    width: 108px;
+  }
+  
+  .sign-up-individual .text-wrapper {
+    color: #000000;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    height: 23px;
+    left: 18px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 4px;
+    white-space: nowrap;
+  }
+  
+  .sign-up-individual .difficulty-filter {
+    border-radius: 25px;
+    height: 47px;
+    left: 128px;
+    position: absolute;
+    top: 1px;
+    width: 154px;
+  }
+  
+  .sign-up-individual .div-wrapper {
+    background-color: #ffe5d5;
+    border-radius: 25px;
+    height: 30px;
+    position: relative;
+    width: 109px;
+  }
+  
+  .sign-up-individual .text-wrapper-2 {
+    color: #000000;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    height: 23px;
+    left: 15px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 4px;
+    white-space: nowrap;
+  }
+  
+  .sign-up-individual .subclub-filter {
+    border-radius: 25px;
+    height: 47px;
+    left: 258px;
+    position: absolute;
+    top: 1px;
+    width: 108px;
+  }
+  
+  .sign-up-individual .overlap-2 {
+    background-color: #ffe5d5;
+    border-radius: 25px;
+    height: 30px;
+    position: relative;
+    width: 104px;
+  }
+  
+  .sign-up-individual .image {
+    height: 403px;
+    left: 235px;
+    position: absolute;
+    top: 0;
+    width: 1277px;
+  }
+  
+  .sign-up-individual .header-line {
+    left: 259px !important;
+    position: absolute !important;
+    top: 545px !important;
+    width: 890px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-progress-indicator {
+    width: 890px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-instance {
+    background-color: #aec1c2 !important;
+  }
+  
+  .sign-up-individual .description-text {
+    border-radius: 25px !important;
+    display: flex !important;
+    height: 176px !important;
+    left: 255px !important;
+    position: absolute !important;
+    top: 564px !important;
+    width: 894px !important;
+  }
+  
+  .sign-up-individual .textarea-field-instance {
+    align-self: unset !important;
+    color: #000000 !important;
+    font-family: "Itim-Regular", Helvetica !important;
+    font-size: 32px !important;
+    font-style: unset !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    line-height: normal !important;
+    width: 240px !important;
+  }
+  
+  .sign-up-individual .design-component-instance-node {
+    border-radius: 25px !important;
+    margin-bottom: -375.00px !important;
+  }
+  
+  .sign-up-individual .description-text-2 {
+    color: #000000 !important;
+    font-family: "Inter-Regular", Helvetica !important;
+    font-size: 24px !important;
+    font-style: unset !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    line-height: 40px !important;
+  }
+  
+  .sign-up-individual .description-text-3 {
+    left: 882px !important;
+    top: 491px !important;
+  }
+  
+  .sign-up-individual .sign-up-button {
+    background-color: #92b6b1 !important;
+    border-radius: 25px !important;
+    box-shadow: 0px 4px 4px #00000040 !important;
+    display: flex !important;
+    height: 72px !important;
+    left: 1259px !important;
+    padding: 15px !important;
+    position: absolute !important;
+    top: 1208px !important;
+    width: 156px !important;
+  }
+  
+  .sign-up-individual .button-instance {
+    flex: unset !important;
+    flex-grow: unset !important;
+    height: 40px !important;
+    padding: 25px 24px !important;
+  }
+  
+  .sign-up-individual .sign-up-button-2 {
+    font-family: "Roboto-SemiBold", Helvetica !important;
+    font-size: 40px !important;
+    font-style: unset !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.10px !important;
+    line-height: 20px !important;
+    margin-bottom: -14.00px !important;
+    margin-left: -36.50px !important;
+    margin-right: -36.50px !important;
+    margin-top: -16.00px !important;
+  }
+  
+  .sign-up-individual .sidebar-frame {
+    height: 682px;
+    left: 39px;
+    position: absolute;
+    top: 47px;
+    width: 83px;
+  }
+  
+  .sign-up-individual .icons {
+    height: 492px;
+    left: 9px;
+    position: absolute;
+    top: 190px;
+    width: 72px;
+  }
+  
+  .sign-up-individual .user-icon {
+    height: 72px;
+    left: 0;
+    position: absolute;
+    top: 420px;
+    width: 67px;
+  }
+  
+  .sign-up-individual .archive-icon {
+    background-color: #d7dedd;
+    border-radius: 33.24px / 36.05px;
+    height: 72px;
+    left: 6px;
+    position: absolute;
+    top: 139px;
+    width: 66px;
+  }
+  
+  .sign-up-individual .screenshot {
+    height: 67px;
+    left: 13px;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    width: 39px;
+  }
+  
+  .sign-up-individual .notifications-icon {
+    background-color: #d7dedd;
+    border-radius: 33.24px / 36.05px;
+    height: 72px;
+    left: 0;
+    position: absolute;
+    top: 280px;
+    width: 66px;
+  }
+  
+  .sign-up-individual .bell {
+    height: 43px !important;
+    left: 13px !important;
+    position: absolute !important;
+    top: 15px !important;
+    width: 40px !important;
+  }
+  
+  .sign-up-individual .trips-icon {
+    background-color: #d7dedd;
+    border-radius: 33.24px / 36.05px;
+    height: 72px;
+    left: 6px;
+    position: absolute;
+    top: 0;
+    width: 66px;
+  }
+  
+  .sign-up-individual .img {
+    height: 47px;
+    left: 11px;
+    object-fit: cover;
+    position: absolute;
+    top: 12px;
+    width: 44px;
+  }
+  
+  .sign-up-individual .logo {
+    height: 128px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 87px;
+  }
+  
+  .sign-up-individual .overlap-group-2 {
+    height: 128px;
+    position: relative;
+    width: 83px;
+  }
+  
+  .sign-up-individual .subtract {
+    height: 27px;
+    left: 19px;
+    position: absolute;
+    top: 16px;
+    width: 65px;
+  }
+  
+  .sign-up-individual .subtract-2 {
+    height: 59px;
+    left: 0;
+    position: absolute;
+    top: 62px;
+    width: 82px;
+  }
+  
+  .sign-up-individual .vector {
+    height: 128px;
+    left: 1px;
+    position: absolute;
+    top: 0;
+    width: 81px;
+  }
+  
+  .sign-up-individual .rectangle {
+    background-color: #6d6875;
+    height: 13px;
+    left: 23px;
+    position: absolute;
+    top: 22px;
+    width: 49px;
+  }
+  
+  .sign-up-individual .rectangle-2 {
+    background-color: #6d6875;
+    height: 13px;
+    left: 12px;
+    position: absolute;
+    top: 65px;
+    width: 49px;
+  }
+  
+  .sign-up-individual .text-wrapper-3 {
+    -webkit-text-stroke: 1.5px #f8f2ca;
+    color: #92b6b1;
+    font-family: "Post No Bills Colombo ExtraBold-Regular", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    height: 20px;
+    left: 18px;
+    letter-spacing: 4.80px;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 17px;
+    white-space: nowrap;
+    width: 56px;
+  }
+  
+  .sign-up-individual .text-wrapper-4 {
+    -webkit-text-stroke: 1.5px #f8f2ca;
+    color: #92b6b1;
+    font-family: "Post No Bills Colombo ExtraBold-Regular", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    height: 19px;
+    left: 6px;
+    letter-spacing: 4.80px;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 63px;
+    white-space: nowrap;
+    width: 56px;
+  }
+  
+  .sign-up-individual .track-2 {
+    height: 1350px;
+    left: 169px;
+    position: absolute;
+    top: 3px;
+    width: 9px;
+  }
+  
+  .sign-up-individual .track-3 {
+    height: 1353px;
+    left: 181px;
+    position: absolute;
+    top: 0;
+    width: 9px;
+  }
+  
+  .sign-up-individual .details-frame {
+    height: 562px;
+    left: 1200px;
+    position: absolute;
+    top: 552px;
+    width: 263px;
+  }
+  
+  .sign-up-individual .details-title {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Itim-Regular", Helvetica;
+    font-size: 32px;
+    font-weight: 400;
+    left: 2px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: -4px;
+    width: 255px;
+  }
+  
+  .sign-up-individual .overlap-3 {
+    height: 511px;
+    left: 0;
+    position: absolute;
+    top: 51px;
+    width: 263px;
+  }
+  
+  .sign-up-individual .details-bar {
+    height: 511px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 263px;
+  }
+  
+  .sign-up-individual .overlap-group-3 {
+    height: 511px;
+    position: relative;
+  }
+  
+  .sign-up-individual .rectangle-3 {
+    background-color: #d9d9d9;
+    border: 3px solid;
+    border-color: #aec1c2;
+    border-radius: 14px;
+    height: 511px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 261px;
+  }
+  
+  .sign-up-individual .linear-indeterminate-progress-indicator-instance {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 83px !important;
+    width: 258px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-2 {
+    top: 1px !important;
+    width: 258px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-3 {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 170px !important;
+    width: 258px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-4 {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 256px !important;
+    width: 261px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-5 {
+    top: 1px !important;
+    width: 261px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-6 {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 343px !important;
+    width: 260px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-7 {
+    top: 1px !important;
+    width: 260px !important;
+  }
+  
+  .sign-up-individual .linear-indeterminate-8 {
+    height: 13px !important;
+    left: 2px !important;
+    position: absolute !important;
+    top: 429px !important;
+    width: 261px !important;
+  }
+  
+  .sign-up-individual .details-text-tab {
+    height: 423px;
+    left: 25px;
+    position: absolute;
+    top: 6px;
+    width: 231px;
+  }
+  
+  .sign-up-individual .provided-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 347px;
+    width: 218px;
+  }
+  
+  .sign-up-individual .span {
+    font-weight: 700;
+  }
+  
+  .sign-up-individual .text-wrapper-5 {
+    font-family: "Inter-Regular", Helvetica;
+  }
+  
+  .sign-up-individual .bring-item-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 267px;
+    width: 218px;
+  }
+  
+  .sign-up-individual .leader-s-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: -3px;
+    width: 218px;
+  }
+  
+  .sign-up-individual .location-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: -3px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 94px;
+    width: 218px;
+  }
+  
+  .sign-up-individual .capacity-tab {
+    -webkit-text-stroke: 3px #aec1c2;
+    color: #000000;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 181px;
+    width: 218px;
+  }
+   */

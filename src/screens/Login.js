@@ -1,5 +1,4 @@
-// src/screens/Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Login.css'; 
@@ -10,28 +9,32 @@ const Login = ({ onLogin, setAuthToken }) => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isLogin) {
+      console.log("Navigating to Sign Up");
+      navigate('/sign-up');
+    }
+  }, [isLogin, navigate]); // Navigate when `isLogin` changes
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Submitting Form:', { username, password });
 
     if (isLogin) {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/token/', {
-          username,
-          password,
-        });
-        const { access, refresh } = response.data;
-        console.log('login successful');
-        onLogin(access); // Pass the access token to App.js handleLogin
+        const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
+        console.log("response: ", response.data);
+        const { access } = response.data;
+        console.log('access', access);
+        // setAuthToken(access);
+        console.log('Login successful');
+        onLogin(access);
         navigate('/trips');
       } catch (err) {
+        console.log(err);
         console.error('Invalid username or password');
         setError('Invalid username or password');
       }
-    } else {
-      // Placeholder for sign-up logic
-      console.log('Sign Up:', { username, password });
-      navigate('/trips');
     }
 };
 
@@ -41,6 +44,7 @@ const Login = ({ onLogin, setAuthToken }) => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username:</label>
+
           <input
             type="text"
             id="username"
