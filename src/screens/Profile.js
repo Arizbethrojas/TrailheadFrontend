@@ -17,7 +17,6 @@ const BADGE_LEVELS = [
 const Profile = ({ authToken }) => {
 
   const MOCK_REGISTERED_TRIPS = [
-    // VHOC Trips (3 trips - should earn Bronze, Silver, and Gold)
     {
       id: 1,
       trip_name: "VHOC Trip 1",
@@ -37,7 +36,6 @@ const Profile = ({ authToken }) => {
       subclub: "VHOC"
     },
     
-    // Climbing Team Trips (2 trips - should earn Bronze and Silver)
     {
       id: 4,
       trip_name: "Climbing @ Rumney",
@@ -51,7 +49,6 @@ const Profile = ({ authToken }) => {
       subclub: "Climbing Team"
     },
     
-    // Cabin & Trail Trip (1 trip - should earn Bronze)
     {
       id: 6,
       trip_name: "Hiking Mt. Moosilauke",
@@ -59,7 +56,6 @@ const Profile = ({ authToken }) => {
       subclub: "Cabin & Trail"
     },
     
-    // Flora & Fauna Trips (3 trips - should earn all badges)
     {
       id: 7,
       trip_name: "Bird Watching",
@@ -79,13 +75,14 @@ const Profile = ({ authToken }) => {
       subclub: "Flora & Fauna"
     }
   ];
+  
   const [userData, setUserData] = useState({
     student_name: "Test User",
     class_year: "2035",
     pronouns: "they/them",
     allergies: "none",
     is_trip_leader: false,
-    registered_trips: MOCK_REGISTERED_TRIPS,
+    registered_trips: MOCK_REGISTERED_TRIPS, // this is just as a placeholder—does not show up on profile
     led_trips: [],
     achievements: Array(12).fill({ icon: mteverestAcheivement }),
     tripDrafts: [],
@@ -99,6 +96,7 @@ const Profile = ({ authToken }) => {
   const [myTrips, setMyTrips] = useState([]);
   const [subclubs, setSubclubs] = useState([]);
 
+  // function to get the subclubs from the database
   const fetchSubclubs = async () => {
     if (!authToken) return;
 
@@ -115,119 +113,167 @@ const Profile = ({ authToken }) => {
     }
   };
 
-  const calculateBadges = (trips) => {
-    const badges = [];
-    const tripsByClub = {};
+// fixed fetchStudentProfile function
+// this function makes API calls to fetch user profile info, fetch the trips the user is registered for
+// and update the frontend user data state with this information
+const fetchStudentProfile = async () => {
+  if (!authToken) {
+    console.log("No auth token available");
+    return;
+  }
 
-    console.log("Calculating badges with trips:", trips);
-    console.log("Current subclubs:", subclubs);
-
-    // Count trips for each subclub
-    trips.forEach(trip => {
-      if (!tripsByClub[trip.subclub]) {
-        tripsByClub[trip.subclub] = 0;
+  try {
+    console.log("Making profile request with token:", authToken);
+    const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
       }
-      tripsByClub[trip.subclub]++;
     });
 
-    console.log("Trips by club:", tripsByClub);
+    console.log("Profile response:", response.data);
 
-    // Check each subclub against badge thresholds
-    subclubs.forEach(subclub => {
-      // Use subclub_name instead of name
-      const subclubName = subclub.subclub_name;
-      const tripCount = tripsByClub[subclubName] || 0;
+    if (response.data.id) {
+      // Use the actual student ID from the profile response
+      const studentId = response.data.id;
+      console.log("Fetching trips for student ID:", studentId);
       
-      // Find the highest badge level achieved
-      BADGE_LEVELS.forEach(level => {
-        if (tripCount >= level.threshold) {
-          badges.push({
-            id: `${subclubName}-${level.name}`.toLowerCase().replace(/\s+/g, '-'),
-            name: `${subclubName} ${level.name}`,
-            description: `Completed ${level.threshold} trips with ${subclubName}`,
-            tripCount: tripCount
-          });
-        }
-      });
-    });
-
-    console.log("Calculated badges:", badges);
-    return badges;
-};
-
-  const fetchStudentProfile = async () => {
-    if (!authToken) {
-      console.log("No auth token available");
-      return;
-    }
-  
-    try {
-      console.log("Making profile request with token:", authToken);
-      const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
+      const tripsResponse = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${studentId}/`, {
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
         }
       });
-  
-      console.log("Profile response:", response.data);
-  
-      if (response.data.id) {
-        console.log("Fetching trips for student ID:", response.data.id);
-        const tripsResponse = await axios.get('http://127.0.0.1:8000/api/trip-registrations/student/3/', {
-          headers: {
-            'Authorization': `Bearer ${authToken}`,
-            'Content-Type': 'application/json'
-          }
-        });
-  
-        console.log("Trips response:", tripsResponse.data);
-  
-        // Map trips by trip name
-        const tripsByName = tripsResponse.data.reduce((acc, trip) => {
-          acc[trip.trip_name] = trip;
-          return acc;
-        }, {});
-  
-        // Update state with user data and mapped trips
-        setUserData(prevData => ({
-          ...prevData,
-          ...response.data,
-          // registered_trips: tripsResponse.data,
-          registered_trips: MOCK_REGISTERED_TRIPS,
-          trips_by_name: tripsByName // Add the mapped trips by name
-        }));
-      }
-    } catch (error) {
-      console.log("Error details:", {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status
-      });
-      console.error('Error fetching profile data:', error);
-    }
-  };
 
+      console.log("Trips response:", tripsResponse.data);
 
-  useEffect(() => {
-    fetchStudentProfile();
-    fetchSubclubs();
-  }, [authToken]);
+      // map trips by the trip name
+      const tripsByName = tripsResponse.data.reduce((acc, trip) => {
+        acc[trip.trip_name] = trip;
+        return acc;
+      }, {});
 
-  useEffect(() => {
-    if (subclubs.length > 0) { // Only calculate badges once subclubs are loaded
-      const earnedBadges = calculateBadges(userData.registered_trips);
-      setUserData(prev => ({
-        ...prev,
-        badges: earnedBadges
+      // update state with new information
+      setUserData(prevData => ({
+        ...prevData,
+        ...response.data,
+        registered_trips: tripsResponse.data,
+        trips_by_name: tripsByName
       }));
     }
-  }, [userData.registered_trips, subclubs]);
+  } catch (error) {
+    console.log("Error details:", {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
+    console.error('Error fetching profile data:', error);
+  }
+};
+
+// function to calculate the users badges
+const calculateBadges = (trips) => {
+  const badges = [];
+  const tripsByClub = {};
+
+  console.log("Calculating badges with trips:", trips);
+  console.log("Current subclubs:", subclubs);
+
+  trips.forEach(trip => {
+    // Get subclub information
+    let subclubName = null;
+    
+    // we need to handle different ways that the subclub might be represented—can be id or name
+    if (typeof trip.subclub === 'string') {
+
+      // string handling
+      subclubName = trip.subclub;
+    } else if (typeof trip.subclub === 'number') {
+      // id handling
+      const match = subclubs.find(club => club.id === trip.subclub);
+      subclubName = match ? match.subclub_name : `Club #${trip.subclub}`;
+    } else if (trip.subclub && typeof trip.subclub === 'object') {
+      // object handling
+      subclubName = trip.subclub.subclub_name || trip.subclub.name;
+    }
+    
+    if (subclubName) {
+      if (!tripsByClub[subclubName]) {
+        tripsByClub[subclubName] = 0;
+      }
+      tripsByClub[subclubName]++;
+    }
+  });
+
+  console.log("Trips by club:", tripsByClub);
+
+  // Ccreate badges based off of count
+  Object.entries(tripsByClub).forEach(([subclubName, tripCount]) => {
+    // check threshholds
+    BADGE_LEVELS.forEach(level => {
+      if (tripCount >= level.threshold) {
+        badges.push({
+          id: `${subclubName}-${level.name}`.toLowerCase().replace(/\s+/g, '-'),
+          name: `${subclubName} ${level.name}`,
+          subclubName: subclubName,
+          description: `Completed ${level.threshold} trips with ${subclubName}`,
+          level: level.name,
+          tripCount: tripCount
+        });
+      }
+    });
+  });
+
+  // check subclubs with no trips
+  subclubs.forEach(subclub => {
+    const subclubName = subclub.subclub_name;
+    
+    if (tripsByClub[subclubName]) {
+      return;
+    }
+    // make the subclub with zero trips for display purposes
+    tripsByClub[subclubName] = 0;
+  });
+
+  console.log("Calculated badges:", badges);
+  return badges;
+};
+
+useEffect(() => {
+  fetchStudentProfile();
+  fetchSubclubs();
+}, [authToken]);
+
+  useEffect(() => {
+    if (subclubs.length > 0 && userData.registered_trips?.length > 0) { 
+      console.log("Calculating badges with subclubs:", subclubs);
+      console.log("And registered trips:", userData.registered_trips);
+      const earnedBadges = calculateBadges(userData.registered_trips);
+      console.log("Earned badges calculated:", earnedBadges);
+      setUserData(prev => ({ ...prev, badges: earnedBadges }));
+    }
+  }, [subclubs, userData.registered_trips]);
   
 
   const formatDate = (date) => {
     const [year, month, day] = date.split('-');
     return `${month}/${day}/${year.slice(-2)}`;
+  };
+
+  const formatSubclubName = (subclub) => {
+    if (!subclub) return "Unknown";
+    
+    // return subclub is string
+    if (typeof subclub === 'string') return subclub;
+    
+    // handling subclub id
+    if (typeof subclub === 'number') {
+      const match = subclubs.find(club => club.id === subclub);
+      return match ? match.subclub_name : `Club #${subclub}`;
+    }
+    
+    // handling subclub object
+    return subclub.subclub_name || subclub.name || JSON.stringify(subclub);
   };
 
   const handleTripClick = (trip) => {
@@ -241,15 +287,14 @@ const Profile = ({ authToken }) => {
     setSelectedTrip(null);
   };
 
-  // Group badges by subclub for display
   const groupedBadges = userData.badges.reduce((acc, badge) => {
-    const subclub = badge.name.split(' ')[0];
-    if (!acc[subclub]) {
-      acc[subclub] = [];
+    const subclubName = badge.subclubName;
+    
+    if (!acc[subclubName]) {
+      acc[subclubName] = [];
     }
-    console.log("Badges:", userData.badges);
-
-    acc[subclub].push(badge);
+    
+    acc[subclubName].push(badge);
     return acc;
   }, {});
 
@@ -276,6 +321,7 @@ const Profile = ({ authToken }) => {
     </div>
   );
 
+
   return (
     <div className="profile-container">
       <div className="left-section">
@@ -287,7 +333,7 @@ const Profile = ({ authToken }) => {
                 <TripCard 
                   title={trip.trip_name} 
                   date={formatDate(trip.trip_date)} 
-                  subclub={trip.subclub}
+                  subclub={formatSubclubName(trip.subclub)}
                 />
               </div>
             ))}
@@ -300,7 +346,7 @@ const Profile = ({ authToken }) => {
                 <TripCard 
                   title={trip.trip_name} 
                   date={formatDate(trip.trip_date)} 
-                  subclub={trip.subclub}
+                  subclub={formatSubclubName(trip.subclub)}
                 />
               </div>
             ))}
@@ -322,7 +368,6 @@ const Profile = ({ authToken }) => {
                 <h3>Total Trips: {userData.registered_trips.length}</h3>
               </div>
 
-              {/* Display badges for each subclub */}
               {Object.entries(groupedBadges).map(([subclub, badges]) => (
                 <div key={subclub} style={{ marginBottom: '20px' }}>
                   <h3 style={{ marginBottom: '10px' }}>{subclub}</h3>
