@@ -139,7 +139,7 @@ const Trips = ({authToken, userID}) => {
       
       {/* Display trips with a "View Details" button for each */}
       {/* new trips */}
-      <h2>New Trips</h2>
+      <h2>Recently Posted Trips</h2>
       <div className="new-trips">
         {new_trips.map((trip) => (
           <div key={trip.id} onClick={() => handleTripClick(trip)}>
@@ -148,7 +148,7 @@ const Trips = ({authToken, userID}) => {
         ))}
       </div>
       {/* all trips */}
-      <h2>All Trips</h2>
+      <h2>All Upcoming Trips</h2>
       <div className="all-doc-trips">
         {reverse.map((trip) => (
           <div key={trip.id} onClick={() => handleTripClick(trip)}>

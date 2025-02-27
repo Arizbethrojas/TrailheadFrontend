@@ -232,7 +232,20 @@ const fetchStudentProfile = async () => {
 
       console.log("Trips response:", tripsResponse.data);
 
+  //TRIP FORMATTING
       // map trips by the trip name
+      tripsResponse.data.reverse(); //organize them with most recent first
+
+      //only display trips that haven't happened yet
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const formattedToday = today.toISOString().split('T')[0]; //YYYY-MM-DD format
+
+      const filteredTrips = tripsResponse.data.filter((trip) => {
+        const dateMatch = trip.trip_date >= formattedToday;
+        return dateMatch
+      })
+
       const tripsByName = tripsResponse.data.reduce((acc, trip) => {
         acc[trip.trip_name] = trip;
         return acc;
@@ -242,7 +255,7 @@ const fetchStudentProfile = async () => {
       setUserData(prevData => ({
         ...prevData,
         ...response.data,
-        registered_trips: tripsResponse.data,
+        registered_trips: filteredTrips,
         trips_by_name: tripsByName
       }));
     }
@@ -425,7 +438,7 @@ useEffect(() => {
     if(leader){
       return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken} leader={true} trippees={trippees} waitlist={waitlist}/>;
     }
-    return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken}/>;
+    return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken} trippees={trippees}/>;
   }
 
   const BadgeCircle = ({ achieved, level, count }) => (
@@ -465,7 +478,7 @@ useEffect(() => {
             ))}
           </div>
 
-          <h2>Trips I'm Registered For ({userData.registered_trips.length} total)</h2>
+          <h2>My Upcoming Trips</h2>
           <div className="upcoming-trips">
             {userData.registered_trips?.map(trip => (
               <div key={trip.id} onClick={() => handleTripClick(trip)}>
@@ -487,37 +500,9 @@ useEffect(() => {
               <h1>{userData.student_name}</h1>
               <img src={fnfImage} alt="Profile" className="profile-pic" />
             </div>
-            <button className='blocked-button' onClick={toggleBlockList}>
-              {showBlockList ? 'Hide Block List': 'Manage Block List'}
-            </button>
-
-          {/* Blocking stuff */}
-          {showBlockList && (
-            <div>
-            <h2>Blocked Users</h2>
-            <ul className='blocked-users-list'>
-              {blockedUsers.map(user => (
-                <li key={user.id}>{user.blocked_name}</li>
-              ))}
-            </ul>
-
-            <Autocomplete
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={onSuggestionFetchRequested}
-              onSuggestionClearRequested={onSuggestionClearRequested}
-              getSuggestionValue={suggestion => suggestion.student_name}
-              renderSuggestion={suggestion => (
-                <div onClick={() => onBlockUser(suggestion.id)} style={{cursor: 'pointer', padding: '5px'}}>
-                  {suggestion.student_name}
-                </div>
-              )}
-              inputProps={inputProps}
-            />
-          </div>
-          )}
             
             <h2>My Badges</h2>
-            <div style={{ padding: '20px' }}>
+            <div style={{ padding: '20px', paddingBottom: '0px' }}>
               <div style={{ marginBottom: '20px' }}>
                 <h3>Total Trips: {userData.registered_trips.length}</h3>
               </div>
@@ -557,9 +542,39 @@ useEffect(() => {
               <p>Allergies: {userData.allergies}</p>
               {userData.is_trip_leader && <p>Trip Leader Status: Active</p>}
             </div>
+
+            <button className='blocked-button' onClick={toggleBlockList}>
+              {showBlockList ? 'Hide Block List': 'Manage Block List'}
+            </button>
+
+          {/* Blocking stuff */}
+          {showBlockList && (
+            <div className='details-box' id='blocked'>
+            <h2>Blocked Users</h2>
+            <ul className='blocked-users-list'>
+              {blockedUsers.map(user => (
+                <li key={user.id}>{user.blocked_name}</li>
+              ))}
+            </ul>
+
+            <Autocomplete
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={onSuggestionFetchRequested}
+              onSuggestionClearRequested={onSuggestionClearRequested}
+              getSuggestionValue={suggestion => suggestion.student_name}
+              renderSuggestion={suggestion => (
+                <div onClick={() => onBlockUser(suggestion.id)} style={{cursor: 'pointer', padding: '5px'}}>
+                  {suggestion.student_name}
+                </div>
+              )}
+              inputProps={inputProps}
+            />
+          </div>
+          )}
           </div>
         </div>
       )}
+
 
       <TripModal
         show={showModal}
