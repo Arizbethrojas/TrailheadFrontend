@@ -362,11 +362,11 @@ useEffect(() => {
     return subclub.subclub_name || subclub.name || JSON.stringify(subclub);
   };
 
-  const handleTripClick = (trip) => {
+  const handleTripClick = (trip, isLeader = false) => {
     setSelectedTrip(trip);
     setShowTripDetails(true);
     setShowModal(true);
-    setLeader(leader);
+    setLeader(isLeader);
     fetchTrippees(trip.id);
     fetchWaitlist(trip.id);
   };
