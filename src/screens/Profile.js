@@ -81,6 +81,7 @@ const Profile = ({ authToken }) => {
     }
   ];
   const [userData, setUserData] = useState({
+    id: 0,
     student_name: "Test User",
     class_year: "2035",
     pronouns: "they/them",
@@ -121,6 +122,7 @@ const Profile = ({ authToken }) => {
           'Content-Type': 'application/json'
         }
       });
+      console.log('blockedUsers', response.data);
       setBlockedUsers(response.data);
       console.log('blocked', response.data);
       console.log('complainer', response.data[0].complainer_id);
@@ -170,6 +172,25 @@ const Profile = ({ authToken }) => {
   const onSuggestionClearRequested = () => {
     fetchSuggestions([]);
   };
+
+  const onUnblockUser = async (userToUnblock, currentUser) => {
+    try{
+      const response = await axios.delete('http://127.0.0.1:8000/api/blocked-users/remove/',{
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        },
+        data: {
+          complainer: currentUser,
+          receiver: userToUnblock,
+        }
+      });
+      console.log('Ublocked user response:', response.data);
+      fetchBlockedUsers();
+    } catch (error){
+      console.error('Error unblocking user:', error);
+    }
+  }
 
   const toggleBlockList = () =>{
     setShowBlockList(prevShow => !prevShow);
@@ -445,34 +466,6 @@ const Profile = ({ authToken }) => {
               <h1>{userData.student_name}</h1>
               <img src={fnfImage} alt="Profile" className="profile-pic" />
             </div>
-            <button className='blocked-button' onClick={toggleBlockList}>
-              {showBlockList ? 'Hide Block List': 'Manage Block List'}
-            </button>
-
-          {/* Blocking stuff */}
-          {showBlockList && (
-            <div>
-            <h2>Blocked Users</h2>
-            <ul className='blocked-users-list'>
-              {blockedUsers.map(user => (
-                <li key={user.id}>{user.blocked_name}</li>
-              ))}
-            </ul>
-
-            <Autocomplete
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={onSuggestionFetchRequested}
-              onSuggestionClearRequested={onSuggestionClearRequested}
-              getSuggestionValue={suggestion => suggestion.student_name}
-              renderSuggestion={suggestion => (
-                <div onClick={() => onBlockUser(suggestion.id)} style={{cursor: 'pointer', padding: '5px'}}>
-                  {suggestion.student_name}
-                </div>
-              )}
-              inputProps={inputProps}
-            />
-          </div>
-          )}
             
             <h2>My Badges</h2>
             <div style={{ padding: '20px' }}>
@@ -521,6 +514,39 @@ const Profile = ({ authToken }) => {
               <p>Allergies: {userData.allergies}</p>
               {userData.is_trip_leader && <p>Trip Leader Status: Active</p>}
             </div>
+
+            <button className='blocked-button' onClick={toggleBlockList}>
+              {showBlockList ? 'Hide Block List': 'Manage Block List'}
+            </button>
+
+          {/* Blocking stuff */}
+          {showBlockList && (
+            <div className='details-box' id='blocked'>
+            <h2>Blocked Users</h2>
+            <ul className='blocked-users-list'>
+              {blockedUsers.map(user => (
+                <li id='block_entry' key={user.id}>
+                {user.blocked_name}
+                <button id='unblock' onClick={() => onUnblockUser(user.receiver_id, user.complainer_id)}>x</button>
+                </li>
+              ))}
+            </ul>
+
+            <Autocomplete
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={onSuggestionFetchRequested}
+              onSuggestionClearRequested={onSuggestionClearRequested}
+              getSuggestionValue={suggestion => suggestion.student_name}
+              renderSuggestion={suggestion => (
+                <div onClick={() => onBlockUser(suggestion.id)} style={{cursor: 'pointer', padding: '5px'}}>
+                  {suggestion.student_name}
+                </div>
+              )}
+              inputProps={inputProps}
+            />
+          </div>
+          )}
+          <span id='spacing'>.</span>
           </div>
         </div>
       )}
