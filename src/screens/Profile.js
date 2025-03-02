@@ -293,18 +293,31 @@ const Profile = ({ authToken }) => {
   
         // Map trips by trip name
         console.log(tripsResponse.data);
-        const reversed = tripsResponse.data.reverse();
-        const tripsByName = reversed.reduce((acc, trip) => {
+        tripsResponse.data.reverse();
+
+        //only show upcoming trips
+       const today = new Date();
+       today.setHours(0, 0, 0, 0);
+       const formattedToday = today.toISOString().split('T')[0]; //YYYY-MM-DD format
+
+       const newTrips = [];
+
+       tripsResponse.data.forEach(trip => {
+        if (trip.trip_date >= formattedToday){
+          newTrips.push(trip);
+        }
+       });
+
+        const tripsByName = newTrips.reduce((acc, trip) => {
           acc[trip.trip_name] = trip;
           return acc;
         }, {});
-
   
         // Update state with user data and mapped trips
         setUserData(prevData => ({
           ...prevData,
           ...response.data,
-          registered_trips: tripsResponse.data,
+          registered_trips: newTrips,
           // registered_trips: MOCK_REGISTERED_TRIPS,
           trips_by_name: tripsByName // Add the mapped trips by name
         }));
@@ -405,7 +418,7 @@ const Profile = ({ authToken }) => {
     if(leader){
       return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken} leader={true} trippees={trippees} waitlist={waitlist}/>;
     }
-    return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken}/>;
+    return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken} trippees={trippees}/>;
   }
 
   const BadgeCircle = ({ achieved, level, count }) => (
@@ -444,7 +457,7 @@ const Profile = ({ authToken }) => {
             ))}
           </div>
 
-          <h2>Trips I'm Registered For ({userData.registered_trips.length} total)</h2>
+          <h2>Trips I'm Registered For</h2>
           <div className="upcoming-trips">
             {userData.registered_trips?.map(trip => (
               <div key={trip.id} onClick={() => handleTripClick(trip)}>
