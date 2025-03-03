@@ -151,8 +151,6 @@ const Profile = ({ authToken }) => {
       alert('This user is already blocked.');
       return;
     }
-
-    console.log('userToBlock', userToBlock);
     const response = await axios.post('http://127.0.0.1:8000/api/blocked-users/', {
       blocked_student_id: userToBlock
     }, {
@@ -163,6 +161,7 @@ const Profile = ({ authToken }) => {
     });
     console.log('onBlockUser', response.data)
     fetchBlockedUsers();
+    setValue(''); //reset textbox
   }
 
   const onSuggestionFetchRequested = ({value}) => {
@@ -551,7 +550,9 @@ const Profile = ({ authToken }) => {
               onSuggestionClearRequested={onSuggestionClearRequested}
               getSuggestionValue={suggestion => suggestion.student_name}
               renderSuggestion={suggestion => (
-                <div onClick={() => onBlockUser(suggestion.id)} style={{cursor: 'pointer', padding: '5px'}}>
+                <div onClick={() => onBlockUser(suggestion.id)} 
+                className="suggestion-item"
+                style={{cursor: 'pointer', padding: '5px'}}>
                   {suggestion.student_name}
                 </div>
               )}
