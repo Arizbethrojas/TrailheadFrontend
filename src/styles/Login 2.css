@@ -1,0 +1,91 @@
+/* src/screens/Login.css */
+
+.login-container {
+    background: white;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 300px;
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  
+  .login-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #556B2F;
+    box-shadow: 0 0 0 2px rgba(85, 107, 47, 0.1);
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .submit-button {
+    width: 25%;
+    padding: 10px;
+    background-color: #556B2F;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: block;
+    margin: 0;
+  }
+  
+  .submit-button:hover {
+    background-color: #3c4d1f;
+  }
+  
+  .toggle-form {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .toggle-button {
+    background: none;
+    border: none;
+    color: #556B2F;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 4px;
+  }
+  
+  .toggle-button:hover {
+    color: #3c4d1f;
+  }
