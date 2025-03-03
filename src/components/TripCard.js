@@ -36,7 +36,26 @@ const subclubImages = {
 };
 
 const TripCard = ({ title, date, subclub, width = 300, height = 200, showImage = true }) => {
-  const imageSrc = subclubImages[subclub] || 'path/to/default_image.jpg';
+  
+  // workaround to determine if we are looking at subclub name or ID
+  let subclubId;
+  
+  if (typeof subclub === 'number' || (typeof subclub === 'string' && !isNaN(subclub))) {
+    // if subclub is an ID 
+    subclubId = String(subclub);
+  } else if (typeof subclub === 'object' && subclub) {
+    // if subclub is an object
+    subclubId = String(subclub.id);
+  } else if (typeof subclub === 'string') {
+    // if subclub is a name, find matching ID
+    const matchingSubclub = subclubs.find(sc => sc.subclub_name === subclub);
+    subclubId = matchingSubclub ? String(matchingSubclub.id) : null;
+  }
+  
+  // get image
+  const imageSrc = subclubId && subclubImages[subclubId] 
+    ? subclubImages[subclubId] 
+    : 'path/to/default_image.jpg';
 
   return (
     <div className="trip-card" style={{ width, height }}>
@@ -48,7 +67,7 @@ const TripCard = ({ title, date, subclub, width = 300, height = 200, showImage =
       )}
       <div className="trip-title">{title}</div>
       <div className="trip-info">
-        <span className="trip-date">{date}</span> {/* Date will be inline */}
+        <span className="trip-date">{date}</span>
       </div>
     </div>
   );

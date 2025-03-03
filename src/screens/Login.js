@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import '../styles/Login.css'; 
 const Login = ({ onLogin, setAuthToken }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
@@ -39,23 +39,38 @@ const Login = ({ onLogin, setAuthToken }) => {
 };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+    <div className="login-container">
+      <h1 className="login-title">{isLogin ? 'Login' : 'Sign Up'}</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label htmlFor="username">Username:</label>
-          <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
-        <div style={{ marginTop: '16px' }}>
+        <div className="form-group">
           <label htmlFor="password">Password:</label>
-          <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit" style={{ marginTop: '20px' }}>{isLogin ? 'Login' : 'Sign Up'}</button>
+        {error && <p className="error-message">{error}</p>}
+        <button type="submit" className="submit-button">
+          {isLogin ? 'Login' : 'Sign Up'}
+        </button>
       </form>
-      <p>
+      <p className="toggle-form">
         {isLogin ? 'Don’t have an account?' : 'Already have an account?'}
-        <button onClick={() => setIsLogin(false)} style={{ marginLeft: '5px', backgroundColor: 'transparent', border: 'none', color: 'blue', cursor: 'pointer' }}>
+        <button onClick={() => setIsLogin(!isLogin)} className="toggle-button">
           {isLogin ? 'Sign Up' : 'Login'}
         </button>
       </p>

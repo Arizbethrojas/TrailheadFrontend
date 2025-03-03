@@ -1,4 +1,4 @@
-/* Main container */
+/* main container */
 .min-h-screen {
     min-height: 100vh;
     /* background-color: white; */
@@ -65,24 +65,13 @@
     margin-right: 5px;
   }
 
-  #top-line{
+  #top-line {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
   }
 
-  /* #trippees{
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-  }
-
-  #trippees:hover{
-    cursor: pointer;
-  }
-  #trippees:active{
-    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2); 
-  } */
   
   /* Tags container */
   .tags-container {
@@ -100,12 +89,12 @@
   }
 
   /* Blocked user message */
-  #blocked-user{
+  #blocked-user {
     position: relative;
     cursor: pointer;
   }
 
-  .tooltip{
+  .tooltip {
     display: none;
     position: absolute;
     background-color: rgba(189, 170, 141, 0.1);
@@ -121,21 +110,22 @@
     text-align: center;
   }
   
-  #blocked-user:hover .tooltip{
+  #blocked-user:hover .tooltip {
     display: block;
   }
 
   /* Grid layout */
   .grid-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: 2fr 1fr;
   }
   
   @media (min-width: 768px) {
     .grid-layout {
       grid-template-columns: 2fr 1fr;
     }
+
+  .font-semibold {
+    font-weight: 600;
   }
 
 /* description section */
@@ -172,13 +162,6 @@
 }
 
 /* sign up button */
-/* .signup-button-container {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  display: flex;
-  gap: 1rem;
-} */
 
 .signup-button {
   background-color: rgba(189, 170, 141, 0.829); /* green-500 */
@@ -196,20 +179,6 @@
 .signup-button:hover {
   background-color: rgba(189, 170, 141, 1); /* green-600 */
 }
-
-/* trippees button */
-/* .trippees-button {
-  background-color: rgba(183, 190, 163, 0.9);
-  color: white;
-  padding: 0.75rem 2rem;
-  border-radius: 9999px;
-  font-size: 1.125rem;
-  font-weight: 600;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s;
-} */
 
 .trippees-button:hover {
   background-color: rgba(183, 190, 163, 1);
