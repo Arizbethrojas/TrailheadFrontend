@@ -155,8 +155,9 @@ Date: 10/27 */
 /* Label styling for form fields */
 .form-label {
     font-size: 18px; /* Medium font size for labels */
-    color: #34464C; /* Dark text color */
+    color: #202b2f; /* Dark text color */
     margin-bottom: 5px; /* Space below the labels */
+    font-weight: 400;
 }
 
 /* Input fields styling */

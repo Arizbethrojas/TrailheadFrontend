@@ -1,12 +1,13 @@
 /* src/screens/GlobalStyles.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Unkempt:wght@400;700&display=swap');
 
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #FDFAEF; /* Light background color */
-    font-family: "Inter", sans-serif;
+    font-family: "Montserrat", serif;
     font-optical-sizing: auto;
-    font-weight: 50;
+    font-weight: 400;
     font-style: normal;
 }
   
@@ -21,7 +22,7 @@ body {
     background-color: #616242; /* Darker background for header */
     color: white;
     padding: 10px;
-    font-family: "Itim", cursive;
+    font-family: "Unkempt", serif;
     font-weight: 400;
     font-style: normal;
   }
@@ -49,13 +50,35 @@ body {
   
   h2 {
     margin-top: 40px;
-    font-family: "Itim", cursive;
+    font-family: "Unkempt", serif;
     font-weight: 400;
     font-style: normal;
+    font-size: 32px;
   }
 
   h1{
-    font-family: "Itim", cursive;
+    font-family: "Unkempt", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 48px;
+  }
+
+  .unkempt-regular {
+    font-family: "Unkempt", serif;
     font-weight: 400;
     font-style: normal;
   }
+  
+  .unkempt-bold {
+    font-family: "Unkempt", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  
+.montserrat {
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}

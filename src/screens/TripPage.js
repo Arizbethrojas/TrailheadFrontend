@@ -216,7 +216,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
       <div className="content-wrapper">
         {/* Title */}
         <div id='top-line'>
-          <h1 className="trip-title">{trip.trip_name}</h1>
+          <h1 className="individual-trip-title" style={{fontSize:'32px'}}>{trip.trip_name}</h1>
           {leader && (
               <button className="signup-button" onClick={handleOpenModal}>
                 Trippees
