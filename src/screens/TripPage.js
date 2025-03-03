@@ -218,9 +218,17 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
         <div id='top-line'>
           <h1 className="trip-title">{trip.trip_name}</h1>
           {leader && (
-              <button className="tag" id="trippees" onClick={handleOpenModal}>
+              <button className="signup-button" onClick={handleOpenModal}>
                 Trippees
               </button>
+          )}
+          {/* Sign Up Button */}
+          {!archive && (
+            <>
+              <button className="signup-button" onClick={handleWaitlist}>
+                Sign Up!
+              </button>
+            </>
           )}
         </div>
 
@@ -284,16 +292,6 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
           </div>
         </div>
 
-        {/* Sign Up Button */}
-        <div className="signup-button-container">
-          {!archive && (
-            <>
-              <button className="signup-button" onClick={handleWaitlist}>
-                Sign Up!
-              </button>
-            </>
-          )}
-        </div>
         {/* Waitlist/trippees Modal */}
         {modalOpen && (
           <div className="modal">

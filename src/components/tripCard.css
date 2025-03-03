@@ -19,6 +19,7 @@
   
   .trip-card:hover {
     transform: translateY(-5px);
+    cursor: pointer;
   }
 
 .trip-image {
@@ -48,8 +49,8 @@
 }
 
 .trip-date {
-    background-color: #A6957C; /* Circle background */
-    border-radius: 50%; /* Make it circular */
+    /* background-color: #A6957C; Circle background */
+    /* border-radius: 50%; Make it circular */
     padding: 5px 10px; /* Padding for date */
     margin-left: 10px; /* Space between title and date */
     font-size: 14px; /* Font size for the date */
@@ -57,12 +58,4 @@
     display: inline-flex; /* Make it flex to center content */
     justify-content: center; /* Center text horizontally */
     align-items: center; /* Center text vertically */
-}
-
-.subclub {
-    /* Optional additional styling for the subclub if needed */
-}
-
-.trip-level {
-    /* Optional styling for the trip level */
 }
