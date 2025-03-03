@@ -46,3 +46,7 @@
     width: 100%;
 
 }
+
+#small-trip-card .trip-title{
+    font-size: 28px !important;
+}

@@ -78,6 +78,7 @@ const Profile = ({ authToken }) => {
   ];
   
   const [userData, setUserData] = useState({
+    id: 0,
     student_name: "Test User",
     class_year: "2035",
     pronouns: "they/them",
@@ -119,6 +120,7 @@ const Profile = ({ authToken }) => {
           'Content-Type': 'application/json'
         }
       });
+      console.log('blockedUsers', response.data);
       setBlockedUsers(response.data);
       console.log('blocked', response.data);
       console.log('complainer', response.data[0].complainer_id);
@@ -147,8 +149,6 @@ const Profile = ({ authToken }) => {
       alert('This user is already blocked.');
       return;
     }
-
-    console.log('userToBlock', userToBlock);
     const response = await axios.post('http://127.0.0.1:8000/api/blocked-users/', {
       blocked_student_id: userToBlock
     }, {
@@ -159,6 +159,7 @@ const Profile = ({ authToken }) => {
     });
     console.log('onBlockUser', response.data)
     fetchBlockedUsers();
+    setValue(''); //reset textbox
   }
 
   const onSuggestionFetchRequested = ({value}) => {
@@ -168,6 +169,25 @@ const Profile = ({ authToken }) => {
   const onSuggestionClearRequested = () => {
     fetchSuggestions([]);
   };
+
+  const onUnblockUser = async (userToUnblock, currentUser) => {
+    try{
+      const response = await axios.delete('http://127.0.0.1:8000/api/blocked-users/remove/',{
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        },
+        data: {
+          complainer: currentUser,
+          receiver: userToUnblock,
+        }
+      });
+      console.log('Ublocked user response:', response.data);
+      fetchBlockedUsers();
+    } catch (error){
+      console.error('Error unblocking user:', error);
+    }
+  }
 
   const toggleBlockList = () =>{
     setShowBlockList(prevShow => !prevShow);
@@ -234,18 +254,6 @@ const fetchStudentProfile = async () => {
 
   //TRIP FORMATTING
       // map trips by the trip name
-      tripsResponse.data.reverse(); //organize them with most recent first
-
-      //only display trips that haven't happened yet
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const formattedToday = today.toISOString().split('T')[0]; //YYYY-MM-DD format
-
-      const filteredTrips = tripsResponse.data.filter((trip) => {
-        const dateMatch = trip.trip_date >= formattedToday;
-        return dateMatch
-      })
-
       const tripsByName = tripsResponse.data.reduce((acc, trip) => {
         acc[trip.trip_name] = trip;
         return acc;
@@ -255,7 +263,7 @@ const fetchStudentProfile = async () => {
       setUserData(prevData => ({
         ...prevData,
         ...response.data,
-        registered_trips: filteredTrips,
+        registered_trips: tripsResponse.data,
         trips_by_name: tripsByName
       }));
     }
@@ -269,8 +277,7 @@ const fetchStudentProfile = async () => {
   }
 };
 
-
-// function to calculate the users badges
+  // function to calculate the users badges
 const calculateBadges = (trips) => {
   const badges = [];
   const tripsByClub = {};
@@ -478,7 +485,7 @@ useEffect(() => {
             ))}
           </div>
 
-          <h2>My Upcoming Trips</h2>
+          <h2>Trips I'm Registered For ({userData.registered_trips.length} total)</h2>
           <div className="upcoming-trips">
             {userData.registered_trips?.map(trip => (
               <div key={trip.id} onClick={() => handleTripClick(trip)}>
@@ -542,35 +549,6 @@ useEffect(() => {
               <p>Allergies: {userData.allergies}</p>
               {userData.is_trip_leader && <p>Trip Leader Status: Active</p>}
             </div>
-
-            <button className='blocked-button' onClick={toggleBlockList}>
-              {showBlockList ? 'Hide Block List': 'Manage Block List'}
-            </button>
-
-          {/* Blocking stuff */}
-          {showBlockList && (
-            <div className='details-box' id='blocked'>
-            <h2>Blocked Users</h2>
-            <ul className='blocked-users-list'>
-              {blockedUsers.map(user => (
-                <li key={user.id}>{user.blocked_name}</li>
-              ))}
-            </ul>
-
-            <Autocomplete
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={onSuggestionFetchRequested}
-              onSuggestionClearRequested={onSuggestionClearRequested}
-              getSuggestionValue={suggestion => suggestion.student_name}
-              renderSuggestion={suggestion => (
-                <div onClick={() => onBlockUser(suggestion.id)} style={{cursor: 'pointer', padding: '5px'}}>
-                  {suggestion.student_name}
-                </div>
-              )}
-              inputProps={inputProps}
-            />
-          </div>
-          )}
           </div>
         </div>
       )}

@@ -98,6 +98,31 @@ h2 {
   margin-bottom: 10px;
 }
 
+#block_entry{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.react-autosuggest__suggestions-list{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.suggestion-item:hover{
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#unblock{
+  background-color: transparent;
+  border: none;
+  font-size: large;
+}
+
+#unblock:hover{
+  cursor: pointer;
+}
+
 .autocomplete-input{
   border: 1px solid #B7BEA3;
   border-radius: 5px;
@@ -153,7 +178,7 @@ h2 {
   overflow-x: auto;
   color: #333;
   margin-bottom: 40px;
-  margin-right: 40px;
+  margin-right: 155px;
   padding-bottom: 20px;
   scrollbar-width: none;
   /* display: flex; */
@@ -171,4 +196,9 @@ h2 {
   border: none;
   border-radius: 5px; /* Round edges */
   color: white;
+}
+
+#spacing{
+  height: 25px;
+  color: transparent;
 }
