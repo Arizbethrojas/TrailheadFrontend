@@ -89,7 +89,6 @@ function Map() {
  return (
    <div>
      <h1>See where other trips have gone!</h1>
-     <p>Click on the map to upload photos from your own trips!</p>
      <GoogleMap
        mapContainerStyle={mapContainerStyle}
        zoom={12}
