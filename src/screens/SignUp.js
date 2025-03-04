@@ -17,13 +17,21 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleChange = async (event) => {
-    event.preventDefault();
+  const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+  
+    if (type === "checkbox") {
+      // Ensure checkbox values are correctly set to true/false
+      setFormData({
+        ...formData,
+        [name]: checked,  // This directly uses the checked value (true or false)
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,  // For other inputs, use the value
+      });
+    }
   };
 
   const handlePfp = (event) => {
@@ -43,6 +51,7 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
     signUpData.append("allergies", formData.allergies);
     signUpData.append("class_year", formData.classYear);
     signUpData.append("pronouns", formData.pronouns);
+    console.log('Trip Leader:', formData.tripLeader);
     signUpData.append("trip_leader", formData.tripLeader);
     if (profilePicture) {
         signUpData.append("profile_picture", profilePicture);
