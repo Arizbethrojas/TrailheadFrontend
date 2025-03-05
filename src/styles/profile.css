@@ -63,6 +63,9 @@ h2 {
   align-items: center; /* Aligns name and profile image */
   /* margin-bottom: 20px; */
 }
+#profile-name{
+  font-size: 32px;
+}
 .profile-pic {
   width: 50px; /* Adjust size as needed */
   height: auto;
