@@ -20,9 +20,9 @@
     outline: none; /* No outline on focus */
     background-color: rgba(183, 190, 163, 1);
     color: white;
+    border: none;
 }
 
-/* Optional: Change color on hover */
 .filters select:hover {
-    background-color: rgba(183, 190, 163, 0.84); /* Change border color on hover */
+    cursor: pointer;
 }

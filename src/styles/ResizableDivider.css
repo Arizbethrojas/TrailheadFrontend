@@ -1,0 +1,7 @@
+.resizer {
+  cursor: ew-resize;
+  width: 2px; /* Width of the resizer */
+  height: auto; /* Set height to auto, or specify as needed */
+  position: relative;
+  z-index: 1; /* Ensure it's on top of other elements */
+}

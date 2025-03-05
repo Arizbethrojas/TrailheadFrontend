@@ -124,27 +124,27 @@ const App = () => {
             <ul>
               <li>
                 <Link to="/trips">
-                  <img src="/Map.png" alt="Explore" className="icon" />
+                  <img src="/homeIcon.png" alt="Explore" className="icon" />
                 </Link>
               </li>
               <li>
                 <Link to="/archive">
-                  <img src="/Archive.png" alt="Archive" className="icon" />
+                  <img src="/archiveIcon.png" alt="Archive" className="icon" />
                 </Link>
               </li>
               <li>
                 <Link to="/profile">
-                  <img src="/Profile.png" alt="Profile" className="icon" />
+                  <img src="/profileIcon.png" alt="Profile" className="icon" />
                 </Link>
               </li>
               <li>
                 <Link to="/add-trip">
-                  <img src="/Add.png" alt="Add" className="icon" />
+                  <img src="/addIcon.png" alt="Add" className="icon" />
                 </Link>
               </li>
               <li>
                 <Link to="/chat">
-                  <img src="/Add.png" alt="Chat" className="icon" />
+                  <img src="/chatIcon.png" alt="Chat" className="icon" />
                 </Link>
               </li>
               <li>
@@ -162,7 +162,7 @@ const App = () => {
             <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
             <Route path="/add-trip" element={isAuthenticated && isTripLeader? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} userID={userID} userName={userName}/> : <Navigate to="/trips" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
-            <Route path="/chat" element={isAuthenticated ? <Chat authToken={authToken} /> : <Navigate to="/chat" />} />
+            <Route path="/chat" element={isAuthenticated ? <Chat authToken={authToken} user={{ username: userName, authToken: authToken }} /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual onSignUp={handleLogin} setAuthToken={setAuthToken}/>} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
             <Route path="/map" element={<Map/>} />

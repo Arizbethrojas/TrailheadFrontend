@@ -63,6 +63,9 @@ h2 {
   align-items: center; /* Aligns name and profile image */
   /* margin-bottom: 20px; */
 }
+#profile-name{
+  font-size: 32px;
+}
 .profile-pic {
   width: 50px; /* Adjust size as needed */
   height: auto;
@@ -82,12 +85,47 @@ h2 {
 .blocked-button:active{
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow */
 }
+
+.blocked-button:hover{
+  cursor: pointer;
+}
+
 .blocked-users-list{
   list-style-type: none;
   padding: 0;
   padding-bottom: 10px;
   margin: 0;
 }
+
+#blocked{
+  margin-bottom: 10px;
+}
+
+#block_entry{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.react-autosuggest__suggestions-list{
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.suggestion-item:hover{
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#unblock{
+  background-color: transparent;
+  border: none;
+  font-size: large;
+}
+
+#unblock:hover{
+  cursor: pointer;
+}
+
 .autocomplete-input{
   border: 1px solid #B7BEA3;
   border-radius: 5px;
@@ -143,7 +181,7 @@ h2 {
   overflow-x: auto;
   color: #333;
   margin-bottom: 40px;
-  margin-right: 40px;
+  margin-right: 155px;
   padding-bottom: 20px;
   scrollbar-width: none;
   /* display: flex; */
@@ -161,4 +199,9 @@ h2 {
   border: none;
   border-radius: 5px; /* Round edges */
   color: white;
+}
+
+#spacing{
+  height: 25px;
+  color: transparent;
 }
