@@ -162,7 +162,7 @@ const App = () => {
             <Route path="/archive" element={isAuthenticated ? <Archive authToken={authToken} userID={userID}/> : <Navigate to="/login" />} />
             <Route path="/add-trip" element={isAuthenticated && isTripLeader? <AddTrip onTripCreated={handleFavSubclub} authToken={authToken} userID={userID} userName={userName}/> : <Navigate to="/trips" />} />
             <Route path="/profile" element={isAuthenticated ? <Profile authToken={authToken} /> : <Navigate to="/login" />} />
-            <Route path="/chat" element={isAuthenticated ? <Chat authToken={authToken} /> : <Navigate to="/chat" />} />
+            <Route path="/chat" element={isAuthenticated ? <Chat authToken={authToken} user={{ username: userName, authToken: authToken }} /> : <Navigate to="/login" />} />
             <Route path="/sign-up" element={<SignUpIndividual onSignUp={handleLogin} setAuthToken={setAuthToken}/>} />
             <Route path="/explore-trips" element={isAuthenticated ? <TripList /> : <Navigate to="/login" />} />
             <Route path="/map" element={<Map/>} />
