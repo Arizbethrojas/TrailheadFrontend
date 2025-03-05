@@ -126,18 +126,19 @@ const Trips = ({authToken, userID}) => {
   
   return (
     <div className="trips-container">
-      <div className="header">
-        <h1>Explore Trips</h1>
+      <div id='trips-top-line'>
+        <div className="header">
+          <h1>Explore Trips</h1>
+        </div>
+
+        <Filter
+          filterBySubclub={filterBySubclub}
+          setFilterBySubclub={setFilterBySubclub}
+          filterByLevel={filterByLevel}
+          setFilterByLevel={setFilterByLevel}
+        />
       </div>
 
-      <Filter
-        filterBySubclub={filterBySubclub}
-        setFilterBySubclub={setFilterBySubclub}
-        filterByLevel={filterByLevel}
-        setFilterByLevel={setFilterByLevel}
-      />
-      
-      {/* Display trips with a "View Details" button for each */}
       {/* new trips */}
       <h2>Recently Posted Trips</h2>
       <div className="new-trips">
@@ -152,7 +153,7 @@ const Trips = ({authToken, userID}) => {
       <div className="all-doc-trips">
         {reverse.map((trip) => (
           <div key={trip.id} onClick={() => handleTripClick(trip)}>
-            <TripCard id="small-trip-card" title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level} width={'150px'} height={'100px'} showImage={false}/>
+            <TripCard id="all-upcoming" title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level} width={'80vw'} height={'20px'} margin={'0px'} backgroundColor={'white'} color={'black'} showImage={false}/> 
           </div>
         ))}
       </div>

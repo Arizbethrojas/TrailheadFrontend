@@ -191,6 +191,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
       }
     }
 
+
     useEffect(() => {
       checkBlocked();
     }, []);
@@ -248,6 +249,10 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
             {/* Details Column */}
             <div className="details">
               <h2>Details</h2>
+              <div className="details-item">
+                <span className="details-label">Date: </span>
+                <span className="details-value">{formatDate(trip.trip_date)}</span>
+              </div>
               <div className="details-item">
                 <span className="details-label">Leader: </span>
                 <span className="details-value">{leaderName}</span>
