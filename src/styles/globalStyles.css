@@ -4,7 +4,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #FDFAEF; /* Light background color */
+    background-color: #FCF8F6; /* Light background color */
     font-family: "Montserrat", serif;
     font-optical-sizing: auto;
     font-weight: 400;
@@ -61,6 +61,13 @@ body {
     font-weight: 400;
     font-style: normal;
     font-size: 48px;
+  }
+
+  h3 {
+    font-family: "Unkempt", serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 24px;
   }
 
   .unkempt-regular {

@@ -518,7 +518,7 @@ useEffect(() => {
         <div className="right-section">
           <div className="profile-info">
             <div className="profile-header">
-              <h1>{userData.student_name}</h1>
+              <h1 id='profile-name'>{userData.student_name}</h1>
               <img src={fnfImage} alt="Profile" className="profile-pic" />
             </div>
             

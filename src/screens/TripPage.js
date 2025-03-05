@@ -191,138 +191,254 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
       }
     }
 
+
     useEffect(() => {
       checkBlocked();
     }, []);
 
-  return (
-    <div className="min-h-screen">
-      {/* Banner Image */}
-      <div className="banner-container">
-            <img 
-        // src="/mountain_background.png" 
-        src={imageSrc}
-        alt="Mountain landscape with fall colors" 
-        className="banner-image"
-        />
-      </div>
-
-      {/* Back Button */}
-      <button onClick={onBack} className="back-button">
-        ←
-      </button>
-
-      {/* Main Content */}
-      <div className="content-wrapper">
-        {/* Title */}
-        <div id='top-line'>
-          <h1 className="individual-trip-title" style={{fontSize:'32px'}}>{trip.trip_name}</h1>
-          {leader && (
+    return (
+      <div className="min-h-screen">
+        {/* Banner Image */}
+        <div className="banner-container">
+          <img 
+            src={imageSrc}
+            alt="Mountain landscape with fall colors" 
+            className="banner-image"
+          />
+        </div>
+        {/* Back Button */}
+        <button onClick={onBack} className="trip-page-back-button">
+          ←
+        </button>
+        {/* Main Content */}
+        <div className="trip-page-content-wrapper">
+          {/* Title */}
+          <div id='top-line'>
+            <h1 className="individual-trip-title">{trip.trip_name}</h1>
+            {leader && (
               <button className="signup-button" onClick={handleOpenModal}>
                 Trippees
               </button>
-          )}
-          {/* Sign Up Button */}
-          {!archive && (
-            <>
+            )}
+            {!archive && (
               <button className="signup-button" onClick={handleWaitlist}>
                 Sign Up!
               </button>
-            </>
-          )}
-        </div>
-
-        {/* Tags */}
-        <div className="tags-container">
-          <span className="tag">{trip_type_formatted[trip.trip_type]}</span>
-          <span className="tag">{trip.trip_level}</span>
-          <span className="tag">{getSubclubNameById(trip.subclub)}</span>
-          {blockedUser && (
-            <span className="tag" id="blocked-user">
-              !
-              <span className='tooltip'> A user you have blocked is on this trip</span>
-            </span>
-          )}
-        </div>
-
-        {/* Two Column Layout */}
-        <div className="grid-layout">
-          {/* Description Column */}
-          <div className="description">
-            <h2>Description</h2>
-            <div className="space-y-4">
+            )}
+          </div>
+          {/* Tags */}
+          <div className="tags-container">
+            <span className="tag">{trip_type_formatted[trip.trip_type]}</span>
+            <span className="tag">{trip.trip_level}</span>
+            <span className="tag">{getSubclubNameById(trip.subclub)}</span>
+            {blockedUser && (
+              <span id="blocked-user">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323"><path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z"/></svg>
+                <span className='tooltip'> A user you have blocked is on this trip</span>
+              </span>
+            )}
+          </div>
+          <div className="horizontal-line"></div>
+          {/* Two Column Layout */}
+          <div className="grid-layout">
+            {/* Description Column */}
+            <div className="description">
+              <h2>Description</h2>
               <p>{trip.trip_description}</p>
             </div>
-          </div>
-
-          {/* Details Column */}
-          <div className="details">
-            <h2>Details</h2>
-            <div className="space-y-4">
-            <div className="details-item">
-                <h3>Date:</h3>
-                <p>{formatDate(trip.trip_date)}</p>
+            {/* Details Column */}
+            <div className="details">
+              <h2>Details</h2>
+              <div className="details-item">
+                <span className="details-label">Date: </span>
+                <span className="details-value">{formatDate(trip.trip_date)}</span>
               </div>
               <div className="details-item">
-                <h3>Leader:</h3>
-                <p>{leaderName}</p>
+                <span className="details-label">Leader: </span>
+                <span className="details-value">{leaderName}</span>
               </div>
               <div className="details-item">
-                <h3>Location:</h3>
-                <p>{trip.trip_location}</p>
+              <span className="details-label">Location: </span>
+              <span className="details-value">{trip.trip_location}</span>
               </div>
               <div className="details-item">
-                <h3>Capacity:</h3>
-                {trippees && (
-                  <p>{trippees.length} / {trip.trip_capacity}</p>
-                )}
-                {!trippees && (
-                  <p>{trip.trip_capacity}</p>
+              <span className="details-label">Capacity: </span>
+                {trippees ? (
+                  <span className="details-value">{trippees.length} / {trip.trip_capacity}</span>
+                ) : (
+                  <span className="details-value">{trip.trip_capacity}</span>
                 )}
               </div>
               <div className="details-item">
-                <h3>Bring:</h3>
-                <p>{trip.trip_bring}</p>
+              <span className="details-label">Bring: </span>
+              <span className="details-value">{trip.trip_bring}</span>
               </div>
               <div className="details-item">
-                <h3>Provided:</h3>
-                <p>{trip.trip_provided}</p>
+              <span className="details-label">Provided: </span>
+              <span className="details-value">{trip.trip_provided}</span>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Waitlist/trippees Modal */}
-        {modalOpen && (
-          <div className="modal">
-            <div className="modal-content">
-              <h2>Waitlist</h2>
-              <ul>
-                {waitlist.map((person) => (
-                  //key is registration id but displays name
-                  <li key={person.id}>
-                    {person.student_name}
-                    <button onClick={() => handleSignUp(person.waitlist_student)}>Approve</button>
-                    <button onClick={() => handleRemove(person.waitlist_student)}>Deny</button>
-                  </li>
-                ))}
-              </ul>
-              <h2>Trippees</h2>
-              <ul>
-                {trippees.map((person) => (
-                  //key is registration id but displays name
-                  <li key={person.id}>
-                    {person.student_name}
-                  </li>
+          {/* Waitlist/trippees Modal */}
+          {modalOpen && (
+            <div className="modal">
+              <div className="modal-content">
+                <h2>Waitlist</h2>
+                <ul>
+                  {waitlist.map((person) => (
+                    <li key={person.id}>
+                      {person.student_name}
+                      <button onClick={() => handleSignUp(person.waitlist_student)}>Approve</button>
+                      <button onClick={() => handleRemove(person.waitlist_student)}>Deny</button>
+                    </li>
                   ))}
-              </ul>
-              <button onClick={() => setModalOpen(false)}>Close</button>
+                </ul>
+                <h2>Trippees</h2>
+                <ul>
+                  {trippees.map((person) => (
+                    <li key={person.id}>
+                      {person.student_name}
+                    </li>
+                  ))}
+                </ul>
+                <button onClick={() => setModalOpen(false)}>Close</button>
               </div>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
 };
+//   return (
+//     <div className="min-h-screen">
+//       {/* Banner Image */}
+//       <div className="banner-container">
+//             <img 
+//         // src="/mountain_background.png" 
+//         src={imageSrc}
+//         alt="Mountain landscape with fall colors" 
+//         className="banner-image"
+//         />
+//       </div>
+
+//       {/* Back Button */}
+//       <button onClick={onBack} className="back-button">
+//         ←
+//       </button>
+
+//       {/* Main Content */}
+//       <div className="content-wrapper">
+//         {/* Title */}
+//         <div id='top-line'>
+//           <h1 className="individual-trip-title" style={{fontSize:'32px'}}>{trip.trip_name}</h1>
+//           {leader && (
+//               <button className="signup-button" onClick={handleOpenModal}>
+//                 Trippees
+//               </button>
+//           )}
+//           {/* Sign Up Button */}
+//           {!archive && (
+//             <>
+//               <button className="signup-button" onClick={handleWaitlist}>
+//                 Sign Up!
+//               </button>
+//             </>
+//           )}
+//         </div>
+
+//         {/* Tags */}
+//         <div className="tags-container">
+//           <span className="tag">{trip_type_formatted[trip.trip_type]}</span>
+//           <span className="tag">{trip.trip_level}</span>
+//           <span className="tag">{getSubclubNameById(trip.subclub)}</span>
+//           {blockedUser && (
+//             <span className="tag" id="blocked-user">
+//               !
+//               <span className='tooltip'> A user you have blocked is on this trip</span>
+//             </span>
+//           )}
+//         </div>
+
+//         <div className="horizontal-line"></div>
+
+//         {/* Two Column Layout */}
+//         <div className="grid-layout">
+//           {/* Description Column */}
+//           <div className="description">
+//             <h2>Description</h2>
+//             <div className="space-y-4">
+//               <p>{trip.trip_description}</p>
+//             </div>
+//           </div>
+
+//           {/* Details Column */}
+//           <div className="details">
+//             <h2>Details</h2>
+//             <div className="space-y-4">
+//             <div className="details-item">
+//                 <h3>Date:</h3>
+//                 <p>{formatDate(trip.trip_date)}</p>
+//               </div>
+//               <div className="details-item">
+//                 <h3>Leader:</h3>
+//                 <p>{leaderName}</p>
+//               </div>
+//               <div className="details-item">
+//                 <h3>Location:</h3>
+//                 <p>{trip.trip_location}</p>
+//               </div>
+//               <div className="details-item">
+//                 <h3>Capacity:</h3>
+//                 {trippees && (
+//                   <p>{trippees.length} / {trip.trip_capacity}</p>
+//                 )}
+//                 {!trippees && (
+//                   <p>{trip.trip_capacity}</p>
+//                 )}
+//               </div>
+//               <div className="details-item">
+//                 <h3>Bring:</h3>
+//                 <p>{trip.trip_bring}</p>
+//               </div>
+//               <div className="details-item">
+//                 <h3>Provided:</h3>
+//                 <p>{trip.trip_provided}</p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Waitlist/trippees Modal */}
+//         {modalOpen && (
+//           <div className="modal">
+//             <div className="modal-content">
+//               <h2>Waitlist</h2>
+//               <ul>
+//                 {waitlist.map((person) => (
+//                   //key is registration id but displays name
+//                   <li key={person.id}>
+//                     {person.student_name}
+//                     <button onClick={() => handleSignUp(person.waitlist_student)}>Approve</button>
+//                     <button onClick={() => handleRemove(person.waitlist_student)}>Deny</button>
+//                   </li>
+//                 ))}
+//               </ul>
+//               <h2>Trippees</h2>
+//               <ul>
+//                 {trippees.map((person) => (
+//                   //key is registration id but displays name
+//                   <li key={person.id}>
+//                     {person.student_name}
+//                   </li>
+//                   ))}
+//               </ul>
+//               <button onClick={() => setModalOpen(false)}>Close</button>
+//               </div>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
 
 export default TripPage;
