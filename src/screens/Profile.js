@@ -228,7 +228,6 @@ const fetchStudentProfile = async () => {
   }
 
   try {
-    console.log("Making profile request with token:", authToken);
     const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
       headers: {
         'Authorization': `Bearer ${authToken}`,
@@ -273,10 +272,13 @@ const fetchStudentProfile = async () => {
         return acc;
       }, {});
 
+      const backendUrl = 'http://127.0.0.1:8000';
+
       // update state with new information
       setUserData(prevData => ({
         ...prevData,
         ...response.data,
+        profile_picture: response.data.profile_picture ? `${backendUrl}${response.data.profile_picture}` : null,
         registered_trips: newTrips,
         trips_by_name: tripsByName
       }));
@@ -519,7 +521,9 @@ useEffect(() => {
           <div className="profile-info">
             <div className="profile-header">
               <h1 id='profile-name'>{userData.student_name}</h1>
-              <img src={fnfImage} alt="Profile" className="profile-pic" />
+              {userData.profile_picture && (
+                <img src={userData.profile_picture} alt="Profile" className="profile-pic" />
+              )}
             </div>
             
             <h2>My Badges</h2>
