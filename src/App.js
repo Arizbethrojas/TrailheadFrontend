@@ -19,6 +19,7 @@ const App = () => {
   const [userID, setUserID] = useState(null);
   const [userName, setUserName] = useState(null);
   const [isTripLeader, setTripLeader] = useState(null);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   //store the current userID to be used by other screens
   const fetchStudentProfile = async () => {
@@ -29,7 +30,7 @@ const App = () => {
 
     try {
       console.log("Making profile request with token:", authToken);
-      const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
+      const response = await axios.get(`${apiUrl}/api/student/current/`, {
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
