@@ -1,4 +1,4 @@
-/* 
+/* /* 
  * Chat Component Styling
  * Fixed sidebar and improved layout
  */
@@ -37,7 +37,7 @@ body, html {
   flex: 1;
   height: 100vh;
   overflow: hidden;
-  width: calc(100vw - 200px); /* Subtract sidebar width plus some*/
+  width: calc(100vw - 80px); /* Subtract sidebar width */
 }
 
 /* active Users Section (green sidebar) */
@@ -286,4 +286,4 @@ body, html {
 .chat-box::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
-}
+} 
