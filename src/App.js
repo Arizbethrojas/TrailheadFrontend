@@ -13,12 +13,14 @@ import './App.css';
 import axios from 'axios';
 import Map from './components/map'; 
 
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
   const [userID, setUserID] = useState(null);
   const [userName, setUserName] = useState(null);
   const [isTripLeader, setTripLeader] = useState(null);
+  const [currentRoute, setCurrentRoute] = useState('/'); // Track the current route
 
   //store the current userID to be used by other screens
   const fetchStudentProfile = async () => {
@@ -111,12 +113,17 @@ const App = () => {
       setIsAuthenticated(true);
       fetchStudentProfile();
     }
+
+    const handleRouteChange = (path) => {
+      setCurrentRoute(path);
+    };
+
   }, [authToken]);
 
   return (
     <Router>
       <div className="app-container">
-        {isAuthenticated && (
+        {isAuthenticated && currentRoute !== '/login' && (
           <nav className="sidebar">
             <img src="/Logo.png" alt="Logo" className="logo" />
             <img src="/Dashed1.png" alt="" className="dashed-line" id="dashed1" />
