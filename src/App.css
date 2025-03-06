@@ -125,3 +125,9 @@
 .sidebar ul li button:hover {
   background-color: #c0392b;
 }
+
+/* fixing sidebar issue */
+.login-container .app-left-sidebar,
+.signup-container .app-left-sidebar {
+  display: none !important;
+}

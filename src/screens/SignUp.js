@@ -158,6 +158,10 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
           </label>
         </div>
 
+        <p className="sui-upload-text"> 
+          Upload Profile Photo (.jpg accepted)
+        </p>
+
         <input
           className="sui-file-input"
           type="file"
