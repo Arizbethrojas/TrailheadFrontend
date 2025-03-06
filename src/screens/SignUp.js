@@ -158,7 +158,7 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
           </label>
         </div>
 
-        <p className="sui-upload-text"> 
+        {/* <p className="sui-upload-text"> 
           Upload Profile Photo (.jpg accepted)
         </p>
 
@@ -168,7 +168,7 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
           name="profilePicture"
           accept="image/*"
           onChange={handlePfp}
-        />
+        /> */}
 
         {error && <p className="sui-error-message">{error}</p>}
 
