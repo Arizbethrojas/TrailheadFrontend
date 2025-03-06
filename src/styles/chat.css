@@ -31,12 +31,13 @@ body, html {
   z-index: 1;
 }
 
-/* main Chat Container */
+/* main chat container*/
 .chat-container {
   display: flex;
   flex: 1;
   height: 100vh;
   overflow: hidden;
+  width: calc(100vw - 200px); /* Subtract sidebar width plus some*/
 }
 
 /* active Users Section (green sidebar) */
@@ -157,13 +158,16 @@ body, html {
   color: #333;
 }
 
+
 .messages-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   background-color: #fff;
   overflow: hidden;
+  width: 100%; /* Make it take full width */
 }
+
 
 .messages-container h2 {
   font-size: 1rem;
