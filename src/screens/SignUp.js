@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import '../styles/signUp.css'; 
 
 const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
   const [isSignUp, setIsSignUp] = useState(true);
