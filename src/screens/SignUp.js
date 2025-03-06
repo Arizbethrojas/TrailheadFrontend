@@ -22,15 +22,14 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
     const { name, value, type, checked } = event.target;
   
     if (type === "checkbox") {
-      // Ensure checkbox values are correctly set to true/false
       setFormData({
         ...formData,
-        [name]: checked,  // This directly uses the checked value (true or false)
+        [name]: checked,
       });
     } else {
       setFormData({
         ...formData,
-        [name]: value,  // For other inputs, use the value
+        [name]: value,
       });
     }
   };
@@ -87,9 +86,11 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
-      <form onSubmit={handleSubmit}>
+    <div className="sui-container">
+      <h2 className="sui-title">Sign Up</h2>
+      <form className="sui-form" onSubmit={handleSubmit}>
         <input
+          className="sui-input"
           type="text"
           name="username"
           placeholder="Username"
@@ -98,6 +99,7 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
           required
         />
         <input
+          className="sui-input"
           type="email"
           name="email"
           placeholder="Email"
@@ -106,6 +108,7 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
           required
         />
         <input
+          className="sui-input"
           type="password"
           name="password"
           placeholder="Password"
@@ -114,6 +117,7 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
           required
         />
         <input
+          className="sui-input"
           type="text"
           name="allergies"
           placeholder="Allergies (if any)"
@@ -121,6 +125,7 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
           onChange={handleChange}
         />
         <input
+          className="sui-input"
           type="number"
           name="classYear"
           placeholder="Class Year (4-digit)"
@@ -131,6 +136,7 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
           max="2100"
         />
         <input
+          className="sui-input"
           type="text"
           name="pronouns"
           placeholder="Pronouns (e.g., they/them, she/her)"
@@ -138,34 +144,39 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
           onChange={handleChange}
         />
 
-        <label>
+        <div className="sui-checkbox-container">
           <input
+            className="sui-checkbox"
             type="checkbox"
             name="tripLeader"
+            id="tripLeaderCheckbox"
             checked={formData.tripLeader}
             onChange={handleChange}
           />
-          I am a trip leader
-        </label>
+          <label className="sui-checkbox-label" htmlFor="tripLeaderCheckbox">
+            I am a trip leader
+          </label>
+        </div>
 
         <input
+          className="sui-file-input"
           type="file"
           name="profilePicture"
           accept="image/*"
           onChange={handlePfp}
         />
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="sui-error-message">{error}</p>}
 
-        <button type="submit" style={{ marginTop: '20px' }}>
-            Sign Up!
+        <button className="sui-button sui-primary-button" type="submit">
+          Sign Up!
         </button>
         <button 
+          className="sui-button sui-secondary-button"
           type="button" 
-          onClick={handleBackToLogin} 
-          style={{ marginTop: '10px', backgroundColor: '#f0f0f0' }}
+          onClick={handleBackToLogin}
         >
-          return to login
+          Return to Login
         </button>
       </form>
     </div>

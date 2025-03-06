@@ -1,4 +1,4 @@
-/* /* 
+/* /* /* 
  * Chat Component Styling
  * Fixed sidebar and improved layout
  */
@@ -37,7 +37,7 @@ body, html {
   flex: 1;
   height: 100vh;
   overflow: hidden;
-  width: calc(100vw - 80px); /* Subtract sidebar width */
+  width: calc(100vw - 150px); /* Subtract sidebar width MOVES BACK AND FORTH*/
 }
 
 /* active Users Section (green sidebar) */
