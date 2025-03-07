@@ -7,6 +7,8 @@
   z-index: 1; /* Ensure it stays above other content */
   padding: 10px; /* Optional: add some padding */
   margin-left: 0px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 .filters-container {

@@ -54,7 +54,10 @@ const Archive = ({ authToken, userID }) => {
            'Content-Type': 'application/json',
          },
        });
-       setMyTrips(response.data);
+       const uniqueTrips = response.data.filter((trip, index, self) => 
+        index === self.findIndex((t) => t.id === trip.id)
+      );
+       setMyTrips(uniqueTrips);
      }
    } catch (error) {
      console.error('Error fetching my archived trips:', error);
