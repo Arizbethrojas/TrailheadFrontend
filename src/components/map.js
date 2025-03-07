@@ -1,121 +1,127 @@
-//maps.js:
 import React, { useState, useCallback, useEffect } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import axios from "axios";
+import vanImage from "../styles/images/van.png"; // Import your local icon image
+import '../styles/map.css';
 
 const mapContainerStyle = {
- width: "225%",
- height: "630px",
+  width: "225%",
+  height: "600px",
 };
 
 const center = { lat: 43.7022, lng: -72.2896 }; // Hanover, NH
 
 function Map() {
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  });
 
- const { isLoaded, loadError } = useLoadScript({
-   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // Secure API key using .env
- });
+  const [markers, setMarkers] = useState([]);
+  const [photo, setPhoto] = useState(null);
+  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [temporaryMarker, setTemporaryMarker] = useState(null); 
 
- const [markers, setMarkers] = useState([]);
- const [photo, setPhoto] = useState(null);
- const [selectedPosition, setSelectedPosition] = useState(null); // Store selected position for marker
+  const handleMapClick = useCallback((event) => {
+    const position = {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    };
+    setTemporaryMarker(position);
+    setSelectedPosition(position);
+  }, []);
 
- const handleMapClick = useCallback((event) => {
-   setSelectedPosition({
-     lat: event.latLng.lat(),
-     lng: event.latLng.lng(),
-   });
- }, []);
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPhoto(file);
+    }
+  };
 
- const handlePhotoUpload = (e) => {
-   const file = e.target.files[0];
-   if (file) {
-     setPhoto(file);
-   }
- };
+  const submitMarker = async () => {
+    if (!selectedPosition || !photo) {
+      alert("Please click on the map and upload a photo!");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("latitude", selectedPosition.lat);
+    formData.append("longitude", selectedPosition.lng);
+    formData.append("image", photo);
+    try {
+      await axios.post("http://localhost:8000/api/markers/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      fetchMarkers();
+      setPhoto(null);
+      setSelectedPosition(null);
+      setTemporaryMarker(null);
+    } catch (error) {
+      console.error("Error adding marker:", error);
+    }
+  };
 
- const submitMarker = async () => {
-   if (!selectedPosition || !photo) {
-     alert("Please click on the map and upload a photo!");
-     return;
-   }
+  const fetchMarkers = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/markers/");
+      setMarkers(response.data);
+    } catch (error) {
+      console.error("Error fetching markers:", error);
+    }
+  };
 
-   const formData = new FormData();
-   formData.append("latitude", selectedPosition.lat);
-   formData.append("longitude", selectedPosition.lng);
-   formData.append("image", photo);
+  useEffect(() => {
+    if (isLoaded) {
+      fetchMarkers();
+    }
+  }, [isLoaded]);
 
-   try {
-     // Replace with your API endpoint to store the marker
-     await axios.post("http://localhost:8000/api/markers/", formData, {
-       headers: {
-         "Content-Type": "multipart/form-data",
-       },
-     });
+  if (loadError) {
+    return <p>Error loading maps</p>;
+  }
+  if (!isLoaded) {
+    return <p>Loading maps...</p>;
+  }
 
-     // Fetch the updated markers after adding a new one
-     fetchMarkers();
-     setPhoto(null); // Reset the photo input
-     setSelectedPosition(null); // Reset the selected position
-   } catch (error) {
-     console.error("Error adding marker:", error);
-   }
- };
+  return (
+    <div>
+      <h1>See where other trips have gone!</h1>
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        zoom={12}
+        center={center}
+        onClick={handleMapClick}
+      >
+        {markers.map((marker) => (
+          <Marker
+            key={marker.id}
+            position={{ lat: marker.latitude, lng: marker.longitude }}
+            icon={{
+              url: marker.image,
+              scaledSize: new window.google.maps.Size(180, 180),
+            }}
+          />
+        ))}
 
- // Fetch markers from the backend
- const fetchMarkers = async () => {
-   try {
-     const response = await axios.get("http://localhost:8000/api/markers/");
-     setMarkers(response.data); // Update markers state with fetched data
-   } catch (error) {
-     console.error("Error fetching markers:", error);
-   }
- };
+        {/* Render the temporary marker */}
+        {temporaryMarker && (
+          <Marker
+            position={temporaryMarker}
+            icon={{
+              url: vanImage, // Use the local image import
+              scaledSize: new window.google.maps.Size(120, 100), // Adjust size as needed
+            }}
+          />
+        )}
+      </GoogleMap>
 
- // Load markers when the map is loaded
- useEffect(() => {
-   if (isLoaded) {
-     fetchMarkers();
-   }
- }, [isLoaded]);
-
- if (loadError) {
-   return <p>Error loading maps</p>;
- }
- if (!isLoaded) {
-   return <p>Loading maps...</p>;
- }
-
- return (
-   <div>
-     <h1>See where other trips have gone!</h1>
-     <GoogleMap
-       mapContainerStyle={mapContainerStyle}
-       zoom={12}
-       center={center}
-       onClick={handleMapClick}
-     >
-       {markers.map((marker) => (
-         <Marker
-           key={marker.id}
-           position={{ lat: marker.latitude, lng: marker.longitude }}
-           icon={{
-             url: marker.image, // Display the image as the marker icon
-             scaledSize: new window.google.maps.Size(180, 180), // Adjust the size if needed
-           }}
-         />
-       ))}
-     </GoogleMap>
-    
-     {/* Photo upload UI - Always displayed */}
-     <div>
-       <h3>Add Photo for Marker</h3>
-       <input type="file" onChange={handlePhotoUpload} />
-       <button onClick={submitMarker}>Submit Marker</button>
-       {selectedPosition && <p>Position selected: {`${selectedPosition.lat}, ${selectedPosition.lng}`}</p>}
-     </div>
-   </div>
- );
+      <div className="photoUploadUI">
+        <h2>Click map to upload photo</h2>
+        <input type="file" onChange={handlePhotoUpload} />
+        <button onClick={submitMarker}>Submit Marker</button>
+      </div>
+    </div>
+  );
 }
 
 export default Map;
