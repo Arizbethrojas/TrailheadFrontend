@@ -144,11 +144,13 @@ const App = () => {
                   <img src="/profileIcon.png" alt="Profile" className="icon" />
                 </Link>
               </li>
-              <li>
+              {isTripLeader && (
+                <li>
                 <Link to="/add-trip">
                   <img src="/addIcon.png" alt="Add" className="icon" />
                 </Link>
               </li>
+              )}
               <li>
                 <Link to="/chat">
                   <img src="/chatIcon.png" alt="Chat" className="icon" />

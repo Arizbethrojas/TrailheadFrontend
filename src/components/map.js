@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import axios from "axios";
-import vanImage from "../styles/images/van.png"; // Import your local icon image
+import vanImage from "../styles/images/pin.png"; // Import your local icon image
 import '../styles/map.css';
 
 const mapContainerStyle = {
@@ -109,16 +109,18 @@ function Map() {
             position={temporaryMarker}
             icon={{
               url: vanImage, // Use the local image import
-              scaledSize: new window.google.maps.Size(120, 100), // Adjust size as needed
+              scaledSize: new window.google.maps.Size(25, 25), // Adjust size as needed
             }}
           />
         )}
       </GoogleMap>
 
       <div className="photoUploadUI">
-        <h2>Click map to upload photo</h2>
-        <input type="file" onChange={handlePhotoUpload} />
-        <button onClick={submitMarker}>Submit Marker</button>
+        <h2 id="upload-text">Click map to upload photo</h2>
+        <div id="photo-buttons">
+          <button id="marker-button" onClick={submitMarker}>Submit Marker</button>
+          <input id="upload-button" type="file" onChange={handlePhotoUpload} />
+        </div>
       </div>
     </div>
   );
