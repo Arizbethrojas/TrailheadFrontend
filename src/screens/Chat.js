@@ -123,6 +123,19 @@ const Chat = ({ user }) => {
   return (
     <div className="chat-container">
       <div className="active-users">
+         {/* Auto-suggest input for new messages */}
+         <Autocomplete id='chat-suggestions'
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={onSuggestionFetchRequested}
+          onSuggestionsClearRequested={onSuggestionClearRequested}
+          getSuggestionValue={suggestion => suggestion.student_name}
+          renderSuggestion={suggestion => (
+            <div onClick={() => setRecipient(suggestion.student_name)} className="suggestion-item">
+              {suggestion.student_name}
+            </div>
+          )}
+          inputProps={inputProps}
+        />
         <h2>Active Chats</h2>
         <div className="active-users-list">
           {activeUsers.map((userName, index) => (
@@ -135,20 +148,6 @@ const Chat = ({ user }) => {
             </div>
           ))}
         </div>
-
-        {/* Auto-suggest input for new messages */}
-        <Autocomplete
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={onSuggestionFetchRequested}
-          onSuggestionsClearRequested={onSuggestionClearRequested}
-          getSuggestionValue={suggestion => suggestion.student_name}
-          renderSuggestion={suggestion => (
-            <div onClick={() => setRecipient(suggestion.student_name)} className="suggestion-item">
-              {suggestion.student_name}
-            </div>
-          )}
-          inputProps={inputProps}
-        />
       </div>
 
       <div className="messages-container">

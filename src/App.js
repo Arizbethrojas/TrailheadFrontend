@@ -13,13 +13,16 @@ import './App.css';
 import axios from 'axios';
 import Map from './components/map'; 
 
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
   const [userID, setUserID] = useState(null);
   const [userName, setUserName] = useState(null);
   const [isTripLeader, setTripLeader] = useState(null);
+  const [currentRoute, setCurrentRoute] = useState('/'); // Track the current route
   const apiUrl = process.env.REACT_APP_API_URL;
+
 
   //store the current userID to be used by other screens
   const fetchStudentProfile = async () => {
@@ -112,12 +115,17 @@ const App = () => {
       setIsAuthenticated(true);
       fetchStudentProfile();
     }
+
+    const handleRouteChange = (path) => {
+      setCurrentRoute(path);
+    };
+
   }, [authToken]);
 
   return (
     <Router>
       <div className="app-container">
-        {isAuthenticated && (
+        {isAuthenticated && currentRoute !== '/login' && (
           <nav className="sidebar">
             <img src="/Logo.png" alt="Logo" className="logo" />
             <img src="/Dashed1.png" alt="" className="dashed-line" id="dashed1" />
@@ -138,11 +146,13 @@ const App = () => {
                   <img src="/profileIcon.png" alt="Profile" className="icon" />
                 </Link>
               </li>
-              <li>
+              {isTripLeader && (
+                <li>
                 <Link to="/add-trip">
                   <img src="/addIcon.png" alt="Add" className="icon" />
                 </Link>
               </li>
+              )}
               <li>
                 <Link to="/chat">
                   <img src="/chatIcon.png" alt="Chat" className="icon" />

@@ -1,5 +1,73 @@
 /* archive.css */
 
+.page-title {
+  position: sticky;
+  top: 0; /* Define the distance from the top */
+  background-color: #FCF8F6; /* Optional: to cover content while scrolling */
+  z-index: 1; /* Ensure it stays above other content */
+  padding: 10px; /* Optional: add some padding */
+  margin-left: 0px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.filters-container {
+  position: sticky;
+  top: 60px; /* Change this value to be below the page title */
+  background-color: #FCF8F6; /* Optional: to cover content while scrolling */
+  z-index: 1; /* Ensure it stays above other content */
+  padding: 10px; /* Optional: add some padding */
+}
+.custom-checkbox {
+  display: flex;
+  margin-left: -40px;
+  align-items: center; /* Center the items vertically */
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
+}
+
+.custom-checkbox label {
+  position: relative;
+  padding-left: 35px; /* Space for the custom checkbox */
+  cursor: pointer; /* Change cursor on hover */
+  font-size: 16px; /* Font size for the label */
+  line-height: 20px; /* Adjust line height to center text vertically with the checkbox */
+}
+
+.custom-checkbox label:before {
+  content: '';
+  position: absolute;
+  left: 0; /* Positioning of the checkbox */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Center vertically */
+  width: 24px; /* Increased width for the checkbox */
+  height: 24px; /* Increased height for the checkbox */
+  background-color: #fff; /* Background color */
+  border: 2px solid #7D7D7D; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+  transition: background-color 0.3s, border-color 0.3s; /* Animation effect */
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label:before {
+  background-color: #b6bea1; /* Background color for checked state */
+  border-color: #b6bea1; /* Border color for checked state */
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label:after {
+  content: '';
+  position: absolute;
+  left: 10px; /* Adjust for positioning of the checkmark */
+  top: 10px; /* Adjust for positioning of the checkmark */
+  width: 8px; /* Increased width of checkmark */
+  height: 14px; /* Increased height of checkmark */
+  border: solid white; /* Color of the checkmark */
+  border-width: 0 3px 3px 0; /* Create the checkmark shape */
+  transform: rotate(45deg); /* Rotate for proper alignment */
+}
+
 .archive-container {
   width: 100vw; 
   display: flex;

@@ -1,7 +1,38 @@
-.map-container {
-    flex: 1; /* Takes remaining space */
-    display: flex; /* Ensures flex layout */
-    background-color: #c3c7b2; /* Optional */
-    height: 100vh; /* This ensures it takes the full height */
-    overflow: hidden; /* Prevent overflow issues */
-  }
+
+
+h1, .photoUploadUI{
+  margin-left: 20px;
+  margin: 10px;
+}
+
+#marker-button {
+  background-color: #fcf8f5; /* green-500 */
+  color: black;
+  border: none;
+  cursor: pointer;
+  padding: 10px 10px;
+  border-radius: 100px;
+  height: 40px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.photoUploadUI{
+  display: flex;
+  flex-direction: column;
+}
+
+#upload-button{
+  font-size: 14px;
+}
+
+#photo-buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#upload-text{
+  font-size: 20px;
+  font-weight: 600;
+}

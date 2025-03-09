@@ -20,6 +20,7 @@ const Archive = ({ authToken, userID }) => {
  const [filterBySubclub, setFilterBySubclub] = useState('');
  const [filterByLevel, setFilterByLevel] = useState('');
  const [mapWidth, setMapWidth] = useState(50); // State for map width percentage
+ const [showMyPastTrips, setShowMyPastTrips] = useState(false); 
  const apiUrl = process.env.REACT_APP_API_URL;
 
  // Fetch all trips
@@ -54,7 +55,10 @@ const Archive = ({ authToken, userID }) => {
            'Content-Type': 'application/json',
          },
        });
-       setMyTrips(response.data);
+       const uniqueTrips = response.data.filter((trip, index, self) => 
+        index === self.findIndex((t) => t.id === trip.id)
+      );
+       setMyTrips(uniqueTrips);
      }
    } catch (error) {
      console.error('Error fetching my archived trips:', error);
@@ -135,34 +139,55 @@ const Archive = ({ authToken, userID }) => {
              filterByLevel={filterByLevel}
              setFilterByLevel={setFilterByLevel}
            />
+          <div className="custom-checkbox">
+            <input 
+              type="checkbox" 
+              id="myPastTripsCheckbox"
+              checked={showMyPastTrips} 
+              onChange={(e) => {
+                console.log('Checkbox clicked:', e.target.checked); // Log checkbox state
+                setShowMyPastTrips(e.target.checked); 
+              }} 
+            />
+            <label htmlFor="myPastTripsCheckbox">My Trips</label>
+          </div>
          </div>
        </div>
-      
-       <h2 className="section-title">My Past Trips</h2>
-       <div className="archive-trips-container">
-         <div className="trips-column">
-           {myFilteredTrips.map((trip) => (
-             <div key={trip.id} onClick={() => handleTripClick(trip)}>
-               <TripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level} />
-             </div>
-           ))}
-           {myTrips.length === 0 && <p>No past trips found, get outside!</p>}
-         </div>
-       </div>
-      
-       <h2 className="section-title">All DOC Trips</h2>
-       <div className="archive-trips-container">
-         <div className="trips-column">
-           {filteredTrips.map((trip) => (
-             <div key={trip.id} onClick={() => handleTripClick(trip)}>
-               <TripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level} />
-             </div>
-           ))}
-         </div>
-       </div>
+
+       <div>
+        {showMyPastTrips ? 
+        (
+        <div>
+          <h2 className="section-title">My Past Trips</h2>
+          <div className="archive-trips-container">
+            <div className="trips-column">
+              {myFilteredTrips.map((trip) => (
+                <div key={trip.id} onClick={() => handleTripClick(trip)}>
+                  <TripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level} />
+                </div>
+              ))}
+              {myTrips.length === 0 && <p>No past trips found, get outside!</p>}
+            </div>
+          </div>
+        </div>
+        ) 
+        : 
+        (
+        <div>
+          <h2 className="section-title">All DOC Trips</h2>
+          <div className="archive-trips-container">
+            <div className="trips-column">
+              {filteredTrips.map((trip) => (
+                <div key={trip.id} onClick={() => handleTripClick(trip)}>
+                  <TripCard title={trip.trip_name} date={formatDate(trip.trip_date)} subclub={trip.subclub} level={trip.trip_level} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        ) }
+      </div>      
      </div>
-    
-     <ResizableDivider onDrag={handleMouseDown} />
     
      <div className="map-container" style={{ flex: `${180- mapWidth} 0 0` }}>
        <Map />

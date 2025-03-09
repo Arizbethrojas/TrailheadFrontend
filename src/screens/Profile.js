@@ -9,72 +9,159 @@ import axios from 'axios';
 import TripPage from './TripPage';
 import Autocomplete from 'react-autosuggest';
 
+
+// import badges
+import biking_bronze from '../styles/images/badges/biking_bronze.png';
+import biking_silver from '../styles/images/badges/biking_silver.png';
+import biking_gold from '../styles/images/badges/biking_gold.png';
+import cabin_bronze from '../styles/images/badges/cabin_bronze.png';
+import cabin_silver from '../styles/images/badges/cabin_silver.png';
+import cabin_gold from '../styles/images/badges/cabin_gold.png';
+import climbing_bronze from '../styles/images/badges/climbing_bronze.png';
+import climbing_silver from '../styles/images/badges/climbing_silver.png';
+import climbing_gold from '../styles/images/badges/climbing_gold.png';
+import flora_bronze from '../styles/images/badges/flora_bronze.png';
+import flora_silver from '../styles/images/badges/flora_silver.png';
+import flora_gold from '../styles/images/badges/flora_gold.png';
+import ledyard_bronze from '../styles/images/badges/ledyard_bronze.png';
+import ledyard_silver from '../styles/images/badges/ledyard_silver.png';
+import ledyard_gold from '../styles/images/badges/ledyard_gold.png';
+import mountaineering_bronze from '../styles/images/badges/mountaineering_bronze.png';
+import mountaineering_silver from '../styles/images/badges/mountaineering_silver.png';
+import mountaineering_gold from '../styles/images/badges/mountaineering_gold.png';
+import poco_bronze from '../styles/images/badges/poco_bronze.png';
+import poco_silver from '../styles/images/badges/poco_silver.png';
+import poco_gold from '../styles/images/badges/poco_gold.png';
+import skiing_bronze from '../styles/images/badges/skiing_bronze.png';
+import skiing_silver from '../styles/images/badges/skiing_silver.png';
+import skiing_gold from '../styles/images/badges/skiing_gold.png';
+import vhoc_bronze from '../styles/images/badges/vhoc_bronze.png';
+import vhoc_silver from '../styles/images/badges/vhoc_silver.png';
+import vhoc_gold from '../styles/images/badges/vhoc_gold.png';
+
+
 const BADGE_LEVELS = [
   { threshold: 1, name: "Bronze", description: "5 trips" },
   { threshold: 2, name: "Silver", description: "10 trips" },
   { threshold: 3, name: "Gold", description: "25 trips" }
 ];
 
+// mapping to get badge images based on subclub/threshold
+
+const badgeImages = {
+  'Biking': {
+    'Bronze': biking_bronze,
+    'Silver': biking_silver,
+    'Gold': biking_gold
+  },
+  'Cabin & Trail': {
+    'Bronze': cabin_bronze,
+    'Silver': cabin_silver,
+    'Gold': cabin_gold
+  },
+  'Climbing Team': {
+    'Bronze': climbing_bronze,
+    'Silver': climbing_silver,
+    'Gold': climbing_gold
+  },
+  'Flora & Fauna': {
+    'Bronze': flora_bronze,
+    'Silver': flora_silver,
+    'Gold': flora_gold
+  },
+  'Ledyard': {
+    'Bronze': ledyard_bronze,
+    'Silver': ledyard_silver,
+    'Gold': ledyard_gold
+  },
+  'Mountaineering': {
+    'Bronze': mountaineering_bronze,
+    'Silver': mountaineering_silver,
+    'Gold': mountaineering_gold
+  },
+  'POCO': {
+    'Bronze': poco_bronze,
+    'Silver': poco_silver,
+    'Gold': poco_gold
+  },
+  'Skiing': {
+    'Bronze': skiing_bronze,
+    'Silver': skiing_silver,
+    'Gold': skiing_gold
+  },
+  'VHOC': {
+    'Bronze': vhoc_bronze,
+    'Silver': vhoc_silver,
+    'Gold': vhoc_gold
+  },
+  'Winter Sports': {
+    'Bronze': skiing_bronze,
+    'Silver': skiing_silver,
+    'Gold': skiing_gold
+  },
+};
+
+
 const Profile = ({ authToken }) => {
 
   const MOCK_REGISTERED_TRIPS = [
-    {
-      id: 1,
-      trip_name: "VHOC Trip 1",
-      trip_date: "2024-12-15",
-      subclub: "VHOC"
-    },
-    {
-      id: 2,
-      trip_name: "VHOC Trip 2",
-      trip_date: "2024-12-16",
-      subclub: "VHOC"
-    },
-    {
-      id: 3,
-      trip_name: "VHOC Trip 3",
-      trip_date: "2024-12-17",
-      subclub: "VHOC"
-    },
+    // {
+    //   id: 1,
+    //   trip_name: "VHOC Trip 1",
+    //   trip_date: "2024-12-15",
+    //   subclub: "VHOC"
+    // },
+    // {
+    //   id: 2,
+    //   trip_name: "VHOC Trip 2",
+    //   trip_date: "2024-12-16",
+    //   subclub: "VHOC"
+    // },
+    // {
+    //   id: 3,
+    //   trip_name: "VHOC Trip 3",
+    //   trip_date: "2024-12-17",
+    //   subclub: "VHOC"
+    // },
     
-    {
-      id: 4,
-      trip_name: "Climbing @ Rumney",
-      trip_date: "2024-12-18",
-      subclub: "Climbing Team"
-    },
-    {
-      id: 5,
-      trip_name: "Climbing @ Sundown",
-      trip_date: "2024-12-19",
-      subclub: "Climbing Team"
-    },
+    // {
+    //   id: 4,
+    //   trip_name: "Climbing @ Rumney",
+    //   trip_date: "2024-12-18",
+    //   subclub: "Climbing Team"
+    // },
+    // {
+    //   id: 5,
+    //   trip_name: "Climbing @ Sundown",
+    //   trip_date: "2024-12-19",
+    //   subclub: "Climbing Team"
+    // },
     
-    {
-      id: 6,
-      trip_name: "Hiking Mt. Moosilauke",
-      trip_date: "2024-12-20",
-      subclub: "Cabin & Trail"
-    },
+    // {
+    //   id: 6,
+    //   trip_name: "Hiking Mt. Moosilauke",
+    //   trip_date: "2024-12-20",
+    //   subclub: "Cabin & Trail"
+    // },
     
-    {
-      id: 7,
-      trip_name: "Bird Watching",
-      trip_date: "2024-12-21",
-      subclub: "Flora & Fauna"
-    },
-    {
-      id: 8,
-      trip_name: "Plant Identification",
-      trip_date: "2024-12-22",
-      subclub: "Flora & Fauna"
-    },
-    {
-      id: 9,
-      trip_name: "Nature Photography",
-      trip_date: "2024-12-23",
-      subclub: "Flora & Fauna"
-    }
+    // {
+    //   id: 7,
+    //   trip_name: "Bird Watching",
+    //   trip_date: "2024-12-21",
+    //   subclub: "Flora & Fauna"
+    // },
+    // {
+    //   id: 8,
+    //   trip_name: "Plant Identification",
+    //   trip_date: "2024-12-22",
+    //   subclub: "Flora & Fauna"
+    // },
+    // {
+    //   id: 9,
+    //   trip_name: "Nature Photography",
+    //   trip_date: "2024-12-23",
+    //   subclub: "Flora & Fauna"
+    // }
   ];
   
   const [userData, setUserData] = useState({
@@ -217,6 +304,22 @@ const Profile = ({ authToken }) => {
       console.error('Error fetching subclubs:', error);
     }
   };
+
+  const getBadgeImage = (subclub, level) => {
+    // Normalize subclub name to match our keys
+    const normalizedSubclub = Object.keys(badgeImages).find(
+      key => key.toLowerCase() === subclub.toLowerCase() || 
+      subclub.toLowerCase().includes(key.toLowerCase())
+    );
+    
+    if (normalizedSubclub && badgeImages[normalizedSubclub][level]) {
+      return badgeImages[normalizedSubclub][level];
+    }
+    
+    console.warn(`No badge found for ${subclub} (${level})`); // CHANGE
+    return null;
+  };
+
 
 
 // fixed fetchStudentProfile function
@@ -465,24 +568,53 @@ useEffect(() => {
     return <TripPage trip={selectedTrip} onBack={handleBack} archive={true} authToken={authToken} trippees={trippees}/>;
   }
 
-  const BadgeCircle = ({ achieved, level, count }) => (
-    <div style={{
-      width: '30px',
-      height: '30px',
-      borderRadius: '50%',
-      backgroundColor: achieved ? {
-        'Bronze': '#CD7F32',
-        'Silver': '#C0C0C0',
-        'Gold': '#FFD700'
-      }[level] : '#e0e0e0',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: 'white'
-    }}>
-      {count}
-    </div>
-  );
+  const BadgeCircle = ({ achieved, level, count, subclub }) => {
+    // Only try to get badge image if achieved is true and subclub exists
+    const badgeImage = (achieved && subclub) ? getBadgeImage(subclub, level) : null;
+    
+    return (
+      <div style={{
+        width: '70px',
+        height: '70px',
+        borderRadius: '50%',
+        backgroundColor: achieved ? 'transparent' : '#e0e0e0',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        position: 'relative'
+      }}>
+        {achieved && badgeImage ? (
+          <img 
+            src={badgeImage} 
+            alt={`${subclub || 'Unknown'} ${level} badge`} 
+            style={{
+              width: '90%', 
+              height: '90%',
+              objectFit: 'contain', 
+              transform: 'scale(1.3)', // scale image in container
+              transformOrigin: 'center', 
+              position: 'absolute'
+            }}
+          />
+        ) : (
+          <div style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'black',
+            fontSize: '20px',
+            fontWeight: 'bold'
+          }}>
+            {count}
+          </div>
+        )}
+      </div>
+    );
+  };
+  
 
 
   return (
@@ -528,37 +660,45 @@ useEffect(() => {
             </div>
             
             <h2>My Badges</h2>
-            <div style={{ padding: '20px' }}>
+            <div style={{ padding: '10px' }}>
               <div style={{ marginBottom: '20px' }}>
                 <h3>Total Trips: {userData.registered_trips.length}</h3>
               </div>
-
-              {Object.entries(groupedBadges).map(([subclub, badges]) => (
-                <div key={subclub} style={{ marginBottom: '20px' }}>
-                  <h3 style={{ marginBottom: '10px' }}>{subclub}</h3>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <BadgeCircle 
-                      achieved={badges.some(b => b.name.includes('Bronze'))} 
-                      level="Bronze"
-                      count={1}
-                    />
-                    <BadgeCircle 
-                      achieved={badges.some(b => b.name.includes('Silver'))} 
-                      level="Silver"
-                      count={2}
-                    />
-                    <BadgeCircle 
-                      achieved={badges.some(b => b.name.includes('Gold'))} 
-                      level="Gold"
-                      count={3}
-                    />
-                    <span>({badges[0]?.tripCount || 0} trips)</span>
+              <div style={{ 
+                maxHeight: '300px', 
+                overflowY: 'auto',  
+                paddingRight: '10px' 
+              }}>
+                {Object.entries(groupedBadges).map(([subclub, badges]) => (
+                  <div key={subclub} style={{ marginBottom: '20px' }}>
+                    <h3 style={{ marginBottom: '10px' }}>{subclub || 'Unknown Subclub'}</h3>
+                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                      <BadgeCircle 
+                        achieved={badges.some(b => b.level === 'Bronze')} 
+                        level="Bronze"
+                        count={1}
+                        subclub={subclub}
+                      />
+                      <BadgeCircle 
+                        achieved={badges.some(b => b.level === 'Silver')} 
+                        level="Silver"
+                        count={2}
+                        subclub={subclub}
+                      />
+                      <BadgeCircle 
+                        achieved={badges.some(b => b.level === 'Gold')} 
+                        level="Gold"
+                        count={3}
+                        subclub={subclub}
+                      />
+                      <span>({badges[0]?.tripCount || 0} trips)</span>
+                    </div>
                   </div>
-                </div>
-              ))}
-              {userData.badges.length === 0 && (
-                <p>Sign up for trips with different subclubs to earn badges!</p>
-              )}
+                ))}
+                {userData.badges.length === 0 && (
+                  <p>Sign up for trips with different subclubs to earn badges!</p>
+                )}
+              </div>
             </div>
             
             <h2>Details</h2>
