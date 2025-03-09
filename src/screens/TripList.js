@@ -10,6 +10,7 @@ const trips = [
 const TripList = () => {
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  
 
   const handleTripClick = (trip) => {
     setSelectedTrip(trip);
