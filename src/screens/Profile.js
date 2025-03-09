@@ -93,7 +93,12 @@ const badgeImages = {
     'Bronze': vhoc_bronze,
     'Silver': vhoc_silver,
     'Gold': vhoc_gold
-  }
+  },
+  'Winter Sports': {
+    'Bronze': skiing_bronze,
+    'Silver': skiing_silver,
+    'Gold': skiing_gold
+  },
 };
 
 
