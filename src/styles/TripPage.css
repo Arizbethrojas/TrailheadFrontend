@@ -51,6 +51,7 @@
   /* Title */
   .individual-trip-title {
     margin: 0;
+    width: 80%;
   }
 
   .signup-button {
