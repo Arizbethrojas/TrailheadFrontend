@@ -27,6 +27,7 @@ const AddTrip = ({onTripCreated, authToken, userID, userName}) => {
   });
 
   const [subclubs, setSubclubs] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const tripTypeOptions = [
     {value:'', label:'Select Trip Type'},
@@ -45,7 +46,7 @@ const AddTrip = ({onTripCreated, authToken, userID, userName}) => {
   useEffect(() => {
     const fetchSubclubs = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/subclubs/', {
+        const response = await axios.get(`{apiUrl}/api/subclubs/`, {
           headers: {
             Authorization: `Bearer ${authToken}`, // Set the authorization token
           },
@@ -84,7 +85,7 @@ const AddTrip = ({onTripCreated, authToken, userID, userName}) => {
     e.preventDefault();
     const tripDataToSubmit = {...formData, trip_leader: formData.trip_leader};
     try{
-      const response = await axios.post('http://127.0.0.1:8000/api/trips/', tripDataToSubmit, {
+      const response = await axios.post(`{apiUrl}/api/trips/`, tripDataToSubmit, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`,
