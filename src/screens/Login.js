@@ -8,7 +8,6 @@ const Login = ({ onLogin, setAuthToken }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     if (!isLogin) {
@@ -23,7 +22,7 @@ const Login = ({ onLogin, setAuthToken }) => {
 
     if (isLogin) {
       try {
-        const response = await axios.post(`${apiUrl}/api/token/`, { username, password });
+        const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
         console.log("response: ", response.data);
         const { access } = response.data;
         console.log('access', access);
