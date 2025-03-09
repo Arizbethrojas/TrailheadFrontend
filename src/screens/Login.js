@@ -11,21 +11,17 @@ const Login = ({ onLogin, setAuthToken }) => {
 
   useEffect(() => {
     if (!isLogin) {
-      console.log("Navigating to Sign Up");
       navigate('/sign-up');
     }
   }, [isLogin, navigate]); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submitting Form:', { username, password });
 
     if (isLogin) {
       try {
         const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
-        console.log("response: ", response.data);
         const { access } = response.data;
-        console.log('access', access);
         onLogin(access);
         navigate('/trips');
       } catch (err) {
