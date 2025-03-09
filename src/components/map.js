@@ -12,7 +12,6 @@ const mapContainerStyle = {
 const center = { lat: 43.7022, lng: -72.2896 }; // Hanover, NH
 
 function Map() {
-  const apiUrl = process.env.REACT_APP_API_URL;
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
@@ -48,7 +47,7 @@ function Map() {
     formData.append("longitude", selectedPosition.lng);
     formData.append("image", photo);
     try {
-      await axios.post(`${apiUrl}/api/markers/`, formData, {
+      await axios.post("http://localhost:8000/api/markers/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -64,7 +63,7 @@ function Map() {
 
   const fetchMarkers = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/markers/`);
+      const response = await axios.get("http://localhost:8000/api/markers/");
       setMarkers(response.data);
     } catch (error) {
       console.error("Error fetching markers:", error);
@@ -125,7 +124,6 @@ function Map() {
       </div>
     </div>
   );
-
 }
 
 export default Map;
