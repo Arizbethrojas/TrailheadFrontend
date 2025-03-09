@@ -15,6 +15,25 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
   const [modalOpen, setModalOpen] = useState(false);
   const [leaderName, setLeaderName] = useState('');
   const [blockedUser, setBlockedUser] = useState(false);
+  const [buttonText, setButtonText] = useState('Sign Up!');
+
+  //display the sign up button differently depending on if they are already on the trip
+  useEffect(() => {
+    if (waitlist && trippees){
+      const onWaitlist = waitlist.some(person => person.waitlist_student===userID);
+      const onTrip = trippees.some(person => person.student===userID);
+
+      if (onWaitlist){
+        setButtonText('On Waitlist');
+        return;
+      }
+      else if (onTrip){
+        setButtonText('On Trip');
+        return;
+      }
+
+    }
+  }, [waitlist, trippees, userID]);
 
     const handleOpenModal = () => {
       setModalOpen(true);
@@ -43,11 +62,9 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
         const onTrip = trippees.some(person => person.student===userID);
 
         if (onWaitlist){
-          alert('You are already on the waitlist');
           return;
         }
         else if (onTrip){
-          alert('You are already on the trip!');
           return;
         }
 
@@ -222,7 +239,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
             )}
             {!archive && (
               <button className="signup-button" onClick={handleWaitlist}>
-                Sign Up!
+                {buttonText}
               </button>
             )}
           </div>
