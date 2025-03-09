@@ -18,7 +18,6 @@ const Trips = ({authToken, userID}) => {
   const [tripsData, setTripsData] = useState([]);
   const [waitlist, setWaitlist] = useState([]);
   const [trippees, setTrippees] = useState([]);
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   const [filterBySubclub, setFilterBySubclub] = useState('');
   const [filterByLevel, setFilterByLevel] = useState('');
@@ -40,7 +39,7 @@ const Trips = ({authToken, userID}) => {
   //fetch waitlist when a trip is clicked
   const fetchWaitlist = async (tripID) => {
     try{
-      const response = await axios.get(`${apiUrl}/api/waitlist/${tripID}/`,{ 
+      const response = await axios.get(`http://127.0.0.1:8000/api/waitlist/${tripID}/`,{ 
         headers:{
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json',
@@ -58,7 +57,7 @@ const Trips = ({authToken, userID}) => {
   //fetch trippees when a trip is called
   const fetchTrippees = async (tripID) => {
     try{
-      const response = await axios.get(`${apiUrl}/api/registrations/${tripID}/`,{ 
+      const response = await axios.get(`http://127.0.0.1:8000/api/registrations/${tripID}/`,{ 
         headers:{
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json',
@@ -75,7 +74,7 @@ const Trips = ({authToken, userID}) => {
 
   const fetchTrips = async() => {
     try{
-      const response = await axios.get(`${apiUrl}/api/trips/`, {
+      const response = await axios.get('http://127.0.0.1:8000/api/trips/', {
         headers:{
           Authorization: `Bearer ${authToken}`,
         },
