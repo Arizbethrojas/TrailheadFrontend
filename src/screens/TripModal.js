@@ -6,12 +6,13 @@ import axios from 'axios';
 
 const TripModal = ({ show, onHide, trip, studentID=2 }) => {
   const [error, setError] = useState(null)
+  const apiUrl = process.env.REACT_APP_API_URL;
   if (!show || !trip) return null;
 
   const handleSignUp = async () => {
     console.log('signup')
     try{
-      const response = await axios.post('http://127.0.0.1:8000/api/register_trip/', {
+      const response = await axios.post(`{apiUrl}/api/register_trip/`, {
         student_id: studentID,
         trip_id: trip.id,
       });

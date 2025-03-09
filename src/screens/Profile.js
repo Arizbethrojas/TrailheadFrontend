@@ -163,6 +163,8 @@ const Profile = ({ authToken }) => {
     //   subclub: "Flora & Fauna"
     // }
   ];
+
+  const apiUrl = process.env.REACT_APP_API_URL;
   
   const [userData, setUserData] = useState({
     id: 0,
@@ -201,7 +203,7 @@ const Profile = ({ authToken }) => {
   const fetchBlockedUsers = async () => {
     //fetch blockedUsers and set it to the variable
     try{
-      const response = await axios.get('http://127.0.0.1:8000/api/blocked-users/', {
+      const response = await axios.get(`{apiUrl}/api/blocked-users/`, {
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
@@ -219,7 +221,7 @@ const Profile = ({ authToken }) => {
 
   //there is a list of suggestions when you try to block someone
   const fetchSuggestions = async (value) => {
-    const response = await axios.get(`http://127.0.0.1:8000/api/students/?search=${value}`, {
+    const response = await axios.get(`{apiUrl}/api/students/?search=${value}`, {
       headers: {
         'Authorization': `Bearer ${authToken}`,
         'Content-Type': 'application/json'
@@ -236,7 +238,7 @@ const Profile = ({ authToken }) => {
       alert('This user is already blocked.');
       return;
     }
-    const response = await axios.post('http://127.0.0.1:8000/api/blocked-users/', {
+    const response = await axios.post(`{apiUrl}/api/blocked-users/`, {
       blocked_student_id: userToBlock
     }, {
       headers: {
@@ -259,7 +261,7 @@ const Profile = ({ authToken }) => {
 
   const onUnblockUser = async (userToUnblock, currentUser) => {
     try{
-      const response = await axios.delete('http://127.0.0.1:8000/api/blocked-users/remove/',{
+      const response = await axios.delete(`{apiUrl}/api/blocked-users/remove/`,{
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
@@ -292,7 +294,7 @@ const Profile = ({ authToken }) => {
     if (!authToken) return;
 
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/subclubs/', {
+      const response = await axios.get(`{apiUrl}/api/subclubs/`, {
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
@@ -331,7 +333,7 @@ const fetchStudentProfile = async () => {
   }
 
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/student/current/', {
+    const response = await axios.get(`{apiUrl}/api/student/current/`, {
       headers: {
         'Authorization': `Bearer ${authToken}`,
         'Content-Type': 'application/json'
@@ -345,7 +347,7 @@ const fetchStudentProfile = async () => {
       const studentId = response.data.id;
       console.log("Fetching trips for student ID:", studentId);
       
-      const tripsResponse = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${studentId}/`, {
+      const tripsResponse = await axios.get(`{apiUrl}/api/trip-registrations/student/${studentId}/`, {
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'
@@ -375,7 +377,7 @@ const fetchStudentProfile = async () => {
         return acc;
       }, {});
 
-      const backendUrl = 'http://127.0.0.1:8000';
+      const backendUrl = '{apiUrl}';
 
       // update state with new information
       setUserData(prevData => ({
@@ -519,7 +521,7 @@ useEffect(() => {
   //fetch trippees when a trip is clicked
   const fetchTrippees = async (tripID) => {
     try{
-      const response = await axios.get(`http://127.0.0.1:8000/api/registrations/${tripID}/`,{ 
+      const response = await axios.get(`{apiUrl}/api/registrations/${tripID}/`,{ 
         headers:{
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json',
@@ -536,7 +538,7 @@ useEffect(() => {
   const fetchWaitlist = async (tripID) => {
     console.log('tripID', tripID)
     try{
-      const response = await axios.get(`http://127.0.0.1:8000/api/waitlist/${tripID}/`,{ 
+      const response = await axios.get(`{apiUrl}/api/waitlist/${tripID}/`,{ 
         headers:{
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json',

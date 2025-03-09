@@ -16,6 +16,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
   const [leaderName, setLeaderName] = useState('');
   const [blockedUser, setBlockedUser] = useState(false);
   const [buttonText, setButtonText] = useState('Sign Up!');
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   //display the sign up button differently depending on if they are already on the trip
   useEffect(() => {
@@ -73,7 +74,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
       try{
         console.log('userID', userID);
         console.log('tripID', trip.id);
-        const response = await axios.post('http://127.0.0.1:8000/api/register_waitlist/', {
+        const response = await axios.post(`{apiUrl}/api/register_waitlist/`, {
           student_id: userID, 
           trip_id: trip.id,
         },
@@ -94,7 +95,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
 
     // remove a student from the waitlist
     const handleRemove = async (student_id) => {
-      const response = await axios.delete('http://127.0.0.1:8000/api/waitlist/remove/', {
+      const response = await axios.delete(`{apiUrl}/api/waitlist/remove/`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${authToken}`,
@@ -114,7 +115,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
         console.log('signup TripPage')
         try{
           console.log('trip: ', trip.id, 'student', student_id)
-          const response = await axios.post('http://127.0.0.1:8000/api/register_trip/', {
+          const response = await axios.post(`{apiUrl}/api/register_trip/`, {
             student_id: student_id, 
             trip_id: trip.id,
           },
@@ -167,7 +168,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
       const getTripLeader = async () => {
         try{
           console.log('tl: ', trip.trip_leader)
-          const response = await axios.get(`http://127.0.0.1:8000/api/student/${trip.trip_leader}/`, {
+          const response = await axios.get(`{apiUrl}/api/student/${trip.trip_leader}/`, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${authToken}`,
@@ -189,7 +190,7 @@ const TripPage = ({ trip, onBack, userID, authToken, waitlist, trippees, archive
       //check if there is a blocked user on the trip
     const checkBlocked = async () => {
       try{
-        const blocked = await axios.get(`http://127.0.0.1:8000/api/blocked-users/`, {
+        const blocked = await axios.get(`{apiUrl}/api/blocked-users/`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${authToken}`,

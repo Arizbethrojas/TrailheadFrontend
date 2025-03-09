@@ -17,6 +17,7 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -58,14 +59,14 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
     }
     if (isSignUp) {
         try {
-        const response = await axios.post("http://127.0.0.1:8000/api/register/", signUpData, {
+        const response = await axios.post(`{apiUrl}/api/register/`, signUpData, {
             headers: {
                 "Content-Type": "multipart/form-data",
               }, 
         });
         console.log('user: ', username, "pw: ", password);
         console.log('response.data', response.data.access_token);
-        const token = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
+        const token = await axios.post(`{apiUrl}/api/token/`, { username, password });
         console.log('token', token);
         const { access, refresh } = token.data;
         console.log('access', access);
