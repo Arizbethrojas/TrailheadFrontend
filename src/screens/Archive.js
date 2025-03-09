@@ -21,12 +21,11 @@ const Archive = ({ authToken, userID }) => {
  const [filterByLevel, setFilterByLevel] = useState('');
  const [mapWidth, setMapWidth] = useState(50); // State for map width percentage
  const [showMyPastTrips, setShowMyPastTrips] = useState(false); 
- const apiUrl = process.env.REACT_APP_API_URL;
 
  // Fetch all trips
  const fetchTrips = async () => {
    try {
-     const response = await axios.get(`${apiUrl}/api/trips/`, {
+     const response = await axios.get('http://127.0.0.1:8000/api/trips/', {
        headers: {
          Authorization: `Bearer ${authToken}`,
        },
@@ -49,7 +48,7 @@ const Archive = ({ authToken, userID }) => {
  const fetchMyTrips = async () => {
    try {
      if (userID) {
-       const response = await axios.get(`${apiUrl}/api/trip-registrations/student/${userID}/`, {
+       const response = await axios.get(`http://127.0.0.1:8000/api/trip-registrations/student/${userID}/`, {
          headers: {
            'Authorization': `Bearer ${authToken}`,
            'Content-Type': 'application/json',
