@@ -46,7 +46,7 @@ const AddTrip = ({onTripCreated, authToken, userID, userName}) => {
   useEffect(() => {
     const fetchSubclubs = async () => {
       try {
-        const response = await axios.get(`{apiUrl}/api/subclubs/`, {
+        const response = await axios.get(`${apiUrl}/api/subclubs/`, {
           headers: {
             Authorization: `Bearer ${authToken}`, // Set the authorization token
           },
@@ -85,7 +85,7 @@ const AddTrip = ({onTripCreated, authToken, userID, userName}) => {
     e.preventDefault();
     const tripDataToSubmit = {...formData, trip_leader: formData.trip_leader};
     try{
-      const response = await axios.post(`{apiUrl}/api/trips/`, tripDataToSubmit, {
+      const response = await axios.post(`${apiUrl}/api/trips/`, tripDataToSubmit, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${authToken}`,

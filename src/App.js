@@ -32,7 +32,7 @@ const App = () => {
 
     try {
       console.log("Making profile request with token:", authToken);
-      const response = await axios.get(`{apiUrl}/api/student/current/`, {
+      const response = await axios.get(`${apiUrl}/api/student/current/`, {
         headers: {
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json'

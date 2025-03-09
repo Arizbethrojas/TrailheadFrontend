@@ -23,7 +23,7 @@ const Login = ({ onLogin, setAuthToken }) => {
 
     if (isLogin) {
       try {
-        const response = await axios.post(`{apiUrl}/api/token/`, { username, password });
+        const response = await axios.post(`${apiUrl}/api/token/`, { username, password });
         console.log("response: ", response.data);
         const { access } = response.data;
         console.log('access', access);

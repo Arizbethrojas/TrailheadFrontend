@@ -40,7 +40,7 @@ const Trips = ({authToken, userID}) => {
   //fetch waitlist when a trip is clicked
   const fetchWaitlist = async (tripID) => {
     try{
-      const response = await axios.get(`{apiUrl}/api/waitlist/${tripID}/`,{ 
+      const response = await axios.get(`${apiUrl}/api/waitlist/${tripID}/`,{ 
         headers:{
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const Trips = ({authToken, userID}) => {
   //fetch trippees when a trip is called
   const fetchTrippees = async (tripID) => {
     try{
-      const response = await axios.get(`{apiUrl}/api/registrations/${tripID}/`,{ 
+      const response = await axios.get(`${apiUrl}/api/registrations/${tripID}/`,{ 
         headers:{
           'Authorization': `Bearer ${authToken}`,
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const Trips = ({authToken, userID}) => {
 
   const fetchTrips = async() => {
     try{
-      const response = await axios.get(`{apiUrl}/api/trips/`, {
+      const response = await axios.get(`${apiUrl}/api/trips/`, {
         headers:{
           Authorization: `Bearer ${authToken}`,
         },

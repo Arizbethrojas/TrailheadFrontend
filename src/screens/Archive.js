@@ -26,7 +26,7 @@ const Archive = ({ authToken, userID }) => {
  // Fetch all trips
  const fetchTrips = async () => {
    try {
-     const response = await axios.get(`{apiUrl}/api/trips/`, {
+     const response = await axios.get(`${apiUrl}/api/trips/`, {
        headers: {
          Authorization: `Bearer ${authToken}`,
        },
@@ -49,7 +49,7 @@ const Archive = ({ authToken, userID }) => {
  const fetchMyTrips = async () => {
    try {
      if (userID) {
-       const response = await axios.get(`{apiUrl}/api/trip-registrations/student/${userID}/`, {
+       const response = await axios.get(`${apiUrl}/api/trip-registrations/student/${userID}/`, {
          headers: {
            'Authorization': `Bearer ${authToken}`,
            'Content-Type': 'application/json',

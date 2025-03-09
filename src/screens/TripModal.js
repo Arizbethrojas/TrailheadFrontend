@@ -12,7 +12,7 @@ const TripModal = ({ show, onHide, trip, studentID=2 }) => {
   const handleSignUp = async () => {
     console.log('signup')
     try{
-      const response = await axios.post(`{apiUrl}/api/register_trip/`, {
+      const response = await axios.post(`${apiUrl}/api/register_trip/`, {
         student_id: studentID,
         trip_id: trip.id,
       });

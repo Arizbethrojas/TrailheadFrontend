@@ -23,7 +23,7 @@ const Chat = ({ user }) => {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch(`{apiUrl}/get_messages/`);
+      const response = await fetch(`${apiUrl}/get_messages/`);
       const data = await response.json();
       if (data.messages) {
         setMessages(data.messages);
@@ -54,7 +54,7 @@ const Chat = ({ user }) => {
       return;
     }
     try {
-      const response = await axios.get(`{apiUrl}/api/students/?search=${value}`, {
+      const response = await axios.get(`${apiUrl}/api/students/?search=${value}`, {
         headers: {
           'Authorization': `Bearer ${user.authToken}`,
           'Content-Type': 'application/json'
@@ -77,7 +77,7 @@ const Chat = ({ user }) => {
     };
 
     try {
-      const response = await fetch(`{apiUrl}/send_message/`, {
+      const response = await fetch(`${apiUrl}/send_message/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

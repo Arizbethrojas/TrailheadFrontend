@@ -59,14 +59,14 @@ const SignUpIndividual = ({ onSignUp, setAuthToken }) => {
     }
     if (isSignUp) {
         try {
-        const response = await axios.post(`{apiUrl}/api/register/`, signUpData, {
+        const response = await axios.post(`${apiUrl}/api/register/`, signUpData, {
             headers: {
                 "Content-Type": "multipart/form-data",
               }, 
         });
         console.log('user: ', username, "pw: ", password);
         console.log('response.data', response.data.access_token);
-        const token = await axios.post(`{apiUrl}/api/token/`, { username, password });
+        const token = await axios.post(`${apiUrl}/api/token/`, { username, password });
         console.log('token', token);
         const { access, refresh } = token.data;
         console.log('access', access);

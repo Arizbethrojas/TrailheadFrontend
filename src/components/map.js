@@ -20,6 +20,7 @@ function Map() {
   const [photo, setPhoto] = useState(null);
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [temporaryMarker, setTemporaryMarker] = useState(null); 
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleMapClick = useCallback((event) => {
     const position = {
@@ -47,7 +48,7 @@ function Map() {
     formData.append("longitude", selectedPosition.lng);
     formData.append("image", photo);
     try {
-      await axios.post("http://localhost:8000/api/markers/", formData, {
+      await axios.post(`${apiUrl}/api/markers/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -63,7 +64,7 @@ function Map() {
 
   const fetchMarkers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/markers/");
+      const response = await axios.get(`${apiUrl}/api/markers/`);
       setMarkers(response.data);
     } catch (error) {
       console.error("Error fetching markers:", error);
