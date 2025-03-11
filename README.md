@@ -34,12 +34,25 @@ Profile:
 ## Setup
 installations: 
 `npm install axios`
+`npm install @react-google-maps/api` to make sure the google maps will connect to the map feature in the webapp
+
 run: 
-`npx create-react-app trailheadfrontend`
+`npm create-react-app trailheadfrontend`
 
 ## Deployment
 
 We will need to use `npm install` and `npm start`
+
+`npm start`
+Runs the app in the development mode.
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### Render
+Our website is hosted on render. Follow this link to open it: https://utrekfrontend.onrender.com/
+Note: inital loading time for first page may take a little longer. You can try refresh the page but it may take a little more time.
 
 ## Django API 
 
@@ -51,9 +64,26 @@ This organizational decsion allows our team to import only neccesary functions f
 
 Ari Rojas 
 Colin Kearns 
+Muthoni Mbesa
 Sammy Rago
 Dara Casey
-Muthoni Mbesa
 
 ## Acknowledgments
+
+## Other Available Scripts
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
